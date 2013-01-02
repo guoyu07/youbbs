@@ -1,4 +1,4 @@
-youBBS v1.04 for BAE 云存储(BCS)版
+youBBS v1.04 for 百度BAE云存储(BCS)版
 
 Modified by Jat
 Blog: http://www.sinosky.org
