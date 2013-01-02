@@ -2,7 +2,14 @@
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
 
 echo '
-<div class="title"><a href="/">',$options['name'],'</a> &raquo; ',$title,'</div>
+<div class="title"><a href="/">',$options['name'],'</a> &raquo; ';
+if($url_path == 'sigin'){
+    echo '注 册';
+}
+if($url_path == 'login'){
+    echo '登 录';
+}
+echo '</div>
 <div class="main-box">
 <p class="red fs12" style="margin-left:60px;">';
 if($options['authorized']){
@@ -29,11 +36,17 @@ if($url_path == 'sigin'){
         echo '<p><label>重　复： <input type="password" name="pw2" class="sl w200" value="" /></label></p>';
         echo '<p><label>验证码： <input type="text" name="seccode" class="sl w100" value="" /></label> <img src="/seccode.php" align="absmiddle" /></p>';
     }
-}else{
-    echo '<p><label>验证码： <input type="text" name="seccode" class="sl w100" value="" /></label> <img src="/seccode.php" align="absmiddle" /></p>';
 }
 
-echo '<p><input type="submit" value=" ',$title,' " name="submit" class="textbtn" style="margin-left:60px;" /> </p>';
+echo '<p><input type="submit" value="';
+if($url_path == 'sigin'){
+    echo '注 册';
+}
+if($url_path == 'login'){
+    echo '登 录';
+}
+echo '" name="submit" class="textbtn" style="margin-left:60px;" /></p><p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用微博账号登录"/></a>&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/connect_logo_3.png" alt="用QQ登录"/></a></p>';
+
 if($url_path == 'login'){
     if($options['close_register'] || $options['close']){
         echo '<p class="grey fs12">网站暂时关闭 或 已停止新用户注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？<a href="/forgot">马上找回</a>';
@@ -41,7 +54,7 @@ if($url_path == 'login'){
         echo '<p class="grey fs12">还没来过？<a href="/sigin">现在注册</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？<a href="/forgot">马上找回</a>';
     }
 }else{
-    echo '<p class="grey fs12">已有用户？<a href="/login">现在登录</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？<a href="/forgot">马上找回</a>';
+    echo '<p class="grey fs12">已有用户？ <a href="/login">现在登录</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？ <a href="/forgot">马上找回</a>';
 }
 echo '</p>
 </form>

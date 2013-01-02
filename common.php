@@ -4,14 +4,27 @@
  *欢迎交流！
  *youBBS是开源项目，可自由修改，但要保留Powered by 链接信息
  */
-define('SAESPOT_VER', '1.04');
+define('SAESPOT_VER', '1.03');
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
+
+// 获得IP地址
+if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+    $onlineip = getenv('HTTP_CLIENT_IP');
+} elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+    $onlineip = getenv('HTTP_X_FORWARDED_FOR');
+} elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+    $onlineip = getenv('REMOTE_ADDR');
+} elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+    $onlineip = $_SERVER['REMOTE_ADDR'];
+}
+$onlineip = addslashes($onlineip);
+//if(!$onlineip) exit('error: 400 no ip');
 
 $mtime = explode(' ', microtime());
 $starttime = $mtime[1] + $mtime[0];
 $timestamp = time();
 $php_self = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
-$url_path = substr($php_self, 1,-4);
+$url_path = substr($php_self, 0,-4);
 
 include (dirname(__FILE__) . '/include/mysql.class.php');
 // 初始化从数据类，若要写、删除数据则需要定义主数据类
@@ -44,23 +57,33 @@ $cur_uid = $_COOKIE['cur_uid'];
 $cur_uname = $_COOKIE['cur_uname'];
 $cur_ucode = $_COOKIE['cur_ucode'];
 
+
 if($cur_uname && $cur_uid && $cur_ucode){
     $u_key = 'u_'.$cur_uid;
-
-	// 从数据库里读取
-	$db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
-	if($db_user){
-		$db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
-		if($cur_uname == $db_user['name'] && $cur_ucode == $db_ucode){
-			//设置cookie
-			setcookie('cur_uid', $cur_uid, $timestamp+ 86400 * 365, '/');
-			setcookie('cur_uname', $cur_uname, $timestamp+86400 * 365, '/');
-			setcookie('cur_ucode', $cur_ucode, $timestamp+86400 * 365, '/');
-			$cur_user = $db_user;
-			unset($db_user);
-		}
-	}
-
+    // 尝试从缓存里取出
+    $mc_user = $MMC->get($u_key);
+    if($mc_user){
+        $mc_ucode = md5($mc_user['id'].$mc_user['password'].$mc_user['regtime'].$mc_user['lastposttime'].$mc_user['lastreplytime']);
+        if($cur_uname == $mc_user['name'] && $cur_ucode == $mc_ucode){
+            $cur_user = $mc_user;
+            unset($mc_user);
+        }
+    }else{
+        // 从数据库里读取
+        $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
+        if($db_user){
+            $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
+            if($cur_uname == $db_user['name'] && $cur_ucode == $db_ucode){
+                //设置缓存和cookie
+                $MMC->set($u_key, $db_user, 0, 600);
+                setcookie('cur_uid', $cur_uid, $timestamp+ 86400 * 365, '/');
+                setcookie('cur_uname', $cur_uname, $timestamp+86400 * 365, '/');
+                setcookie('cur_ucode', $cur_ucode, $timestamp+86400 * 365, '/');
+                $cur_user = $db_user;
+                unset($db_user);
+            }
+        }
+    }
 }
 
 include (dirname(__FILE__) . '/model.php');
@@ -96,19 +119,6 @@ if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
 }
 
 
-// 获得IP地址
-if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
-    $onlineip = getenv('HTTP_CLIENT_IP');
-} elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
-    $onlineip = getenv('HTTP_X_FORWARDED_FOR');
-} elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
-    $onlineip = getenv('REMOTE_ADDR');
-} elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
-    $onlineip = $_SERVER['REMOTE_ADDR'];
-}
-$onlineip = addslashes($onlineip);
-//if(!$onlineip) exit('error: 400 no ip');
-
 $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 if($user_agent){
     $is_spider = preg_match('/(bot|crawl|spider|slurp|sohu-search|lycos|robozilla|google)/i', $user_agent);
@@ -127,8 +137,6 @@ if($user_agent){
     }
 }else{
     //exit('error: 400 no agent');
-	$is_spider = '';
-	$is_mobie = '';
 }
 
 //设置基本环境变量

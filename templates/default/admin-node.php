@@ -4,7 +4,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 echo '
 <a name="add"></a>
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; - 添加分类
+    <a href="/">',$options['name'],'</a> &raquo; 添加分类
 </div>
 
 <div class="main-box">';

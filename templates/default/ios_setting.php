@@ -38,10 +38,10 @@ echo '
 
 </div>';
 
+
 if($cur_user['password']){
 
-echo '
-<a name="3"></a>
+echo '<a name="3"></a>
 <div class="title">更改密码</div>
 <div class="main-box">';
 if($tip3){
@@ -110,5 +110,4 @@ echo '
 </div>';
 
 }
-
 ?>

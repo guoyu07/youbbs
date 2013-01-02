@@ -4,6 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
+/*
 // 屏蔽下面几行可以通过 用户名和密码 注册
 if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $options['wb_secret'])){
     header("content-Type: text/html; charset=UTF-8");
@@ -17,7 +18,7 @@ if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $op
     echo '&nbsp;<a href="/">返回首页</a>';
     exit;
 }
-
+*/
 
 if($cur_user){
     header('location: /');
@@ -29,10 +30,18 @@ if($cur_user){
     }
 }
 
+// 检测已注册ip
+$regip = $MMC->get('regip_'.$onlineip);
+
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
     	exit('403: unknown referer.');
+    }
+    
+    if($regip){
+        header("content-Type: text/html; charset=UTF-8");
+        exit('一个ip最小注册间隔时间是 '.$options['reg_ip_space'].' 秒，请稍后再来注册 或 让管理员把这个时间改小点。');
     }
     
     $name = addslashes(strtolower(trim($_POST["name"])));
@@ -86,6 +95,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($new_uid == 1){
             $DBS->unbuffered_query("UPDATE yunbbs_users SET flag = '99' WHERE id='1'");
         }
+        $MMC->delete('site_infos');
+        // 记录已注册ip
+        $MMC->set('regip_'.$onlineip, '1', 0, intval($options['reg_ip_space']));
         
         //设置cookie
         $db_ucode = md5($new_uid.$pwmd5.$timestamp.'00');
@@ -99,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '注 册';
+$title = '注 册 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 

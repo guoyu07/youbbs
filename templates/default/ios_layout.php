@@ -34,7 +34,7 @@ echo '
         <div class="banner">';
         
 if($cur_user){
-    echo '<a href="/member/',$cur_user['id'],'"><img src="/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/></a>&nbsp;&nbsp;<a href="/favorites">★</a>&nbsp;&nbsp;&nbsp;<a href="/setting">设置</a>&nbsp;&nbsp;<a href="/logout">退出</a>';
+    echo '<a href="/member/',$cur_user['id'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/></a>&nbsp;&nbsp;&nbsp;<a href="/favorites">收藏</a>&nbsp;&nbsp;<a href="/setting">设置</a>&nbsp;&nbsp;<a href="/logout">退出</a>';
 }else{
     if($options['wb_key'] && $options['wb_secret']){
         echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录"/></a>';
@@ -90,10 +90,12 @@ echo '</span>
 
 if($cur_user && $cur_user['flag']>=99){
 echo '
-<div class="title">管理员面板 <a href="http://youbbs.sinaapp.com/" target="_blank">youbbs官方支持</a></div>
+<div class="title">管理员面板</div>
 <div class="main-box main-box-node">
 <div class="btn">
-<a href="/admin-node">分类管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>
+<a href="/admin-node">分类管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>';
+
+echo '
 <div class="c"></div>
 </div>
 
@@ -157,7 +159,7 @@ echo '    </div>
     <!-- footer end -->
 </div>';
 
-if($options['ad_web_bot']){
+if($options['ad_web_bot'] && isset($show_sider_ad)){
     echo $options['ad_web_bot'];
 }
 

@@ -18,8 +18,8 @@ $mw = intval($_GET['mw']);
 $rsp = array('status'=>201, 'msg'=>'ok');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if($_FILES['filetoupload']['size']){
-        // 上传的文件名
+    if($_FILES['filetoupload']['size'] && $_FILES['filetoupload']['size'] < 1048576){
+          // 上传的文件名
         $up_name = strtolower($_FILES['filetoupload']['name']);
         // 上传文件扩展名
         $ext_name = pathinfo($up_name, PATHINFO_EXTENSION);
@@ -82,12 +82,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             
             ///保存
             $upload_dir = 'upload/'.$cur_uid;
-            if(!$options['upyun_domain'] || !$options['upyun_user'] || !$options['upyun_pw']){
-                if(!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
-                }
-            }
-            
             $upload_filename = $upload_dir.'/'.$new_name;
             
             if($is_img){
@@ -97,7 +91,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $is_gifs = null;
                 if($img_info[2]==1){
                     $out_img = file_get_contents($_FILES['filetoupload']['tmp_name']);
-                    if(strpos( $out_img, chr(0x21).chr(0xff).chr(0x0b).'NETSCAPE2.0') !== FALSE){
+                    if(strpos($out_img, chr(0x21).chr(0xff).chr(0x0b).'NETSCAPE2.0') !== FALSE){
                         $is_gifs = '1';
                     }
                 }
@@ -129,83 +123,54 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }
                 imagedestroy($img_obj);
                 
-                if($options['upyun_domain'] && $options['upyun_user'] && $options['upyun_pw']){
-                    // 上传到又拍云
-                    include(dirname(__FILE__).'/upyun.class.php');
-                    
-                    if(!$is_gifs){
-                        ob_start();
-                        imagejpeg($new_image, NULL, 95);
-                        $out_img = ob_get_contents();
-                        ob_end_clean();
-                    }
-                    
-                    $upyun = new UpYun($options['upyun_domain'], $options['upyun_user'], $options['upyun_pw']);
-                    // 本地调试失败
-                    if($upyun->writeFile('/'.$upload_filename, $out_img, true)){
+                // 上传到云存储
+                include(dirname(__FILE__) . '/bcs.class.php');
+                $baidu_bcs =new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                
+                $bcs_object = '/'.$upload_filename;
+                
+                if(!$is_gifs){
+                    ob_start();
+                    imagejpeg($new_image, NULL, 95);
+                    $out_img = ob_get_contents();
+                    ob_end_clean();
+                    imagedestroy($new_image);
+                }
+                
+                try{
+                    $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                    if($response['status']==200){
                         $rsp['status'] = 200;
-                        $rsp['url'] = 'http://'.$options['upyun_domain'].'.b0.upaiyun.com/'.$upload_filename;
+                        $rsp['url'] = TUCHUANG_URL.$bcs_object;
                         $rsp['msg'] = '图片已成功上传';
                     }else{
                         $rsp['msg'] = '图片保存失败，请稍后再试';
                     }
-                    unset($out_img);
-                }else{
-                    // 上传到服务器
-                    if($is_gifs){
-                        if (move_uploaded_file($_FILES['filetoupload']['tmp_name'], $upload_filename)) {
-                            $rsp['status'] = 200;
-                            $rsp['url'] = 'http://'.$_SERVER['HTTP_HOST'].'/'.$upload_filename;
-                            $rsp['msg'] = '图片已成功上传';
-                        }else{
-                            $rsp['msg'] = '图片保存失败，请稍后再试';
-                        }
-                    }else{
-                        if(imagejpeg($new_image, $upload_filename, 95)){
-                            $rsp['status'] = 200;
-                            $rsp['url'] = 'http://'.$_SERVER['HTTP_HOST'].'/'.$upload_filename;
-                            $rsp['msg'] = '图片已成功上传';
-                        }else{
-                            $rsp['msg'] = '图片保存失败，请稍后再试';
-                        }
-                    }
+                }catch (Exception $e){
+                    $rsp['msg'] = '百度云存储创建对象失败，请稍后再试';
                 }
-                
-                if(!$is_gifs){
-                    imagedestroy($new_image);
-                }
+                unset($out_img);
                 
             }else{
                 // 其它文件
-                // $rsp['msg'] = '本站暂不支持上传非图片附件';
-                // 涉及安全问题，别开放图片以外的文件上传 
-                // 参见 http://youbbs.sinaapp.com/t-172
-                //
-                if($options['upyun_domain'] && $options['upyun_user'] && $options['upyun_pw']){
-                    // 上传到又拍云
-                    include(dirname(__FILE__).'/upyun.class.php');
-                    
-                    $upyun = new UpYun($options['upyun_domain'], $options['upyun_user'], $options['upyun_pw']);
-                    // 本地调试失败
-                    if($upyun->writeFile('/'.$upload_filename, $_FILES['filetoupload']['tmp_name'], true)){
+                // 上传到云存储
+                include(dirname(__FILE__) . '/bcs.class.php');
+                $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                
+                $bcs_object = '/'.$upload_filename;
+                try{
+                    $response = (array)$baidu_bcs->create_object(BUCKET, $bcs_object, $_FILES['filetoupload']['tmp_name'], array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                    if($response['status']==200){
                         $rsp['status'] = 200;
-                        $rsp['url'] = '附件：'.$up_name.'http://'.$options['upyun_domain'].'.b0.upaiyun.com/'.$upload_filename;
+                        $rsp['url'] = '附件：'.$up_name.' '.TUCHUANG_URL.$bcs_object;
                         $rsp['msg'] = '附件已成功上传';
                     }else{
                         $rsp['msg'] = '附件保存失败，请稍后再试';
                     }
-                    unset($out_img);
-                }else{
-                    // 上传到服务器
-                    if (move_uploaded_file($_FILES['filetoupload']['tmp_name'], $upload_filename)) {
-                        $rsp['status'] = 200;
-                        $rsp['url'] = '附件：'.$up_name.' http://'.$_SERVER['HTTP_HOST'].'/'.$upload_filename;
-                        $rsp['msg'] = '文件已成功上传';
-                    }else{
-                        $rsp['msg'] = '文件保存失败，请稍后再试';
-                    }
+                }catch (Exception $e){
+                    $rsp['msg'] = '百度云存储创建对象失败，请稍后再试';
                 }
-                //
+                
             }
         }
         
@@ -216,6 +181,4 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     header("Content-Type: text/html");
     echo json_encode($rsp);
 }
-
-
 ?>

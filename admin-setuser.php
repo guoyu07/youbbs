@@ -39,6 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $m_obj['url'] = $url;
             $m_obj['about'] = $about;
             
+            $MMC->delete('u_'.$mid);
             $tip1 = '已成功保存';
         }else{
             $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
@@ -65,66 +66,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $new_w = round($img_info[0]*$percent);
                         $new_h = round($img_info[1]*$percent);
                         
-                        $new_image = imagecreatetruecolor($new_w, $new_h);
-                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                        imagefill ( $new_image, 0, 0, $bg );
-                        
-                        ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
-                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                        imagejpeg($new_image, 'avatar/large/'.$mid.'.png', 95);
                     }else{
-                        imagejpeg($img_obj, 'avatar/large/'.$mid.'.png', 95);
+                        $new_w = $img_info[0];
+                        $new_h = $img_info[1];
                     }
-                    //normal
-                    if($max_px>48){
-                        $percent = 48/$max_px;
-                        $new_w = round($img_info[0]*$percent);
-                        $new_h = round($img_info[1]*$percent);
-                        $new_image = imagecreate($new_w, $new_h);
-                        
-                        $new_image = imagecreatetruecolor($new_w, $new_h);
-                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                        imagefill ( $new_image, 0, 0, $bg );
-                        
-                        ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
-                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                        imagejpeg($new_image, 'avatar/normal/'.$mid.'.png', 95);
-                    }else{
-                        imagejpeg($img_obj, 'avatar/normal/'.$mid.'.png', 95);
-                    }
-                    // mini
-                    if($max_px>24){
-                        $percent = 24/$max_px;
-                        $new_w = round($img_info[0]*$percent);
-                        $new_h = round($img_info[1]*$percent);
-                        $new_image = imagecreate($new_w, $new_h);
-                        
-                        $new_image = imagecreatetruecolor($new_w, $new_h);
-                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                        imagefill ( $new_image, 0, 0, $bg );
-                        
-                        ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
-                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                        imagejpeg($new_image, 'avatar/mini/'.$mid.'.png', 95);
-                    }else{
-                        imagejpeg($img_obj, 'avatar/mini/'.$mid.'.png', 95);
-                    }
+                    
+                    $new_image = imagecreatetruecolor($new_w, $new_h);
+                    $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                    imagefill ( $new_image, 0, 0, $bg );
+                    
+                    ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
+                    imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
                     imagedestroy($img_obj);
-                    if(isset($new_image)){
-                        imagedestroy($new_image);
-                    }
-                    //
-                    if($cur_user['avatar']!=$mid){
-                        if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$mid' WHERE id='$mid'")){
-                            // pass
-                        }else{
-                            $tip2 = '数据保存失败，请稍后再试';
+                    
+                    // 上传到又拍云
+                    include(dirname(__FILE__).'/upyun.class.php');
+                    ob_start();
+                    imagejpeg($new_image, NULL, 95);
+                    $out_img = ob_get_contents();
+                    ob_end_clean();
+                    $upyun = new UpYun($options['upyun_avatar_domain'], $options['upyun_user'], $options['upyun_pw']);
+                    // 本地调试失败
+                    if($upyun->writeFile('/'.$mid.'.jpg', $out_img)){
+                        if($cur_user['avatar']!=$mid){
+                            if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$mid' WHERE id='$mid'")){
+                                $MMC->delete('u_'.$mid);
+                            }else{
+                                $tip2 = '数据保存失败，请稍后再试';
+                            }
                         }
+                    }else{
+                        $tip2 = '图片保存失败，请稍后再试';
                     }
+                    unset($out_img);
+                    
+                    //
                     $av_time = $timestamp;
                 }else{
                     $tip2 = '图片转换失败，请稍后再试';
                 }
+                
             }else{
                 $tip2 = '你上传的不是图片文件，只支持jpg/gif/png三种格式';
             }
@@ -139,6 +120,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $new_md5pw = md5($password_new);
                 
                 if($DBS->unbuffered_query("UPDATE yunbbs_users SET password='$new_md5pw' WHERE id='$mid'")){
+                    //更新缓存
+                    $MMC->delete('u_'.$mid);
                     $tip3 = '密码已成功更改，请记住新密码';
                 }else{
                     $tip3 = '数据保存失败，请稍后再试';
@@ -153,6 +136,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $flag = intval(trim($_POST['flag']));
         if($flag>=0 && $flag<=99){
             if($DBS->unbuffered_query("UPDATE yunbbs_users SET flag='$flag' WHERE id='$mid'")){
+                //更新缓存
+                $MMC->delete('u_'.$mid);
+                if($flag == 0){
+                    $MMC->delete('flag0_users');
+                }else if($flag == 1){
+                    $MMC->delete('flag1_users');
+                }
+                
                 $m_obj['flag'] = $flag;
                 $tip4 = '用户权限已成功更改';
             }else{
@@ -167,7 +158,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 // 页面变量
-$title = '修改用户资料';
+$title = '修改用户资料  - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setuser.php';

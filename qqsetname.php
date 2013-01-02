@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
             $DBS->query("INSERT INTO yunbbs_users (id,name,flag,password,regtime) VALUES (null,'$name', $flag, '', $timestamp)");
             $new_uid = $DBS->insert_id();
-            
+            $MMC->delete('site_infos');
             // update qqweibo
             $DBS->unbuffered_query("UPDATE yunbbs_qqweibo SET uid = '$new_uid' WHERE openid='$openid'");
             
@@ -98,7 +98,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 //设置缓存和cookie
                                 $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
                                 $cur_uid = $db_user['id'];
-                                
+                                $MMC->set('u_'.$cur_uid, $check_user, 0, 600);
                                 setcookie("cur_uid", $cur_uid, time()+ 86400 * 365, '/');
                                 setcookie("cur_uname", $name, time()+86400 * 365, '/');
                                 setcookie("cur_ucode", $db_ucode, time()+86400 * 365, '/');
@@ -164,9 +164,24 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
-            // 保存头像
-            imagejpeg($new_image, 'avatar/large/'.$cur_uid.'.png', 95);
             
+            // 保存头像到云存储
+            include(dirname(__FILE__) . '/bcs.class.php');
+            $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                    
+            $bcs_object = '/avatar/large/'.$cur_uid.'.png';
+                    
+            ob_start();
+            imagejpeg($new_image, NULL, 95);
+            $out_img = ob_get_contents();
+            ob_end_clean();
+                    
+            try{
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+            }catch (Exception $e){
+                $tip2 = '百度云存储创建large对象失败，请稍后再试！';
+            }
+
             // 头像 normal
             $new_w = 48;
             $new_h = 48;
@@ -177,8 +192,20 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
-            // 保存头像
-            imagejpeg($new_image, 'avatar/normal/'.$cur_uid.'.png', 95);
+            
+            // 保存头像到云存储       
+            $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
+                    
+            ob_start();
+            imagejpeg($new_image, NULL, 95);
+            $out_img = ob_get_contents();
+            ob_end_clean();
+                    
+            try{
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+            }catch (Exception $e){
+                $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
+            }
             
             // 头像 mini
             $new_w = 24;
@@ -190,9 +217,22 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
-            // 保存头像
-            imagejpeg($new_image, 'avatar/mini/'.$cur_uid.'.png', 95);
             
+            // 保存头像到云存储                    
+            $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
+                    
+            ob_start();
+            imagejpeg($new_image, NULL, 95);
+            $out_img = ob_get_contents();
+            ob_end_clean();
+                    
+            try{
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+            }catch (Exception $e){
+                $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
+            }
+            
+            imagedestroy($out_img);
             imagedestroy($img_obj);
             imagedestroy($new_image);
             
@@ -208,10 +248,10 @@ if(isset($gotohome)){
 
 /////
 // 页面变量
-$title = '设置名字';
+$title = '设置名字 - '.$options['name'];
 $logintype = "QQ";
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'qqsetname.php';
+$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';
 
 include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 

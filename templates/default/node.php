@@ -6,7 +6,7 @@ echo '
     <div class="float-left fs14">
         <a href="/">',$options['name'],'</a> &raquo; ',$c_obj['name'],'(',$c_obj['articles'],')';
         if($cur_user && $cur_user['flag']>=99){
-            echo ' &nbsp;&nbsp;&nbsp; • <a href="/admin-node-',$c_obj['id'],'#edit">编辑</a>';
+            echo ' • <a href="/admin-node-',$c_obj['id'],'#edit">编辑</a>';
         }
 echo '    </div>';
 if($cur_user && $cur_user['flag']>4){
@@ -26,9 +26,9 @@ echo '
 <div class="post-list">
     <div class="item-avatar"><a href="/member/',$article['uid'],'">';
 if($is_spider){
-    echo '<img src="/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
+    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
 }else{
-    echo '<img src="/static/grey.gif" data-original="/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
+    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
 }
 echo '    </a></div>
     <div class="item-content">

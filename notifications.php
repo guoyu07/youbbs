@@ -16,7 +16,7 @@ if ($cur_user['flag']==0){
 
 // 获取提醒文章列表
 $cur_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
-
+$MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
 if($cur_user['notic']){
     $ids = implode(',', array_unique(explode(',', substr($cur_user['notic'], 0, -1))));
     
@@ -39,7 +39,7 @@ if($cur_user['notic']){
 }
 
 // 页面变量
-$title = '站内提醒';
+$title = '站内提醒 - '.$options['name'];
 $newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'notifications.php';

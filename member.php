@@ -25,8 +25,8 @@ $m_obj = $DBS->fetch_one_array($query);
 if($m_obj){
     if(!$mid){
         // 可以重定向到网址 /member/id 为了减少请求，下面用 $canonical 来让SEO感觉友好
-        //header('location: /member/'.$m_obj['id']);
-        //exit;
+        header('location: /member/'.$m_obj['id']);
+        exit;
         $mid = $m_obj['id'];
     }
     if($m_obj['flag'] == 0){
@@ -45,23 +45,26 @@ $m_obj['regtime'] = showtime($m_obj['regtime']);
 
 // 获取用户最近文章列表
 if($m_obj['articles']){
-    
-    $query_sql = "SELECT a.id,a.cid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,ru.name as rauthor
-        FROM yunbbs_articles a 
-        LEFT JOIN yunbbs_categories c ON c.id=a.cid
-        LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-        WHERE a.uid='".$mid."' ORDER BY id DESC LIMIT 10";
-    $query = $DBS->query($query_sql);
-    $articledb=array();
-    while ($article = $DBS->fetch_array($query)) {
-        // 格式化内容
-        $article['addtime'] = showtime($article['addtime']);
-        $article['edittime'] = showtime($article['edittime']);
-        $articledb[] = $article;
+    $mc_key = 'member-article-list-'.$mid;
+    $articledb = $MMC->get($mc_key);
+    if(!$articledb){
+        $query_sql = "SELECT a.id,a.cid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,ru.name as rauthor
+            FROM yunbbs_articles a 
+            LEFT JOIN yunbbs_categories c ON c.id=a.cid
+            LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
+            WHERE a.uid='".$mid."' ORDER BY id DESC LIMIT 10";
+        $query = $DBS->query($query_sql);
+        $articledb=array();
+        while ($article = $DBS->fetch_array($query)) {
+            // 格式化内容
+            $article['addtime'] = showtime($article['addtime']);
+            $article['edittime'] = showtime($article['edittime']);
+            $articledb[] = $article;
+        }
+        unset($article);
+        $DBS->free_result($query);
+        $MMC->set($mc_key, $articledb, 0, 600);
     }
-    unset($article);
-    $DBS->free_result($query);
-
 }
 
 // 用户最近回复文章列表不能获取
@@ -69,9 +72,10 @@ if($m_obj['articles']){
 
 
 // 页面变量
-$title = '会员: '.$m_obj['name'];
+$title =  $options['name'].' > '.$m_obj['name'];
 $newest_nodes = get_newest_nodes();
 $canonical = '/member/'.$m_obj['id'];
+$show_sider_ad = "1";
 $meta_des = $m_obj['name'].' - '.htmlspecialchars(mb_substr($m_obj['about'], 0, 150, 'utf-8'));
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'member.php';

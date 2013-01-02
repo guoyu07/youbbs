@@ -9,7 +9,7 @@ class DB_MySQL  {
 
     function connect($servername, $dbport, $dbusername, $dbpassword, $dbname) {
         
-        if(!$this->link = @mysql_connect($servername.':'.$dbport, $dbusername, $dbpassword)) {
+        if(!$this->link = @mysql_connect($servername.':'.$dbport, $dbusername, $dbpassword, true)) {
             $this->halt('Can not connect to MySQL server');
         }
 

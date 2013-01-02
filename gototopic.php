@@ -16,7 +16,7 @@ if($db_user['notic']){
     }
     $new_notic = implode(',', $n_arr);
     $DBS->unbuffered_query("UPDATE yunbbs_users SET notic = '$new_notic' WHERE id='$cur_uid'");
-    
+    $MMC->delete('u_'.$cur_uid);
     unset($n_arr);
     unset($new_notic);
 }

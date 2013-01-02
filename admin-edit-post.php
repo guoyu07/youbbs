@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<88) exit('error: 403 Access Denied');
 
 $tid = intval($_GET['tid']);
 $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
@@ -25,20 +25,24 @@ if($t_obj['visible']){
     $t_obj['visible'] = '';
 }
 
-// 获取1000个热点分类
-$query = $DBS->query("SELECT `id`, `name` FROM `yunbbs_categories` ORDER BY  `articles` DESC LIMIT 1000");
-$all_nodes = array();
-while($node = $DBS->fetch_array($query)) {
-    $all_nodes[$node['id']] = $node['name'];
+// 获取热点分类
+$all_nodes = $MMC->get('all_nodes');
+if(!$all_nodes){
+    $query = $DBS->query("SELECT `id`, `name` FROM `yunbbs_categories` ORDER BY  `articles` DESC LIMIT 1000");
+    $all_nodes = array();
+    while($node = $DBS->fetch_array($query)) {
+        $all_nodes[$node['id']] = $node['name'];
+    }
+    if( !array_key_exists($t_obj['cid'], $all_nodes) ){
+        $cid = $t_obj['cid'];
+        $c_obj = $DBS->fetch_one_array("SELECT id,name FROM yunbbs_categories WHERE id='".$cid."'");
+        $all_nodes[$c_obj['id']] = $c_obj['name'];
+    }
+    $MMC->set('all_nodes', $all_nodes, 0 ,600);
+    
+    unset($node);
+    $DBS->free_result($query);
 }
-if( !array_key_exists($t_obj['cid'], $all_nodes) ){
-    $cid = $t_obj['cid'];
-    $c_obj = $DBS->fetch_one_array("SELECT id,name FROM yunbbs_categories WHERE id='".$cid."'");
-    $all_nodes[$c_obj['id']] = $c_obj['name'];
-}
-
-unset($node);
-$DBS->free_result($query);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $old_cid = $t_obj['cid'];
@@ -52,6 +56,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $p_title = htmlspecialchars($p_title);
         $p_content = htmlspecialchars($p_content);
         $DBS->unbuffered_query("UPDATE yunbbs_articles SET cid='$p_cid',title='$p_title',content='$p_content',closecomment='$p_closecomment',visible='$p_visible' WHERE id='$tid'");
+        $MMC->delete('t-'.$tid);
+        $MMC->delete('t-'.$tid.'_ios');
         if($p_cid != $old_cid){
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles+1 WHERE id='$p_cid'");
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles-1 WHERE id='$old_cid'");
@@ -68,10 +74,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
 }
 // 页面变量
-$title = '修改帖子 - '.$t_obj['title'];
+$title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 650;
-
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-edit-post.php';
 

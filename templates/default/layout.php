@@ -11,7 +11,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 <link href="/static/default/style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link href="/feed" rel="alternate" title="',htmlspecialchars($options['name']),' - ATOM Feed" type="application/atom+xml"/>
+<link href="/feed" rel="alternate" title="',htmlspecialchars($options['name']),' - 订阅" type="application/atom+xml"/>
 <script src="',$options['jquery_lib'],'" type="text/javascript"></script>
 <link rel="top" title="Back to Top" href="#" />
 ';
@@ -31,7 +31,7 @@ echo '
 <body>
 <div class="header-wrap">
     <div class="header">
-        <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
+        <div class="logo"><a href="/" name="top" title="SinoSky"><img src="/static/logo-top.png" alt="SinoSky"></a></div>
         <div class="scbox">
         <form role="search" method="get" id="searchform" action="http://www.google.com/search" target="_blank">
             <input type="hidden" maxlength="30" name="q" value="site:',$_SERVER['HTTP_HOST'],'">
@@ -41,8 +41,8 @@ echo '
         <div class="banner">';
         
 if($cur_user){
-    echo '<img src="/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/>&nbsp;&nbsp;&nbsp;';
-    
+    echo '<img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+
     if(!$cur_user['password']){
         //echo '<a href="/setting#3" style="color:yellow;">设置登录密码</a>&nbsp;&nbsp;&nbsp;';
     }
@@ -56,21 +56,20 @@ if($cur_user){
     }else if($cur_user['flag'] == 1){
         echo '<span style="color:yellow;">在等待审核</span>&nbsp;&nbsp;&nbsp;';
     }
-    echo '<a href="/favorites" title="收藏的帖子">★</a>&nbsp;&nbsp;&nbsp;<a href="/member/',$cur_user['id'],'">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/setting">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout">退出</a>';
+    echo '<a href="/" title="论坛首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member/',$cur_user['id'],'" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
 }else{
     if($options['wb_key'] && $options['wb_secret']){
-        echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login.png" alt="微博登录" title="用微博帐号登录"/></a>&nbsp;&nbsp;&nbsp;';
+        echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用微博帐号登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
     if($options['qq_appid'] && $options['qq_appkey']){
-        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/connect_logo_7.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
-        
+        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_logo_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
-    echo '<a href="/login" rel="nofollow">登录</a>';
-    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
-        if(!$options['close_register']){
-            echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
-        }
-    }
+    echo '<a href="/login" rel="nofollow">登录</a>&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
+//    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
+//        if(!$options['close_register']){
+//            echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
+//        }
+//    }
 }
 echo '       </div>
         <div class="c"></div>
@@ -100,22 +99,25 @@ echo '       </div>
 echo '
 <div class="footer-wrap">
     <div class="footer">
-    <p>&copy; Copyright <a href="/">',$options['name'],'</a> • <a href="/feed">Atom Feed</a>';
-if($options['icp']){
-    echo ' • <a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a>';
-}
+    <div class="left">
+    <a href="/feed">订阅</a>';
 if($is_mobie){
-    echo ' • <a href="/viewat-mobile">手机模式</a>';
+    echo '• <a href="/viewat-mobile">手机版</a>';
 }
 
-echo '    </p>
-    <p>Powered by <a href="http://youbbs.sinaapp.com/" target="_blank">YouBBS v',SAESPOT_VER,'</a></p>';
+echo '</div><div class="right">';
+
+if($options['icp']){
+    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
+}
+echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a> , All Rights Reserved.  Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a> .';
+
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
     $totaltime = number_format(($mtime[1] + $mtime[0] - $starttime), 6);
-    echo '<p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries</p>';
+    echo '<p style="text-align:right">Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
 }
-echo '    </div>
+echo '  </div></div>
     <!-- footer end -->
 </div>
 

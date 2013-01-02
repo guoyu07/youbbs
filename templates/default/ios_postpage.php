@@ -31,13 +31,13 @@ if($cur_user && $cur_user['flag']>4){
         echo ' • <a href="/favorites?act=add&id=',$t_obj['id'],'" title="点击收藏">收藏</a>';
     }
     
-    if($cur_user['flag']>=99){
+    if($cur_user['flag']>=88){
         echo ' &nbsp;&nbsp;• <a href="/admin-edit-post-',$t_obj['id'],'">编辑</a>';
     }
 }
 echo '        </div>
     </div>
-    <div class="detail-avatar"><a href="/member/',$t_obj['uid'],'"><img src="/avatar/normal/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />    </a></div>
+    <div class="detail-avatar"><a href="/member/',$t_obj['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />  </a></div>
     <div class="c"></div>
 </div>
 <div class="topic-content">
@@ -61,7 +61,7 @@ foreach($commentdb as $comment){
 $count_n += 1;
 echo '
     <div class="commont-item">
-        <div class="commont-avatar"><a href="/member/',$comment['uid'],'"><img src="/avatar/mini/',$comment['avatar'],'.png" alt="',$comment['author'],'" /></a></div>
+        <div class="commont-avatar"><a href="/member/',$comment['uid'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$comment['avatar'],'.png" alt="',$comment['author'],'" /></a></div>
         <div class="commont-data">
             <div class="commont-content">
             <p>',$comment['content'],'</p>
@@ -69,7 +69,7 @@ echo '
             
             <div class="commont-data-date">
                 <div class="float-left"><a href="/member/',$comment['uid'],'">',$comment['author'],'</a> at ',$comment['addtime'];
-if($cur_user && $cur_user['flag']>=99){
+if($cur_user && $cur_user['flag']>=88){
     echo ' &nbsp;&nbsp;&nbsp; • <a href="/admin-edit-comment-',$comment['id'],'">编辑</a>';
 }
                 echo '</div>
@@ -135,7 +135,7 @@ echo '    <form action="',$_SERVER["REQUEST_URI"],'#new-comment" method="post">
 <input type="hidden" name="formhash" value="',$formhash,'" />
     <p><textarea id="id-content" name="content" class="comment-text mll wb96">',htmlspecialchars($c_content),'</textarea></p>
     <p><input type="submit" value=" 提 交 " name="submit" class="textbtn wb96" /></p>
-    <p class="fs12 grey">请尽量让自己的回复能够对别人有帮助</p>
+    <p class="fs12 grey">• 请尽量让自己的回复能够对别人有帮助，不欢迎灌水！</p>
     </form>
 </div>
 <!-- new comment end -->';

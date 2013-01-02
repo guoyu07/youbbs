@@ -25,7 +25,7 @@ foreach($articledb as $article){
 echo '
 <div class="post-list">
     <div class="item-avatar"><a href="/member/',$article['uid'],'">
-    <img src="/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a></div>
+   <img src="',TUCHUANG_URL,'/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date">';

@@ -4,7 +4,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 echo '
 <a name="add"></a>
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; - 添加链接
+    <a href="/">',$options['name'],'</a> &raquo; 添加链接
 </div>
 
 <div class="main-box">';
@@ -53,7 +53,7 @@ echo '
 echo '
 <ul class="user-list">';
 foreach($linkdb as $link){
-    echo '<li><a href="',$link['url'],'" target="_blank">',$link['name'],'</a> • ',$link['url'],'  &nbsp;&nbsp;&nbsp;• <a href="/admin-link-edit-',$link['id'],'#1">编辑</a>  &nbsp;&nbsp;&nbsp;• <a href="/admin-link-del-',$link['id'],'#list">删除</a></li>';
+    echo '<li><a href="',$link['url'],'" target="_blank">',$link['name'],'</a>&nbsp;&nbsp;&nbsp;',$link['url'],'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/admin-link-edit-',$link['id'],'#1">编辑</a> | <a href="/admin-link-del-',$link['id'],'#list">删除</a></li>';
 }
 
 echo '</ul>

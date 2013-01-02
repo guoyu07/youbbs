@@ -2,7 +2,7 @@
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
 echo '
 <a name="1"></a>
-<div class="title"><a href="/">',$options['name'],'</a> &raquo; ',$title,'</div>
+<div class="title"><a href="/">',$options['name'],'</a> &raquo; 设置</div>
 <div class="main-box">
 <p class="red">',$tip1,'</p>
 <form method="post" action="',$_SERVER["REQUEST_URI"],'#1">
@@ -45,10 +45,9 @@ echo '
     <tbody><tr>
         <td width="120" align="right">当前头像</td>
         <td width="auto" align="left">
-        <img src="/avatar/large/',$cur_user['avatar'],'.png?',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp; 
-        <img src="/avatar/normal/',$cur_user['avatar'],'.png?',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp; 
-        <img src="/avatar/mini/',$cur_user['avatar'],'.png?',$av_time,'" class="avatar" border="0" align="default" auto="">
-        </td>
+      <img src="',TUCHUANG_URL,'/avatar/large/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp; 
+        <img src="',TUCHUANG_URL,'/avatar/normal/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp; 
+        <img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""></td>
     </tr>
     <tr>
         <td width="120" align="right">选择头像图片</td>
@@ -109,7 +108,7 @@ echo '
 <table cellpadding="5" cellspacing="8" border="0" width="100%" class="fs12">
     <tbody>
     <tr>
-        <td width="120" align="right">这个是干嘛？</td>
+        <td width="120" align="right"> </td>
         <td width="auto" align="left">当不用QQ登录时可以使用你的用户名和设置的密码登录</td>
     </tr>
     <tr>

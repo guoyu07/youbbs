@@ -12,7 +12,6 @@ $_SESSION["appkey"]   = $options['qq_appkey'];
 
 $_SESSION["callback"] = 'http://'.$_SERVER['HTTP_HOST'].'/qqcallback';
 
-
 include(dirname(__FILE__) . "/api/qq_utils.php");
 
 function qq_callback()
@@ -128,9 +127,9 @@ if($db_openid && $db_openid['uid']){
     $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
     if($db_user){
         $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
-        //设置cookie
+        //设置缓存和cookie
         $u_key = 'u_'.$cur_uid;
-        
+        $MMC->set($u_key, $db_user, 0, 600);
         $timestamp = time();
         setcookie('cur_uid', $cur_uid, $timestamp+ 86400 * 365, '/');
         setcookie('cur_uname', $db_user['name'], $timestamp+86400 * 365, '/');
@@ -142,6 +141,7 @@ if($db_openid && $db_openid['uid']){
     header("Location:/");
     exit;    
 }
+
 
 ///
 if(strpos(' '.$_SESSION["scope"], 'get_info')){
@@ -184,7 +184,6 @@ if(strpos(' '.$_SESSION["scope"], 'get_info')){
 }
 
 
-
 if($db_openid){
     if($db_openid['uid']){
         // pass
@@ -196,6 +195,7 @@ if($db_openid){
     $DBS->query("INSERT INTO yunbbs_qqweibo (id,uid,name,openid) VALUES (null,'0','$name', '$openid')");
     header("Location:/qqsetname");
     exit;
+    
 }
 
 ?>

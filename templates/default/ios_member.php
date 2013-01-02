@@ -7,7 +7,7 @@ echo '
 </div>
 
 <div class="main-box">
-<div class="member-avatar"><img src="/avatar/large/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></div>
+<div class="member-avatar"><img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></div>
 <div class="member-detail">
 <p>会员：<strong>',$m_obj['name'],'</strong> (第',$m_obj['id'],'号会员，',$m_obj['regtime'],'加入)';
 if($cur_user && $cur_user['flag']>=99){
@@ -42,7 +42,7 @@ echo '
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$m_obj['id'],'"><img src="/avatar/mini/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></a></div>
+    <div class="item-avatar"><a href="/member/',$m_obj['id'],'"><img src="',$options['base_avatar_url'],'/',$m_obj['avatar'],'.jpg!mini" alt="',$m_obj['name'],'" /></a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>';

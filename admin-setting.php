@@ -14,8 +14,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = trim($_POST['action']);
     if($action =='base'){
         // 修改设置一些默认参数
-        $_POST['name'] = filter_chr($_POST['name']);  
-        $_POST['site_des'] = filter_chr($_POST['site_des']);      
+        $_POST['name'] = filter_chr($_POST['name']);
+        $_POST['site_des'] = filter_chr($_POST['site_des']); 
         $_POST['icp'] = filter_chr($_POST['icp']);
         
         $_POST['home_shownum'] = intval($_POST['home_shownum']);
@@ -73,6 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!$_POST['jquery_lib']) $_POST['jquery_lib'] = '/static/js/jquery-1.6.4.js';
         
         $_POST['safe_imgdomain'] = filter_chr($_POST['safe_imgdomain']);
+        $_POST['upyun_avatar_domain'] = filter_chr($_POST['upyun_avatar_domain']);
         $_POST['upyun_domain'] = filter_chr($_POST['upyun_domain']);
         $_POST['upyun_user'] = filter_chr($_POST['upyun_user']);
         $_POST['upyun_pw'] = filter_chr($_POST['upyun_pw']);
@@ -84,7 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $qq_scope = 'get_user_info,'.$qq_scope;
         }
         $_POST['qq_scope'] = $qq_scope;
-
+        
         // 安全图床域名白名单 格式 www.xxx.com 
         $safe_imgdomain = trim($_POST['safe_imgdomain']);
         if($safe_imgdomain){
@@ -139,7 +140,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $spam_words_arr = array_filter(array_unique($spam_words_arr));
         $_POST['spam_words'] = implode(",", $spam_words_arr);
         
-        // ext_list
+        // ext_list 扩展名列表
         $_POST['ext_list'] = filter_chr($_POST['ext_list']);
         if($_POST['ext_list'] && ($options['ext_list'] != $_POST['ext_list'] ) ){
             $ext_list = str_replace(" ", ",", $_POST['ext_list']);
@@ -155,7 +156,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST['ext_list'] = '';
             }
         }
-        
+
         $changed = 0;
         foreach($options as $k=>$v){
             if($k != 'site_create'){
@@ -170,10 +171,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
         if($changed){
+            $MMC->delete('options');
+            $MMC->delete('regip_'.$onlineip);
             $tip1 = '已成功更改了 '.$changed.' 个设置';
         }
     }else if($action =='flushmc'){
-        $tip2 = '没有用到缓存';
+        // $MMC->flush();
+        $tip2 = 'BAE目前不支持清空缓存';
     }else if($action =='flushdata'){
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_articles`");
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_categories`");
@@ -183,7 +187,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_users`");
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_favorites`");
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_qqweibo`");
-        $DBM->query("DROP TABLE IF EXISTS `yunbbs_weibo`");
+        $DBS->query("DROP TABLE IF EXISTS `yunbbs_weibo`");
+        
+        //$MMC->flush();
         
         $tip3 = '所有数据已删除';
         header('location: /install');
@@ -191,8 +197,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 // 页面变量
-$title = '网站设置';
-
+$title = '网站设置 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setting.php';
 

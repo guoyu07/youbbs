@@ -18,7 +18,7 @@ foreach($articledb as $article){
 echo '
 <div class="post-list">
     <div class="item-avatar"><a href="/member/',$article['uid'],'">
-    <img src="/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" />
+    <img src="',TUCHUANG_URL,'/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" />
     </a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
@@ -44,7 +44,6 @@ echo '    <div class="c"></div>
 
 }
 
-
 if(count($articledb) == $options['home_shownum']){ 
 echo '<div class="pagination">';
 echo '<a href="/page/2" class="float-right">下一页 &raquo;</a>';
@@ -52,8 +51,6 @@ echo '<div class="c"></div>
 </div>';
 }
 
-
 echo '</div>';
-
 
 ?>

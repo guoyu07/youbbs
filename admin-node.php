@@ -38,6 +38,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $tip1 = $n_name.' 分类名已存在，请修改为不同的分类名';
             }else{
                 if($DBS->query("INSERT INTO yunbbs_categories (id,name,about) VALUES (null,'$n_name','$n_about')")){
+                    //更新缓存
+                    $MMC->delete('newest_nodes');
+                    $MMC->delete('bot_nodes');
+                    $MMC->delete('site_infos');
                     $tip1 = '已成功添加';
                 }else{
                     $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
@@ -51,12 +55,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $n_about = trim($_POST['about']);
         if($n_name){
             if($DBS->unbuffered_query("UPDATE yunbbs_categories SET name='$n_name',about='$n_about' WHERE id='$nid'")){
+                //更新缓存
+                $MMC->delete('newest_nodes');
+                $MMC->delete('bot_nodes');
+                $MMC->delete('n-'.$nid);
                 $c_obj['name'] = $n_name;
                 $c_obj['about'] = $n_about;
                 $tip2 = '已成功保存';
             }else{
                 $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
             }
+            
         }else{
             $tip2 = '分类名不能留空';
         }
@@ -66,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '分类管理';
+$title = '分类管理 - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-node.php';

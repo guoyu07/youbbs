@@ -3,7 +3,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; - 修改评论';
+    <a href="/">',$options['name'],'</a> &raquo; 修改评论';
 echo '
 </div>
 
@@ -25,6 +25,5 @@ echo '
 </form>
 <a href="/t-',$r_obj['articleid'],'">查看这条评论所在的帖子</a>
 </div>';
-
 
 ?>

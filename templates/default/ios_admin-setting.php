@@ -23,7 +23,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">网站名称</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="name" value="',htmlspecialchars($options['name']),'" /> <a href="http://youbbs.sinaapp.com/t-425" title="查看帮助" target="_blank">?</a></td>
+        <td width="auto" align="left"><input type="text" class="sl wb50" name="name" value="',htmlspecialchars($options['name']),'" /> <a href="http://youbbs.sinaapp.com/t-425" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
         <td width="120" align="right">网站描述</td>
@@ -43,7 +43,7 @@ echo '
     </tr>
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
-        <td width="82%" align="left">微博登录设置（可选，不用则留空） <a href="http://youbbs.sinaapp.com/t-426" title="查看帮助" target="_blank">?</a></td>
+        <td width="82%" align="left">微博登录设置（可选，不用则留空），参考 <a href="http://youbbs.sinaapp.com/t-426" target="_blank">用新浪微博登录</a></td>
     </tr>
     <tr>
         <td width="120" align="right">App Key</td>
@@ -59,7 +59,7 @@ echo '
     </tr>
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
-        <td width="82%" align="left">QQ登录设置（可选，不用则留空），参考<a href="http://youbbs.sinaapp.com/t-263" target="_blank">用QQ登录</a></td>
+        <td width="82%" align="left">QQ登录设置（可选，不用则留空），参考 <a href="http://youbbs.sinaapp.com/t-263" target="_blank">用QQ登录</a></td>
     </tr>
     <tr>
         <td width="120" align="right">scope</td>
@@ -79,7 +79,7 @@ echo '
     </tr>
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
-        <td width="auto" align="left">附件设置</td>
+        <td width="auto" align="left">附件设置，参考 <a href="http://youbbs.sinaapp.com/t-199" target="_blank">YouBBS和又拍云结合</a></td>
     </tr>
     <tr>
         <td width="120" align="right">关闭上传附件功能</td>
@@ -98,6 +98,11 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left">附件默认上传到服务器，若要上传到又拍云请正确填写下面三个信息，否则留空</td>
     </tr>
+    <tr>
+        <td width="120" align="right">头像空间名称</td>
+        <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_avatar_domain" value="',$options['upyun_avatar_domain'],'" /> 需要建立两个缩略图!normal 48px 、 !mini 24px</td>
+    </tr>
+    
     <tr>
         <td width="120" align="right">空间名称</td>
         <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_domain" value="',$options['upyun_domain'],'" /> <br/>默认留空，不能包含特殊字符:"\'<></td>
@@ -121,7 +126,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">主分类id</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主分类id，用逗号隔开 <a href="http://youbbs.sinaapp.com/t-427" title="查看帮助" target="_blank">?</a></td>
+        <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主分类id，用逗号隔开 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
@@ -141,7 +146,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">安全图床域名<br/>参见 <a href="http://www.saespot.com/t-3-7" target="_blank">外链图片安全</a><br/>(默认留空)</td>
-        <td width="auto" align="left"><textarea class="ml wb80" name="safe_imgdomain">',str_replace("|", "\n", $options['safe_imgdomain']),'</textarea> 示例： ww2.sinaimg.cn (注意，不含斜杠，每行一个域名) <a href="http://youbbs.sinaapp.com/t-428" title="查看帮助" target="_blank">?</a></td>
+        <td width="auto" align="left"><textarea class="ml wb80" name="safe_imgdomain">',str_replace("|", "\n", $options['safe_imgdomain']),'</textarea> 示例： ww2.sinaimg.cn (注意，不含斜杠，每行一个域名) <a href="http://youbbs.sinaapp.com/t-428" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
         <td width="120" align="right"></td>

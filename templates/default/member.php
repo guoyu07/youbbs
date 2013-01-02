@@ -3,15 +3,15 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; 会员：',$m_obj['name'],' 
+    <a href="/">',$options['name'],'</a> &raquo; ',$m_obj['name'],' 
 </div>
 
 <div class="main-box">
-<div class="member-avatar"><img src="/avatar/large/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></div>
+<div class="member-avatar"><img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></div>
 <div class="member-detail">
 <p>会员：<strong>',$m_obj['name'],'</strong> (第',$m_obj['id'],'号会员，',$m_obj['regtime'],'加入)';
 if($cur_user && $cur_user['flag']>=99){
-    echo ' &nbsp;&nbsp;&nbsp; • (',$m_obj['flag'],') <a href="/admin-setuser-',$m_obj['id'],'">编辑</a>';
+    echo ' • (',$m_obj['flag'],') <a href="/admin-setuser-',$m_obj['id'],'">编辑</a>';
 }
 echo '
 </p>
@@ -44,9 +44,9 @@ echo '
 <div class="post-list">
     <div class="item-avatar"><a href="/member/',$m_obj['id'],'">';
 if($is_spider){
-    echo '<img src="/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
+    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
 }else{
-    echo '<img src="/static/grey.gif" data-original="/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
+    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
 }
 echo '    </a></div>
     <div class="item-content">

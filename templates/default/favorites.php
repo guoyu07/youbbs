@@ -3,7 +3,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; 个人收藏的帖子 （',$user_fav['articles'],'）
+    <a href="/">',$options['name'],'</a> &raquo; 个人收藏的帖子 (',$user_fav['articles'],')
 </div>
 
 <div class="main-box home-box-list">';
@@ -14,7 +14,11 @@ foreach($articledb as $article){
 echo '
 <div class="post-list">
     <div class="item-avatar"><a href="/member/',$article['uid'],'">';
-    echo '<img src="/static/grey.gif" data-original="/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
+if(!$is_spider){
+    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
+}else{
+    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
+}
 echo '    </a></div>
     <div class="item-content">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>

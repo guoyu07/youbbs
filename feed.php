@@ -9,21 +9,25 @@ if($options['authorized'] || $options['close']){
 }
 
 // 获取最近文章列表
-$query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.comments,c.name as cname,u.name as author
-    FROM yunbbs_articles a 
-    LEFT JOIN yunbbs_categories c ON c.id=a.cid
-    LEFT JOIN yunbbs_users u ON a.uid=u.id
-    ORDER BY id DESC LIMIT 10";
-$query = $DBS->query($query_sql);
-$articledb=array();
-while ($article = $DBS->fetch_array($query)) {
-    // 格式化内容
-    $article['addtime'] = gmdate('Y-m-dTH:M:SZ',$article['addtime']);
-    $article['edittime'] = gmdate('Y-m-dTH:M:SZ',$article['edittime']);
-    $articledb[] = $article;
+$articledb = $MMC->get('feed-article-list');
+if(!$articledb){
+    $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.comments,c.name as cname,u.name as author
+        FROM yunbbs_articles a 
+        LEFT JOIN yunbbs_categories c ON c.id=a.cid
+        LEFT JOIN yunbbs_users u ON a.uid=u.id
+        ORDER BY id DESC LIMIT 10";
+    $query = $DBS->query($query_sql);
+    $articledb=array();
+    while ($article = $DBS->fetch_array($query)) {
+        // 格式化内容
+        $article['addtime'] = gmdate('Y-m-dTH:M:SZ',$article['addtime']);
+        $article['edittime'] = gmdate('Y-m-dTH:M:SZ',$article['edittime']);
+        $articledb[] = $article;
+    }
+    unset($article);
+    $DBS->free_result($query);
+    $MMC->set('feed-article-list', $articledb, 0, 600);
 }
-unset($article);
-$DBS->free_result($query);
 
 $base_url = 'http://'.$_SERVER['HTTP_HOST'];
 

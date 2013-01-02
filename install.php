@@ -5,7 +5,7 @@ define('IN_SAESPOT', 1);
 
 $sqlfile = dirname(__FILE__) . '/yunbbs_mysql.sql';
 if(!is_readable($sqlfile)) {
-	exit('���ݿ��ļ������ڻ��߶�ȡʧ��');
+	exit('数据库文件不存在或者读取失败');
 }
 $fp = fopen($sqlfile, 'rb');
 $sql = fread($fp, 2048000);
@@ -27,17 +27,19 @@ if($DBS->geterrdesc()) {
 	}
 	
 	if($DBS->geterrdesc()) {
-		exit('ָ�������ݿⲻ����, ϵͳҲ�޷��Զ�����, �޷���װ.<br />');
+		exit('指定的数据库不存在, 系统也无法自动建立, 无法安装.<br />');
 	} else {
 		$DBS->select_db($dbname);
-		//�ɹ�����ָ�����ݿ�
+		//成功建立指定数据库
 	}
 }
 
 $query - $DBS->query("SELECT COUNT(*) FROM yunbbs_settings", 'SILENT');
 if(!$DBS->geterrdesc()) {
+	// BAE目前不支持清空缓存
+	// $MMC->flush();
 	header('location: /');
-	exit('�����Ѿ�װ���ˣ� �����ظ���װ�� ��Ҫ��װ����ɾ��mysql ��ȫ�����ݡ� <a href="/">����ֱ�ӽ�����ҳ</a><br />');
+	exit('数据已经装好了， 不能重复安装， 若要重装，先删除mysql 里全部数据。 <a href="/">现在直接进入首页</a><br />');
 }
 
 runquery($sql);
@@ -47,7 +49,32 @@ $DBS->unbuffered_query("UPDATE yunbbs_settings SET value='$timestamp' WHERE titl
 
 $DBS->close();
 
-// '<br /> ˳����װ��ɣ�<br /><a href="/">���������ҳ</a>';
+// BAE目前不支持清空缓存
+//$MMC->flush();
+
+// 拷贝三种格式默认头像
+// 上传到云存储
+include(dirname(__FILE__) . '/bcs.class.php');
+
+$baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+
+try{
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/large/0.png', 'static/0-large.png', array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+}catch (Exception $e){
+    exit('百度云存储创建large对象失败，请稍后再试！' );
+}
+try{
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/normal/0.png', 'static/0-normal.png', array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+}catch (Exception $e){
+    exit('百度云存储创建normal对象失败，请稍后再试！' );
+}
+try{
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/mini/0.png', 'static/0-mini.png', array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+}catch (Exception $e){
+    exit('百度云存储创建normal对象失败，请稍后再试！' );
+}
+
+// '<br /> 顺利安装完成！<br /><a href="/">点击进入首页</a>';
 
 function runquery($sql) {
 	global $dbcharset, $DBS;
@@ -69,7 +96,7 @@ function runquery($sql) {
 		if($query) {
 			if(substr($query, 0, 12) == 'CREATE TABLE') {
 				$name = preg_replace("/CREATE TABLE ([a-z0-9_]+) .*/is", "\\1", $query);
-				//echo '������ '.$name.' ... �ɹ�<br />';
+				//echo '创建表 '.$name.' ... 成功<br />';
 				$DBS->query(createtable($query, $dbcharset));
 			} else {
 				$DBS->query($query);

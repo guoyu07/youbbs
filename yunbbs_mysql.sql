@@ -91,6 +91,7 @@ INSERT INTO yunbbs_settings VALUES('jquery_lib', '/static/js/jquery-1.6.4.js');
 INSERT INTO yunbbs_settings VALUES('head_meta', '');
 INSERT INTO yunbbs_settings VALUES('analytics_code', '');
 INSERT INTO yunbbs_settings VALUES('safe_imgdomain', '');
+INSERT INTO yunbbs_settings VALUES('upyun_avatar_domain', '');
 INSERT INTO yunbbs_settings VALUES('upyun_domain', '');
 INSERT INTO yunbbs_settings VALUES('upyun_user', '');
 INSERT INTO yunbbs_settings VALUES('upyun_pw', '');
