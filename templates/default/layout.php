@@ -31,7 +31,7 @@ echo '
 <body>
 <div class="header-wrap">
     <div class="header">
-        <div class="logo"><a href="/" name="top" title="SinoSky"><img src="/static/logo-top.png" alt="SinoSky"></a></div>
+        <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
         <div class="scbox">
         <form role="search" method="get" id="searchform" action="http://www.google.com/search" target="_blank">
             <input type="hidden" maxlength="30" name="q" value="site:',$_SERVER['HTTP_HOST'],'">
@@ -65,11 +65,11 @@ if($cur_user){
         echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_logo_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
     echo '<a href="/login" rel="nofollow">登录</a>&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
-//    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
-//        if(!$options['close_register']){
-//            echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
-//        }
-//    }
+    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
+        if(!$options['close_register']){
+            echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
+        }
+    }
 }
 echo '       </div>
         <div class="c"></div>
@@ -110,7 +110,7 @@ echo '</div><div class="right">';
 if($options['icp']){
     echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
 }
-echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a> , All Rights Reserved.  Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a> .';
+echo 'Copyright &copy; 2012-2013 <a href="/" target="_blank">',$options['name'],'</a> , All Rights Reserved.  Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a> .';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());

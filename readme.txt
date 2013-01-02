@@ -1,6 +1,7 @@
 youBBS v1.04 for BAE 云存储版
+Modified by Jat 
 
-youBBS 是一款超轻量级的论坛程序，基于标准的php+mysql环境，为了让url更优美，服务器必须支持rewrite。
+youBBS 是一款超轻量级的论坛程序，基于标准的php+mysql环境。
 
 官方示例 http://youbbs.sinaapp.com
 

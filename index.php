@@ -27,7 +27,7 @@ if(!$articledb){
 }
 
 // 页面变量
-$title = $options['name'].' - 自由 平等 开放 分享';
+$title = $options['name'];
 
 $site_infos = get_site_infos();
 $newest_nodes = get_newest_nodes();
