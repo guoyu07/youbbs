@@ -163,12 +163,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             $cur_user['avatar'] = $cur_user['id'];
                             $MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
                         }else{
-                            $tip2 = '数据保存失败，请稍后再试';
+                            $tip2 = '图片保存失败，请稍后再试';
                         }
-                    }else{
-                        $tip2 = '图片保存失败，请稍后再试';
                     }
-                    
+
                     //
                     $av_time = $timestamp;
                 }else{
