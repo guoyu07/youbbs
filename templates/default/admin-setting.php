@@ -79,7 +79,7 @@ echo '
     </tr>
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right">附件设置</td>
-        <td width="auto" align="left">参考 <a href="http://bbs.liulirong.cn/t-11" target="_blank">YouBBS云存储版</a></td>
+        <td width="auto" align="left"></td>
     </tr>
     <tr>
         <td width="120" align="right">关闭上传附件功能</td>

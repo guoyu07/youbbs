@@ -40,7 +40,7 @@ if($cur_user){
         echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录"/></a>';
     }
     if($options['qq_appid'] && $options['qq_appkey']){
-        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_logo_55_24.png" alt="QQ登录"/></a>';
+        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24" alt="QQ登录"/></a>';
     }
     echo '&nbsp;<a href="/login" rel="nofollow">登录</a>';
     if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){

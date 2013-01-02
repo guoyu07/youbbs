@@ -73,11 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!$_POST['jquery_lib']) $_POST['jquery_lib'] = '/static/js/jquery-1.6.4.js';
         
         $_POST['safe_imgdomain'] = filter_chr($_POST['safe_imgdomain']);
-        $_POST['upyun_avatar_domain'] = filter_chr($_POST['upyun_avatar_domain']);
-        $_POST['upyun_domain'] = filter_chr($_POST['upyun_domain']);
-        $_POST['upyun_user'] = filter_chr($_POST['upyun_user']);
-        $_POST['upyun_pw'] = filter_chr($_POST['upyun_pw']);
-        
+
         // qq_scope
         $qq_scope = filter_chr($_POST['qq_scope']);
         if(!$qq_scope) $qq_scope = 'get_user_info';
@@ -95,12 +91,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $safe_imgdomain = str_replace("https://", "", $safe_imgdomain);
             $safe_imgdomain = str_replace("/", "", $safe_imgdomain);
             $safe_arr = explode("\n",$safe_imgdomain);
-            // 加入网站域名和又拍云的域名
+            // 加入网站域名
             if($_SERVER['HTTP_HOST']){
                 $safe_arr[] = $_SERVER['HTTP_HOST'];
-            }
-            if($_POST['upyun_domain']){
-                $safe_arr[] = $_POST['upyun_domain'].'.b0.upaiyun.com';
             }
             $safe_arr = array_filter(array_unique($safe_arr));
             $_POST['safe_imgdomain'] = implode("|", $safe_arr);

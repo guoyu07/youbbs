@@ -88,7 +88,7 @@ echo '
 <table cellpadding="5" cellspacing="8" border="0" width="100%" class="fs12">
     <tbody>
     <tr>
-        <td width="120" align="right">这个是干嘛？</td>
+        <td width="120" align="right"> </td>
         <td width="auto" align="left">当不用QQ登录时可以使用你的用户名和设置的密码登录</td>
     </tr>
     <tr>

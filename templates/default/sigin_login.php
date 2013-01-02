@@ -45,13 +45,13 @@ if($url_path == 'sigin'){
 if($url_path == 'login'){
     echo '登 录';
 }
-echo '" name="submit" class="textbtn" style="margin-left:60px;" /></p><p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用微博账号登录"/></a>&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/connect_logo_3.png" alt="用QQ登录"/></a></p>';
+echo '" name="submit" class="textbtn" style="margin-left:60px;" /></p><p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用微博账号登录"/></a>&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_120_24.png" alt="用QQ登录"/></a></p>';
 
 if($url_path == 'login'){
     if($options['close_register'] || $options['close']){
-        echo '<p class="grey fs12">网站暂时关闭 或 已停止新用户注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？<a href="/forgot">马上找回</a>';
+        echo '<p class="grey fs12">网站暂时关闭 或 已停止新用户注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？ <a href="/forgot">马上找回</a>';
     }else{
-        echo '<p class="grey fs12">还没来过？<a href="/sigin">现在注册</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？<a href="/forgot">马上找回</a>';
+        echo '<p class="grey fs12">还没来过？ <a href="/sigin">现在注册</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？ <a href="/forgot">马上找回</a>';
     }
 }else{
     echo '<p class="grey fs12">已有用户？ <a href="/login">现在登录</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？ <a href="/forgot">马上找回</a>';

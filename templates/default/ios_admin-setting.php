@@ -79,7 +79,7 @@ echo '
     </tr>
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
-        <td width="auto" align="left">附件设置，参考 <a href="http://youbbs.sinaapp.com/t-199" target="_blank">YouBBS和又拍云结合</a></td>
+        <td width="auto" align="left">附件设置</td>
     </tr>
     <tr>
         <td width="120" align="right">关闭上传附件功能</td>
@@ -89,31 +89,9 @@ echo '
         <td width="120" align="right">允许扩展名</td>
         <td width="auto" align="left"><input type="text" class="sl wb60" name="ext_list" value="',$options['ext_list'],'" /> <br/>默认留空，用逗号分隔</td>
     </tr>
-    
     <tr>
         <td width="120" align="right">是否添加图片水印</td>
         <td width="auto" align="left"><input type="text" class="sl w50" name="img_shuiyin" value="',$options['img_shuiyin'],'" /> <br/>默认0（不加水印），添加水印则设为1</td>
-    </tr>
-    <tr>
-        <td width="120" align="right"></td>
-        <td width="auto" align="left">附件默认上传到服务器，若要上传到又拍云请正确填写下面三个信息，否则留空</td>
-    </tr>
-    <tr>
-        <td width="120" align="right">头像空间名称</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_avatar_domain" value="',$options['upyun_avatar_domain'],'" /> 需要建立两个缩略图!normal 48px 、 !mini 24px</td>
-    </tr>
-    
-    <tr>
-        <td width="120" align="right">空间名称</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_domain" value="',$options['upyun_domain'],'" /> <br/>默认留空，不能包含特殊字符:"\'<></td>
-    </tr>
-    <tr>
-        <td width="120" align="right">操作员</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_user" value="',$options['upyun_user'],'" /> <br/>默认留空，不能包含特殊字符:"\'<></td>
-    </tr>
-    <tr>
-        <td width="120" align="right">操作员密码</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="upyun_pw" value="',$options['upyun_pw'],'" /> <br/>默认留空，不能包含特殊字符:"\'<></td>
     </tr>
     <tr>
         <td width="120" align="right"></td>

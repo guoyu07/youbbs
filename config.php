@@ -3,7 +3,7 @@
  *程序官方支持社区 http://youbbs.sinaapp.com/
  *欢迎交流！
  *youBBS是开源项目，可自由修改，但要保留Powered by 链接信息
- * 1.04 百度BAE 云存储版 Jat修改
+ * v1.04 百度BAE云存储(BCS)版 Modified by Jat
  * http://www.sinosky.org
  */
 // 定义头像、图库基础网址

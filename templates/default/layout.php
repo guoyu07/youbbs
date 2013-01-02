@@ -65,11 +65,11 @@ if($cur_user){
         echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_logo_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
     echo '<a href="/login" rel="nofollow">登录</a>&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
-    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
+//    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
         if(!$options['close_register']){
             echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
         }
-    }
+//    }
 }
 echo '       </div>
         <div class="c"></div>

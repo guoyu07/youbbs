@@ -164,6 +164,7 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
+            imagedestroy($img_obj);
             
             // 保存头像到云存储
             include(dirname(__FILE__) . '/bcs.class.php');
@@ -192,6 +193,7 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
+            imagedestroy($img_obj);
             
             // 保存头像到云存储       
             $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
@@ -217,6 +219,7 @@ if(isset($gotohome)){
             
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
+            imagedestroy($img_obj);
             
             // 保存头像到云存储                    
             $bcs_object = '/avatar/mini/'.$cur_uid.'.png';

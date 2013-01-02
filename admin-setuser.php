@@ -79,26 +79,96 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
                     imagedestroy($img_obj);
                     
-                    // 上传到又拍云
-                    include(dirname(__FILE__).'/upyun.class.php');
+                    // 上传到云存储
+                    include(dirname(__FILE__) . '/bcs.class.php');
+                    $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                    
+                    $bcs_object = '/avatar/large/'.$cur_uid.'.png';
+                    
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
                     $out_img = ob_get_contents();
                     ob_end_clean();
-                    $upyun = new UpYun($options['upyun_avatar_domain'], $options['upyun_user'], $options['upyun_pw']);
-                    // 本地调试失败
-                    if($upyun->writeFile('/'.$mid.'.jpg', $out_img)){
-                        if($cur_user['avatar']!=$mid){
-                            if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$mid' WHERE id='$mid'")){
-                                $MMC->delete('u_'.$mid);
-                            }else{
-                                $tip2 = '数据保存失败，请稍后再试';
-                            }
+                    
+                    try{
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                    }catch (Exception $e){
+                        $tip2 = '百度云存储创建large对象失败，请稍后再试！';
+                    }
+                    
+                    //normal
+                    if($max_px>48){
+                        $percent = 48/$max_px;
+                        $new_w = round($img_info[0]*$percent);
+                        $new_h = round($img_info[1]*$percent);
+                    }else{
+                        $new_w = $img_info[0];
+                        $new_h = $img_info[1];
+                    }
+                    
+                    $new_image = imagecreatetruecolor($new_w, $new_h);
+                    $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                    imagefill ( $new_image, 0, 0, $bg );
+                    
+                    imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                    
+                    $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
+                    
+                    ob_start();
+                    imagejpeg($new_image, NULL, 95);
+                    $out_img = ob_get_contents();
+                    ob_end_clean();
+                    
+                    try{
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                    }catch (Exception $e){
+                        $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
+                    }
+                    
+                    // mini
+                    if($max_px>24){
+                        $percent = 24/$max_px;
+                        $new_w = round($img_info[0]*$percent);
+                        $new_h = round($img_info[1]*$percent);
+                    }else{
+                        $new_w = $img_info[0];
+                        $new_h = $img_info[1];
+                    }
+                    
+                    $new_image = imagecreatetruecolor($new_w, $new_h);
+                    $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                    imagefill ( $new_image, 0, 0, $bg );
+                    
+                    imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                    imagedestroy($img_obj);
+                    
+                    $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
+                    
+                    ob_start();
+                    imagejpeg($new_image, NULL, 95);
+                    $out_img = ob_get_contents();
+                    ob_end_clean();
+                    imagedestroy($new_image);
+                    
+                    try{
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                    }catch (Exception $e){
+                        $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
+                    }
+                    
+                    unset($out_img);
+                    
+                    // 
+                    if($cur_user['avatar']!=$cur_user['id']){
+                        if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
+                            $cur_user['avatar'] = $cur_user['id'];
+                            $MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
+                        }else{
+                            $tip2 = '数据保存失败，请稍后再试';
                         }
                     }else{
                         $tip2 = '图片保存失败，请稍后再试';
                     }
-                    unset($out_img);
                     
                     //
                     $av_time = $timestamp;

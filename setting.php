@@ -66,7 +66,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
                     imagefill ( $new_image, 0, 0, $bg );
                     
+                    ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                    imagedestroy($img_obj);
                     
                     // 上传到云存储
                     include(dirname(__FILE__) . '/bcs.class.php');
@@ -100,6 +102,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagefill ( $new_image, 0, 0, $bg );
                     
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                    imagedestroy($img_obj);
                     
                     $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
                     
@@ -145,10 +148,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
                     }
                     
-                    $out_img = '';
-                    
-                    //--end
-                    
+                    unset($out_img);
+
                     //
                     if($cur_user['avatar']!=$cur_user['id']){
                         if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
@@ -157,7 +158,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         }else{
                             $tip2 = '数据保存失败，请稍后再试';
                         }
+                    }else{
+                        $tip2 = '图片保存失败，请稍后再试';
                     }
+
+                    //
                     $av_time = $timestamp;
                 }else{
                     $tip2 = '图片转换失败，请稍后再试';

@@ -23,9 +23,6 @@ if(!$options){
         }
     }
 
-    // 使用又拍云存头像
-    $options['base_avatar_url'] = 'http://'.$options['upyun_avatar_domain'].'.b0.upaiyun.com';
-    
     $options = stripslashes_array($options);
     
     if(!$options['safe_imgdomain']){
