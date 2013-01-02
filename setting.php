@@ -68,7 +68,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     
                     ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                    imagedestroy($img_obj);
                     
                     // 上传到云存储
                     include(dirname(__FILE__) . '/bcs.class.php');
@@ -102,7 +101,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagefill ( $new_image, 0, 0, $bg );
                     
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                    imagedestroy($img_obj);
                     
                     $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
                     
