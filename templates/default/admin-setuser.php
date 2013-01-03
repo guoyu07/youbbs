@@ -2,7 +2,7 @@
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
 echo '
 <a name="4"></a>
-<div class="title"><a href="/">',$options['name'],'</a> &raquo; ',$title,'  &raquo; 用户名： <span class="red">',$m_obj['name'],'</span></div>
+<div class="title">修改用户权限 - <span class="red">',$m_obj['name'],'</span></div>
 <div class="main-box">
 <p class="red">',$tip4,'</p>
 <form method="post" action="',$_SERVER["REQUEST_URI"],'#4">
@@ -33,7 +33,7 @@ echo '
 </div>
 
 <a name="1"></a>
-<div class="title">',$title,' <span class="red">',$m_obj['name'],'</span></div>
+<div class="title">修改用户资料 - <span class="red">',$m_obj['name'],'</span></div>
 <div class="main-box">
 <p class="red">',$tip1,'</p>
 <form method="post" action="',$_SERVER["REQUEST_URI"],'#1">
@@ -63,7 +63,7 @@ echo '
 </div>
 
 <a name="2"></a>
-<div class="title">为<span class="red">',$m_obj['name'],'</span>设置头像</div>
+<div class="title">为 <span class="red">',$m_obj['name'],'</span> 设置头像</div>
 <div class="main-box">
 <p class="red">',$tip2,'</p>
 <form action="',$_SERVER["REQUEST_URI"],'#2" enctype="multipart/form-data" method="post">
@@ -93,7 +93,7 @@ echo '
 </div>
 
 <a name="3"></a>
-<div class="title">为<span class="red">',$m_obj['name'],'</span>重设密码</div>
+<div class="title">为 <span class="red">',$m_obj['name'],'</span> 重设密码</div>
 <div class="main-box">
 <p class="red">',$tip3,'</p>
 <form method="post" action="',$_SERVER["REQUEST_URI"],'#3">
