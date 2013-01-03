@@ -2,7 +2,7 @@
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
 echo '
 <a name="4"></a>
-<div class="title"><a href="/">',$options['name'],'</a> &raquo; ',$title,'  &raquo; 用户名： <span class="red">',$m_obj['name'],'</span></div>
+<div class="title">修改用户权限 - <span class="red">',$m_obj['name'],'</span></div>
 <div class="main-box">';
 if($tip4){
 echo '<p class="red">',$tip4,'</p>';
@@ -37,7 +37,7 @@ echo '
 </div>
 
 <a name="1"></a>
-<div class="title">',$title,' <span class="red">',$m_obj['name'],'</span></div>
+<div class="title">修改用户资料 - <span class="red">',$m_obj['name'],'</span></div>
 <div class="main-box">';
 if($tip1){
 echo '<p class="red">',$tip1,'</p>';
@@ -70,7 +70,7 @@ echo '
 </div>
 
 <a name="3"></a>
-<div class="title">为<span class="red">',$m_obj['name'],'</span>重设密码</div>
+<div class="title">为 <span class="red">',$m_obj['name'],'</span> 重设密码</div>
 <div class="main-box">';
 if($tip3){
 echo '<p class="red">',$tip3,'</p>';
