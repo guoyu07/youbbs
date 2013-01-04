@@ -35,7 +35,7 @@ echo '
         <div class="scbox">
         <form role="search" method="get" id="searchform" action="http://www.google.com/search" target="_blank">
             <input type="hidden" maxlength="30" name="q" value="site:',$_SERVER['HTTP_HOST'],'">
-            <input type="text" value="" name="q" id="s">
+            <input type="text" placeholder="搜索" name="q" id="s">
         </form>
         </div>
         <div class="banner">';
