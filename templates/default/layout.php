@@ -102,20 +102,21 @@ echo '
     <div class="left">
     <a href="/feed">订阅</a>';
 if($is_mobie){
-    echo '• <a href="/viewat-mobile">手机版</a>';
+    echo ' • <a href="/viewat-mobile">手机版</a>';
 }
 
-echo '</div><div class="right">';
-
+$year = date("Y");
+echo '</div><div class="right">
+&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
 if($options['icp']){
-    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
+    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
 }
-echo 'Copyright &copy; 2012-2013 <a href="/" target="_blank">',$options['name'],'</a> , All Rights Reserved.  Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a> .';
+echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
     $totaltime = number_format(($mtime[1] + $mtime[0] - $starttime), 6);
-    echo '<p style="text-align:right">Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
+    echo '<p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
 }
 echo '  </div></div>
     <!-- footer end -->
