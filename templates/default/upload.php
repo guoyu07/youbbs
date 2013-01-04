@@ -26,6 +26,7 @@ $("#filetoupload").change(function() {
                 var con = document.getElementById("id-content").value;
                 document.getElementsByTagName("textarea")[0].focus();
                 document.getElementById("id-content").value = con + "\n"+res.url+"\n";
+                document.getElementsByName("filetoupload")[0].value="";
             }else{
                 alert(res.msg);
             }
