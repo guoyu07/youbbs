@@ -98,14 +98,9 @@ if ($token) {
             exit;
         }
     }else{
-    
-        $DBS = new DB_MySQL;
-        $DBS->connect($servername_m, $dbport, $dbusername, $dbpassword, $dbname);
-        
         $DBS->query("INSERT INTO `yunbbs_weibo` (`id`,`uid`,`name`,`openid`) VALUES (null,'0','$name', '$openid')");
         header("Location:/wbsetname");
         exit;
-        
     }
     
 } else {

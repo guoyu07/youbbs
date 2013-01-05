@@ -53,10 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $errors[] = '用户名 必填'; 
         }
         //
-        if(!$errors){
-            $DBS = new DB_MySQL;
-            $DBS->connect($servername_m, $dbport, $dbusername, $dbpassword, $dbname);
-            
+        if(!$errors){            
             if($options['register_review']){
                 $flag = 1;
             }else{
@@ -95,8 +92,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             $pwmd5 = md5($pw);
                             if($pwmd5 == $db_user['password']){
                                 // update qqweibo
-                                $DBS = new DB_MySQL;
-                                $DBS->connect($servername_m, $dbport, $dbusername, $dbpassword, $dbname);
                                 $userid = $db_user['id'];
                                 $DBS->unbuffered_query("UPDATE `yunbbs_weibo` SET `uid` = '$userid' WHERE `openid`='$openid'");
                                 

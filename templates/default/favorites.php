@@ -3,7 +3,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; 个人收藏的帖子 (',$user_fav['articles'],')
+    <a href="/">',$options['name'],'</a> &raquo; 收藏的帖子 (',$user_fav['articles'],')
 </div>
 
 <div class="main-box home-box-list">';
@@ -59,7 +59,7 @@ echo '<div class="c"></div>
 
 
 }else{
-    echo '<p>&nbsp;&nbsp;&nbsp;暂无收藏帖子</p>';
+    echo '<p>&nbsp;&nbsp;&nbsp;没有收藏的帖子</p>';
 }
 
 echo '</div>';
