@@ -49,13 +49,6 @@ echo '    <div class="c"></div>
 
 }
 
-if(count($articledb) == $options['home_shownum']){ 
-echo '<div class="pagination">';
-echo '<a href="/page/2" class="float-right">下一页 &raquo;</a>';
-echo '<div class="c"></div>
-</div>';
-}
-
 echo '</div>';
 
 if(isset($bot_nodes)){
