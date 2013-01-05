@@ -7,7 +7,8 @@ echo '
         &raquo; 最近更新
     </div>';
 if($cur_user && $cur_user['flag']>4 && $newest_nodes){
-    echo '<div class="float-right"><a href="/newpost/1" rel="nofollow" class="newpostbtn">+发新帖</a></div>';
+    echo '<div class="float-right grey">请先选择相关分类再发帖</div>';
+    //echo '<div class="float-right"><a href="/newpost/1" rel="nofollow" class="newpostbtn">+发新帖</a></div>';
 }
 echo '    <div class="c"></div>
 </div>
