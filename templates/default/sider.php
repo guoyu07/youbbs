@@ -30,13 +30,13 @@ echo '
 if($options['close']){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">网站暂时关闭公告</div>
+    <div class="sider-box-title">论坛暂时关闭公告</div>
     <div class="sider-box-content">
     <h2>';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '论坛维护中！';
+    echo '论坛维护中……';
 }
 echo '</h2>
     <div class="c"></div>

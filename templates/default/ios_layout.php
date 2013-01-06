@@ -43,11 +43,11 @@ if($cur_user){
         echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24" alt="QQ登录"/></a>';
     }
     echo '&nbsp;<a href="/login" rel="nofollow">登录</a>';
-    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
+//    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
         if(!$options['close_register']){
             echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
         }
-    }
+//    }
 }
 echo '       </div>
         <div class="c"></div>
@@ -77,12 +77,12 @@ if($cur_user){
 
 if($options['close']){
 echo '
-<div class="tiptitle">网站暂时关闭公告 &raquo; 
+<div class="tiptitle">论坛暂时关闭公告 &raquo; 
 <span style="color:yellow;">';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '数据调整中。。。';
+    echo '论坛维护中……';
 }
 echo '</span>
 </div>';
@@ -145,15 +145,16 @@ echo '       </div>
 
 <div class="footer-wrap">
     <div class="footer">
-    <p class="float-left">&copy; <a href="/">',$options['name'],'</a>';
+    <p class="float-left"><a href="/feed">订阅</a>';
     
 if($is_mobie){
-    echo ' • <a href="/viewat-desktop">桌面模式</a>';
+    echo ' • <a href="/viewat-desktop">桌面版</a>';
 }
-    
-    echo '</p>
-    <p class="float-right">by <a href="http://youbbs.sinaapp.com/" target="_blank">YouBBS v',SAESPOT_VER,'</a></p>
-    <div class="c"></div>';
+
+$year = date("Y");
+echo '</p>
+<p class="float-right">&copy; ',$yaer,' - <a href="/">',$options['name'],'</a> Powered by <a href="http://youbbs.sinaapp.com/" target="_blank">YouBBS</a></p>
+<div class="c"></div>';
 
 echo '    </div>
     <!-- footer end -->

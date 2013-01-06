@@ -99,7 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '登 录 - '.$options['name'];
+$title = '登录 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 
