@@ -19,7 +19,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($r_content){
         $r_content = htmlspecialchars($r_content);
         $DBS->unbuffered_query("UPDATE yunbbs_comments SET content='$r_content' WHERE id='$rid'");
-        $MMC->delete($rid);
         $tip = '评论已成功修改';
     }else{
         $tip = '内容 不能留空';
