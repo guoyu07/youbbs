@@ -4,7 +4,7 @@
  *欢迎交流！
  *youBBS是开源项目，可自由修改，但要保留Powered by 链接信息
  */
-define('SAESPOT_VER', '1.03');
+define('SAESPOT_VER', '1.04');
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 // 获得IP地址
