@@ -33,10 +33,21 @@ echo '
     <div class="header">
         <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
         <div class="scbox">
-        <form role="search" method="get" id="searchform" action="http://www.google.com/search" target="_blank">
-            <input type="hidden" maxlength="30" name="q" value="site:',$_SERVER['HTTP_HOST'],'">
-            <input type="text" placeholder="搜索" name="q" id="s">
-        </form>
+            <script type="text/javascript">
+                var dispatch = function() {
+                    q = document.getElementById("q");
+                    if (q.value != "" && q.value != "搜索") {
+                        window.open(\'http://www.google.com/search?q=site:',$_SERVER['HTTP_HOST'],'%20\' + q.value, "_blank");
+                        return false;
+                    } else {
+                        return false;
+                    }
+                }
+            </script>
+
+            <form role="search" method="get" id="searchform" onsubmit="return dispatch()" target="_blank">
+                <input type="text" maxlength="30" onfocus="if(this.value==\'搜索\') this.value=\'\';" onblur="if(this.value==\'\') this.value=\'搜索\';" value="搜索" name="q" id="q">
+            </form>
         </div>
         <div class="banner">';
         
