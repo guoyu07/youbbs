@@ -19,6 +19,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($r_content){
         $r_content = htmlspecialchars($r_content);
         $DBS->unbuffered_query("UPDATE yunbbs_comments SET content='$r_content' WHERE id='$rid'");
+        $query = "SELECT comments FROM yunbbs_articles WHERE id='".$r_obj['articleid']."'";
+        $t_obj = $DBS->fetch_one_array($query);
+        $page = ceil($t_obj['comments']/$options['commentlist_num']);
+        $MMC->delete('commentdb-'.$r_obj['articleid'].'-'.$page);
+        $MMC->delete('commentdb-'.$r_obj['articleid'].'_ios-'.$page);
         $tip = '评论已成功修改';
     }else{
         $tip = '内容 不能留空';

@@ -3,8 +3,7 @@ if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; 修改评论';
-echo '
+    <a href="/">',$options['name'],'</a> &raquo; 修改评论
 </div>
 
 <div class="main-box">';
