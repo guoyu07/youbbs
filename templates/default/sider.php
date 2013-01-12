@@ -71,7 +71,7 @@ echo '
     <div class="sider-box-title">最热主题</div>
     <div class="sider-box-content">
     <div class="btn">';
-foreach(array_slice($bot_nodes, 0, intval($options['hot_node_num'])) as $k=>$v ){
+foreach(array_slice($bot_nodes, 0, intval($options['hot_node_num']), true) as $k=>$v ){
     echo '<a href="/',$k,'">',$v,'</a>';
 }
 echo '    </div>

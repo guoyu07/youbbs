@@ -3,6 +3,10 @@
  *程序官方支持社区 http://youbbs.sinaapp.com/
  *欢迎交流！
  *youBBS是开源项目，可自由修改，但要保留Powered by 链接信息
+ *在 youBBS 的代码基础之上发布派生版本，名字可以不包含youBBS，
+ *但是页脚需要带有 based on youBBS 的字样和链接。
+ *v1.04 百度BAE云存储(BCS)版 Modified by Jat
+ *http://www.sinosky.org
  */
 define('SAESPOT_VER', '1.04');
 if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
