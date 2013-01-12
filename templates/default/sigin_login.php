@@ -48,10 +48,10 @@ if($url_path == 'login'){
 echo '" name="submit" class="textbtn" style="margin-left:60px;" /></p>';
 
 if(($options['wb_key'] && $options['wb_secret']) && ($options['qq_appid'] && $options['qq_appkey'])){
-    echo '<p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用微博账号登录"/></a>&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_120_24.png" alt="用QQ登录"/></a></p>';
+    echo '<p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用新浪微博登录"/></a>&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_120_24.png" alt="用QQ登录"/></a></p>';
 }else{
     if($options['wb_key'] && $options['wb_secret']){
-        echo '<p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用微博账号登录"/></a></p>';
+        echo '<p><a href="/wblogin" rel="nofollow" style="margin-left:60px;"><img src="/static/weibo_login_120_24.png" alt="用新浪微博登录"/></a></p>';
     }
     if($options['qq_appid'] && $options['qq_appkey']){
         echo '<p><a href="/qqlogin" rel="nofollow" style="margin-left:60px;"><img src="/static/qq_login_120_24.png" alt="用QQ登录"/></a></p>';
