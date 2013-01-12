@@ -95,6 +95,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_SERVER['HTTP_HOST']){
                 $safe_arr[] = $_SERVER['HTTP_HOST'];
             }
+            // 加入百度云存储
+            if(!$safe_arr[] = 'bcs.duapp.com'){
+                $safe_arr[] = 'bcs.duapp.com';
+            }
             $safe_arr = array_filter(array_unique($safe_arr));
             $_POST['safe_imgdomain'] = implode("|", $safe_arr);
         }
