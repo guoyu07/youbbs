@@ -37,15 +37,15 @@ if($cur_user){
     echo '<a href="/member/',$cur_user['id'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/></a>&nbsp;&nbsp;&nbsp;<a href="/favorites">收藏</a>&nbsp;&nbsp;<a href="/setting">设置</a>&nbsp;&nbsp;<a href="/logout">退出</a>';
 }else{
     if($options['wb_key'] && $options['wb_secret']){
-        echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录"/></a>';
+        echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录"/></a>&nbsp;&nbsp;';
     }
     if($options['qq_appid'] && $options['qq_appkey']){
-        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录"/></a>';
+        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录"/></a>&nbsp;&nbsp;';
     }
-    echo '&nbsp;<a href="/login" rel="nofollow">登录</a>';
+    echo '<a href="/login" rel="nofollow">登录</a>';
 //    if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
         if(!$options['close_register']){
-            echo '&nbsp;&nbsp;&nbsp;<a href="/sigin">注册</a>';
+            echo '&nbsp;&nbsp;<a href="/sigin">注册</a>';
         }
 //    }
 }
