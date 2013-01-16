@@ -71,9 +71,9 @@ echo '
     <div class="commont-item">
         <div class="commont-avatar"><a href="/member/',$comment['uid'],'">';
 if($is_spider){
-    echo '<img src="',TUCHUANG_URL,'/avatar/large/',$comment['uid'],'.png" alt="',$t_obj['uauthor'],'" />';
+    echo '  <img src="',TUCHUANG_URL,'/avatar/normal/',$comment['avatar'],'.png" alt="',$comment['author'],'" />';
 }else{
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/large/',$comment['uid'],'.png" alt="',$t_obj['uauthor'],'" />';
+    echo '  <img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$comment['avatar'],'.png" alt="',$comment['author'],'" />';
 }
 echo '</a></div>
         <div class="commont-data">
