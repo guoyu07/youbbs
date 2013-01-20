@@ -36,10 +36,10 @@ echo '
 if($cur_user){
     echo '<a href="/member/',$cur_user['id'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/></a>&nbsp;&nbsp;<a href="/favorites">收藏</a>&nbsp;<a href="/setting">设置</a>&nbsp;<a href="/logout">退出</a>';
 }else{
+    if(!$options['close_register']){
+        echo '<a href="/sigin">注册</a>&nbsp;';
+    }
     echo '<a href="/login" rel="nofollow">登录</a>';
-        if(!$options['close_register']){
-            echo '&nbsp;<a href="/sigin">注册</a>';
-        }
 }
 echo '       </div>
         <div class="c"></div>
