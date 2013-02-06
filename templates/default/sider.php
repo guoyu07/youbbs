@@ -19,7 +19,7 @@ echo '
 if($options['ad_sider_top'] && isset($show_sider_ad)){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">&raquo; 公告</div>
+    <div class="sider-box-title">公告</div>
     <div class="sider-box-content">',$options['ad_sider_top'],'
     <div class="c"></div>
     </div>
