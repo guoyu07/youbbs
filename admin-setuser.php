@@ -27,18 +27,18 @@ $av_time = '';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
-    
+
     if($action == 'info'){
         $email = addslashes(filter_chr(trim($_POST['email'])));
         $url = char_cv(filter_chr(trim($_POST['url'])));
         $about = addslashes(trim($_POST['about']));
-        
+
         if($DBS->unbuffered_query("UPDATE yunbbs_users SET email='$email', url='$url', about='$about' WHERE id='$mid'")){
             //更新缓存
             $m_obj['email'] = $email;
             $m_obj['url'] = $url;
             $m_obj['about'] = $about;
-            
+
             $MMC->delete('u_'.$mid);
             $tip1 = '已成功保存';
         }else{
@@ -65,36 +65,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $percent = 73/$max_px;
                         $new_w = round($img_info[0]*$percent);
                         $new_h = round($img_info[1]*$percent);
-                        
+
                     }else{
                         $new_w = $img_info[0];
                         $new_h = $img_info[1];
                     }
-                    
+
                     $new_image = imagecreatetruecolor($new_w, $new_h);
                     $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
                     imagefill ( $new_image, 0, 0, $bg );
-                    
+
                     ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                    
+
                     // 上传到云存储
                     include(dirname(__FILE__) . '/bcs.class.php');
                     $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
-                    
+
                     $bcs_object = '/avatar/large/'.$cur_uid.'.png';
-                    
+
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
                     $out_img = ob_get_contents();
                     ob_end_clean();
-                    
+
                     try{
-                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
                     }catch (Exception $e){
                         $tip2 = '百度云存储创建large对象失败，请稍后再试！';
                     }
-                    
+
                     //normal
                     if($max_px>48){
                         $percent = 48/$max_px;
@@ -104,26 +104,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $new_w = $img_info[0];
                         $new_h = $img_info[1];
                     }
-                    
+
                     $new_image = imagecreatetruecolor($new_w, $new_h);
                     $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
                     imagefill ( $new_image, 0, 0, $bg );
-                    
+
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                    
+
                     $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
-                    
+
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
                     $out_img = ob_get_contents();
                     ob_end_clean();
-                    
+
                     try{
-                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
                     }catch (Exception $e){
                         $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
                     }
-                    
+
                     // mini
                     if($max_px>24){
                         $percent = 24/$max_px;
@@ -133,31 +133,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $new_w = $img_info[0];
                         $new_h = $img_info[1];
                     }
-                    
+
                     $new_image = imagecreatetruecolor($new_w, $new_h);
                     $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
                     imagefill ( $new_image, 0, 0, $bg );
-                    
+
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
                     imagedestroy($img_obj);
-                    
+
                     $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
-                    
+
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
                     $out_img = ob_get_contents();
                     ob_end_clean();
                     imagedestroy($new_image);
-                    
+
                     try{
-                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                        $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
                     }catch (Exception $e){
                         $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
                     }
-                    
+
                     unset($out_img);
-                    
-                    // 
+
+                    //
                     if($cur_user['avatar']!=$cur_user['id']){
                         if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
                             $cur_user['avatar'] = $cur_user['id'];
@@ -172,7 +172,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }else{
                     $tip2 = '图片转换失败，请稍后再试';
                 }
-                
+
             }else{
                 $tip2 = '你上传的不是图片文件，只支持jpg/gif/png三种格式';
             }
@@ -185,7 +185,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($password_new && $password_again){
             if($password_new == $password_again){
                 $new_md5pw = md5($password_new);
-                
+
                 if($DBS->unbuffered_query("UPDATE yunbbs_users SET password='$new_md5pw' WHERE id='$mid'")){
                     //更新缓存
                     $MMC->delete('u_'.$mid);
@@ -210,7 +210,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }else if($flag == 1){
                     $MMC->delete('flag1_users');
                 }
-                
+
                 $m_obj['flag'] = $flag;
                 $tip4 = '用户权限已成功更改';
             }else{
@@ -220,7 +220,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $tip4 = '数值不正确，请填写0~99之间的数字';
         }
     }
-    
+
 }
 
 

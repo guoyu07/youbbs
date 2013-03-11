@@ -27,7 +27,7 @@ $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
     $name = addslashes(strtolower(trim($_POST["name"])));
-    
+
     if($action == 'newuser'){
         // 新增
         if($name){
@@ -50,10 +50,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $errors[] = '用户名 太长了';
             }
         }else{
-            $errors[] = '用户名 必填'; 
+            $errors[] = '用户名 必填';
         }
         //
-        if(!$errors){            
+        if(!$errors){
             if($options['register_review']){
                 $flag = 1;
             }else{
@@ -64,7 +64,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $MMC->delete('site_infos');
             // update qqweibo
             $DBS->unbuffered_query("UPDATE `yunbbs_weibo` SET `uid` = '$new_uid' WHERE `openid`='$openid'");
-            
+
             //设置cookie
             $db_ucode = md5($new_uid.''.$timestamp.'00');
             $cur_uid = $new_uid;
@@ -75,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $getavatar = "1";
             //header('location: /');
             //exit;
-            
+
         }
     }else if($action == 'bind'){
         // 绑定
@@ -94,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 // update qqweibo
                                 $userid = $db_user['id'];
                                 $DBS->unbuffered_query("UPDATE `yunbbs_weibo` SET `uid` = '$userid' WHERE `openid`='$openid'");
-                                
+
                                 //设置缓存和cookie
                                 $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
                                 $cur_uid = $db_user['id'];
@@ -125,9 +125,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $errors[] = '用户名 或 密码 太长了';
             }
-            
+
         }else{
-            $errors[] = '用户名、密码  必填'; 
+            $errors[] = '用户名、密码  必填';
         }
     }
 }
@@ -145,101 +145,101 @@ if(isset($gotohome)){
                       "Referer: ".$imgurl."\r\n"
           )
         );
-        
+
         $context = stream_context_create($opts);
-        
+
         $avatardata = file_get_contents($imgurl, false, $context);
-        
+
         $img_obj = imagecreatefromstring($avatardata);
-        
+
         if($img_obj !== false){
             // 头像 large
             $new_w = 73;
             $new_h = 73;
-            
+
             $new_image = imagecreatetruecolor($new_w, $new_h);
             $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
             imagefill ( $new_image, 0, 0, $bg );
-            
+
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 180, 180);
-            
+
             // 保存头像到云存储
             include(dirname(__FILE__) . '/bcs.class.php');
             $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
-                    
+
             $bcs_object = '/avatar/large/'.$cur_uid.'.png';
-                    
+
             ob_start();
             imagejpeg($new_image, NULL, 95);
             $out_img = ob_get_contents();
             ob_end_clean();
-                    
+
             try{
-                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
             }catch (Exception $e){
                 $tip2 = '百度云存储创建large对象失败，请稍后再试！';
             }
-            
+
             // 头像 normal
             $new_w = 48;
             $new_h = 48;
-            
+
             $new_image = imagecreatetruecolor($new_w, $new_h);
             $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
             imagefill ( $new_image, 0, 0, $bg );
-            
+
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 180, 180);
-            
-            // 保存头像到云存储       
+
+            // 保存头像到云存储
             $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
-                    
+
             ob_start();
             imagejpeg($new_image, NULL, 95);
             $out_img = ob_get_contents();
             ob_end_clean();
-                    
+
             try{
-                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
             }catch (Exception $e){
                 $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
             }
-            
+
             // 头像 mini
             $new_w = 24;
             $new_h = 24;
-            
+
             $new_image = imagecreatetruecolor($new_w, $new_h);
             $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
             imagefill ( $new_image, 0, 0, $bg );
-            
+
             ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 180, 180);
-            
-            // 保存头像到云存储                    
+
+            // 保存头像到云存储
             $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
-                    
+
             ob_start();
             imagejpeg($new_image, NULL, 95);
             $out_img = ob_get_contents();
             ob_end_clean();
-                    
+
             try{
-                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','contenttype'=>'image/jpeg'));
+                $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
             }catch (Exception $e){
                 $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
             }
-            
+
             imagedestroy($out_img);
             imagedestroy($img_obj);
             imagedestroy($new_image);
-            
-            // 
+
+            //
             $DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'");
-            
+
         }
-        
+
     }
     header('location: /');
     exit;
