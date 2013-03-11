@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
@@ -39,13 +39,9 @@ if($cur_user && $cur_user['flag']>4){
 
 echo '        </div>
     </div>
-    <div class="detail-avatar"><a href="/member/',$t_obj['uid'],'">';
-if($is_spider){
-    echo '<img src="',TUCHUANG_URL,'/avatar/large/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />';
-}else{
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/large/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />';
-}
-echo '    </a></div>
+    <div class="detail-avatar">
+        <a href="/member/',$t_obj['uid'],'"><img src="',TUCHUANG_URL,'/avatar/large/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" /></a>
+    </div>
     <div class="c"></div>
 </div>
 <div class="topic-content">
@@ -69,18 +65,14 @@ foreach($commentdb as $comment){
 $count_n += 1;
 echo '
     <div class="commont-item">
-        <div class="commont-avatar"><a href="/member/',$comment['uid'],'">';
-if($is_spider){
-    echo '  <img src="',TUCHUANG_URL,'/avatar/normal/',$comment['avatar'],'.png" alt="',$comment['author'],'" />';
-}else{
-    echo '  <img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$comment['avatar'],'.png" alt="',$comment['author'],'" />';
-}
-echo '</a></div>
+        <div class="commont-avatar">
+            <a href="/member/',$comment['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$comment['avatar'],'.png" alt="',$comment['author'],'" /></a>
+        </div>
         <div class="commont-data">
             <div class="commont-content">
             <p>',$comment['content'],'</p>
             </div>
-            
+
             <div class="commont-data-date">
                 <div class="float-left"><a href="/member/',$comment['uid'],'">',$comment['author'],'</a> at ',$comment['addtime'];
 if($cur_user && $cur_user['flag']>=88){
@@ -89,7 +81,7 @@ if($cur_user && $cur_user['flag']>=88){
                 echo '</div>
                 <div class="float-right">';
 if(!$t_obj['closecomment'] && $cur_user && $cur_user['flag']>4 && $cur_user['name'] != $comment['author']){
-    echo '&laquo; <a href="#new-comment" onclick="replyto(\'',$comment['author'],'\');">回复</a>'; 
+    echo '&laquo; <a href="#new-comment" onclick="replyto(\'',$comment['author'],'\');">回复</a>';
 }
 echo '                <span class="commonet-count">',$count_n,'</span></div>
                 <div class="c"></div>
@@ -100,7 +92,7 @@ echo '                <span class="commonet-count">',$count_n,'</span></div>
     </div>';
 }
 
-if($t_obj['comments'] > $options['commentlist_num']){ 
+if($t_obj['comments'] > $options['commentlist_num']){
 echo '<div class="pagination">';
 if($page>1){
 echo '<a href="/t-',$tid,'-',$page-1,'" class="float-left">&laquo; 上一页</a>';
@@ -113,7 +105,7 @@ echo '<div class="c"></div>
 }
 
 echo '
-    
+
 </div>
 <!-- comment list end -->
 
@@ -142,7 +134,7 @@ echo '
 <div class="title">
     <div class="float-left">添加一条新回复</div>
     <div class="float-right"><a href="#">↑ 回到顶部</a></div>
-    <div class="c"></div>    
+    <div class="c"></div>
 </div>
 <div class="main-box">';
 if($tip){
@@ -160,7 +152,7 @@ echo '
     <p>
     <div class="float-left"><input type="submit" value=" 提 交 " name="submit" class="textbtn" /></div>
     <div class="float-right fs12 grey">请尽量让自己的回复能够对别人有帮助。</div>
-    <div class="c"></div> 
+    <div class="c"></div>
     </p>
     </form>
 </div>

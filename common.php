@@ -178,12 +178,7 @@ function set_content($text,$spider='0'){
     // images
     $img_re = '/(http[s]?:\/\/?('.$options['safe_imgdomain'].').+\.(jpg|jpe|jpeg|gif|png))\w*/';
     if(preg_match($img_re, $text)){
-        if(!$spider){
-            $text = preg_replace($img_re, '<img src="'.$options['base_url'].'/static/grey2.gif" data-original="\1" alt="" />', $text);
-        }else{
-            // 搜索引擎来这样显示 更利于SEO 参见 http://saepy.sinaapp.com/t/81
-            $text = preg_replace($img_re, '<img src="\1" alt="" />', $text);
-        }
+        $text = preg_replace($img_re, '<img src="\1" alt="" />', $text);
     }
     // 各大网站的视频地址格式经常变，能识别一些，不能识别了再改。
     // youku
@@ -229,9 +224,9 @@ function set_content($text,$spider='0'){
         );
         $text = substr($text, 1);
     }
-    
+
     $text = str_replace("\r\n", '<br/>', $text);
-    
+
     return $text;
 }
 

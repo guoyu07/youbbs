@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 ob_start();
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,14 +50,14 @@ echo '
             </form>
         </div>
         <div class="banner">';
-        
+
 if($cur_user){
     echo '<img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 
     if(!$cur_user['password']){
         //echo '<a href="/setting#3" style="color:yellow;">设置登录密码</a>&nbsp;&nbsp;&nbsp;';
     }
-    
+
     if($cur_user['notic']){
         $notic_n = count(array_unique(explode(',', $cur_user['notic'])))-1;
         echo '<a href="/notifications" style="color:yellow;">',$notic_n,'条提醒</a>&nbsp;&nbsp;&nbsp;';
@@ -91,7 +91,7 @@ echo '       </div>
 <div class="main-wrap">
     <div class="main">
         <div class="main-content">';
-        
+
 include($pagefile);
 
 echo '       </div>
@@ -132,18 +132,8 @@ if($options['show_debug']){
 echo '  </div></div>
     <!-- footer end -->
 </div>
-
-<script src="/static/js/jquery.lazyload.min.js" type="text/javascript" charset="utf-8"></script>
-
-<script type="text/javascript" charset="utf-8">
-$(function() {
-    $(".main-box img").lazyload({
-        //placeholder : "/static/grey.gif",
-        //effect : "fadeIn"
-    });
-});
-</script>
 ';
+
 if($options['analytics_code']){
     echo $options['analytics_code'];
 }

@@ -19,7 +19,7 @@ if($is_spider || $tpl){
 $t_obj = $MMC->get($t_mc_key);
 if(!$t_obj){
     $query = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.views,a.comments,a.closecomment,a.favorites,a.visible,u.avatar as uavatar,u.name as author
-        FROM yunbbs_articles a 
+        FROM yunbbs_articles a
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         WHERE a.id='$tid'";
     $t_obj = $DBS->fetch_one_array($query);
@@ -32,7 +32,7 @@ if(!$t_obj){
                 header("Status: 404 Not Found");
                 include(dirname(__FILE__) . '/404.html');
                 exit;
-                
+
             }
         }
     }else{
@@ -40,17 +40,16 @@ if(!$t_obj){
         header("Status: 404 Not Found");
         include(dirname(__FILE__) . '/404.html');
         exit;
-        
+
     }
     $t_obj['addtime'] = showtime($t_obj['addtime']);
     $t_obj['edittime'] = showtime($t_obj['edittime']);
     if($is_spider || $tpl){
-        // 手机浏览和搜索引擎访问不用 jquery.lazyload
         $t_obj['content'] = set_content($t_obj['content'], 1);
     }else{
         $t_obj['content'] = set_content($t_obj['content']);
-    }    
-    
+    }
+
     $MMC->set($t_mc_key, $t_obj, 0, 300);
 }
 // 处理正确的评论页数
@@ -75,7 +74,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
     	exit('403: unknown referer.');
     }
-    
+
     $c_content = addslashes(trim($_POST['content']));
     if(($timestamp - $cur_user['lastreplytime']) > $options['comment_post_space']){
         $c_con_len = mb_strlen($c_content,'utf-8');
@@ -97,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         }
                     }
                 }
-                
+
                 $c_content = htmlspecialchars($c_content);
                 $DBS->query("INSERT INTO yunbbs_comments (id,articleid,uid,addtime,content) VALUES (null,$tid, $cur_uid, $timestamp, '$c_content')");
                 $DBS->unbuffered_query("UPDATE yunbbs_articles SET ruid='$cur_uid',edittime='$timestamp',comments=comments+1 WHERE id='$tid'");
@@ -114,13 +113,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $MMC->delete('home-article-list');
                 $MMC->delete('cat-page-article-list-'.$t_obj['cid'].'-1');
                 $MMC->delete('site_infos');
-                
+
                 $new_taltol_page = ceil(($t_obj['comments']+1)/$options['commentlist_num']);
                 if($new_taltol_page == $taltol_page){
                     $MMC->delete('commentdb-'.$tid.'-'.$taltol_page);
                     $MMC->delete('commentdb-'.$tid.'_ios-'.$taltol_page);
                 }
-                
+
                 // mentions 没有提醒用户的id，等缓存自动过期，提醒有点延迟
                 $mentions = find_mentions($c_content.' @'.$t_obj['author'], $cur_uname);
                 if($mentions && count($mentions)<=10){
@@ -128,17 +127,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $DBS->unbuffered_query("UPDATE yunbbs_users SET notic =  concat('$tid,', notic) WHERE name='$m_name'");
                     }
                 }
-                
+
                 // 保存内容md5值
                 $MMC->set('cm_'.$conmd5, '1', 0, 3600);
-                
+
                 // 跳到评论最后一页
                 if($page<$new_taltol_page){
                     $c_content = '';
                     header('location: /t-'.$tid.'-'.$new_taltol_page);
                     exit;
                 }
-                
+
                 // 若不转向
                 $c_content = '';
                 $t_obj['edittime'] = showtime($timestamp);
@@ -172,7 +171,7 @@ if($t_obj['comments']){
     $commentdb = $MMC->get($c_mc_key);
     if(!$commentdb){
         $query_sql = "SELECT c.id,c.uid,c.addtime,c.content,u.avatar as avatar,u.name as author
-            FROM yunbbs_comments c 
+            FROM yunbbs_comments c
             LEFT JOIN yunbbs_users u ON c.uid=u.id
             WHERE c.articleid='$tid' ORDER BY c.id ASC LIMIT ".($page-1)*$options['commentlist_num'].",".$options['commentlist_num'];
         $query = $DBS->query($query_sql);
@@ -181,7 +180,6 @@ if($t_obj['comments']){
             // 格式化内容
             $comment['addtime'] = showtime($comment['addtime']);
             if($is_spider || $tpl){
-                // 手机浏览和搜索引擎访问不用 jquery.lazyload
                 $comment['content'] = set_content($comment['content'], 1);
             }else{
                 $comment['content'] = set_content($comment['content']);
@@ -200,7 +198,7 @@ $DBS->unbuffered_query("UPDATE yunbbs_articles SET views=views+1 WHERE id='$tid'
 // 如果id在提醒里则清除
 if ($cur_user && $cur_user['notic'] && strpos(' '.$cur_user['notic'], $tid.',')){
     $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."'");
-    
+
     $n_arr = explode(',', $db_user['notic']);
     foreach($n_arr as $k=>$v){
         if($v == $tid){
@@ -222,7 +220,7 @@ if ($cur_user){
         $user_fav = $DBS->fetch_one_array("SELECT * FROM yunbbs_favorites WHERE uid='".$cur_uid."'");
         $MMC->set('favorites_'.$cur_uid, $user_fav, 0, 300);
     }
-    
+
     if($user_fav && $user_fav['content']){
         if( strpos(' ,'.$user_fav['content'].',', ','.$tid.',') ){
             $in_favorites = '1';

@@ -1,9 +1,9 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; ',$m_obj['name'],' 
+    <a href="/">',$options['name'],'</a> &raquo; ',$m_obj['name'],'
 </div>
 
 <div class="main-box">
@@ -42,13 +42,9 @@ echo '
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$m_obj['id'],'">';
-if($is_spider){
-    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
-}else{
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" />';
-}
-echo '    </a></div>
+    <div class="item-avatar">
+        <a href="/member/',$m_obj['id'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></a>
+    </div>
     <div class="item-content">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>  •  <a href="/member/',$m_obj['id'],'">',$m_obj['name'],'</a>';

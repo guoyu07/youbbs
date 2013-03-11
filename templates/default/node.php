@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
@@ -24,13 +24,9 @@ if($c_obj['about']){
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$article['uid'],'">';
-if($is_spider){
-    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
-}else{
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
-}
-echo '    </a></div>
+    <div class="item-avatar">
+        <a href="/member/',$article['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a>
+    </div>
     <div class="item-content">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date">by <a href="/member/',$article['uid'],'">',$article['author'],'</a>';
@@ -55,7 +51,7 @@ echo '    <div class="c"></div>
 
 }
 
-if($c_obj['articles'] > $options['list_shownum']){ 
+if($c_obj['articles'] > $options['list_shownum']){
 echo '<div class="pagination">';
 if($page>1){
 echo '<a href="/n-',$cid,'-',$page-1,'" class="float-left">&laquo; 上一页</a>';

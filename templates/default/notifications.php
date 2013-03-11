@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
@@ -13,9 +13,9 @@ if($articledb){
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$article['uid'],'">';
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
-echo '    </a></div>
+    <div class="item-avatar">
+        <a href="/member/',$article['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a>
+    </div>
     <div class="item-content">
         <h1><a href="/goto-t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>  •  <a href="/member/',$article['uid'],'">',$article['author'],'</a>';

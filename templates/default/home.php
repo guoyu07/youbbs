@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
@@ -18,13 +18,9 @@ echo '    <div class="c"></div>
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$article['uid'],'">';
-if(!$is_spider){
-    echo '<img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
-}else{
-    echo '<img src="/static/grey.gif" data-original="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" />';
-}
-echo '    </a></div>
+    <div class="item-avatar">
+        <a href="/member/',$article['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a>
+    </div>
     <div class="item-content">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>&nbsp;&nbsp;•&nbsp;&nbsp;<a href="/member/',$article['uid'],'">',$article['author'],'</a>';
@@ -49,7 +45,7 @@ echo '    <div class="c"></div>
 
 }
 
-if(count($articledb) == $options['home_shownum']){ 
+if(count($articledb) == $options['home_shownum']){
 echo '<div class="pagination">';
 echo '<a href="/page/2" class="float-right">下一页 &raquo;</a>';
 echo '<div class="c"></div>
