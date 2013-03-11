@@ -15,63 +15,63 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($action =='base'){
         // 修改设置一些默认参数
         $_POST['name'] = filter_chr($_POST['name']);
-        $_POST['site_des'] = filter_chr($_POST['site_des']); 
+        $_POST['site_des'] = filter_chr($_POST['site_des']);
         $_POST['icp'] = filter_chr($_POST['icp']);
-        
+
         $_POST['home_shownum'] = intval($_POST['home_shownum']);
         if(!$_POST['home_shownum']) $_POST['home_shownum'] = 20;
-        
+
         $_POST['list_shownum'] = intval($_POST['list_shownum']);
         if(!$_POST['list_shownum']) $_POST['list_shownum'] = 20;
-        
+
         $_POST['newest_node_num'] = intval($_POST['newest_node_num']);
         if(!$_POST['newest_node_num']) $_POST['newest_node_num'] = 20;
-        
+
         $_POST['hot_node_num'] = intval($_POST['hot_node_num']);
         if(!$_POST['hot_node_num']) $_POST['hot_node_num'] = 20;
-        
+
         $_POST['bot_node_num'] = intval($_POST['bot_node_num']);
         if(!$_POST['bot_node_num']) $_POST['bot_node_num'] = 100;
-        
+
         $_POST['article_title_max_len'] = intval($_POST['article_title_max_len']);
         if(!$_POST['article_title_max_len']) $_POST['article_title_max_len'] = 60;
-        
+
         $_POST['article_content_max_len'] = intval($_POST['article_content_max_len']);
         if(!$_POST['article_content_max_len']) $_POST['article_content_max_len'] = 3000;
-        
+
         $_POST['article_post_space'] = intval($_POST['article_post_space']);
         if(!$_POST['article_post_space']) $_POST['article_post_space'] = 60;
-        
+
         $_POST['comment_min_len'] = intval($_POST['comment_min_len']);
         if(!$_POST['comment_min_len']) $_POST['comment_min_len'] = 4;
-        
+
         $_POST['comment_max_len'] = intval($_POST['comment_max_len']);
         if(!$_POST['comment_max_len']) $_POST['comment_max_len'] = 1200;
-        
+
         $_POST['commentlist_num'] = intval($_POST['commentlist_num']);
         if(!$_POST['commentlist_num']) $_POST['commentlist_num'] = 32;
-        
+
         $_POST['comment_post_space'] = intval($_POST['comment_post_space']);
         if(!$_POST['comment_post_space']) $_POST['comment_post_space'] = 20;
-        
+
         $_POST['close'] = intval($_POST['close']);
-        
+
         $_POST['close_note'] = filter_chr($_POST['close_note']);
         if(!$_POST['close_note']) $_POST['close_note'] = '数据调整中';
-        
+
         $_POST['reg_ip_space'] = intval($_POST['reg_ip_space']);
         if(!$_POST['reg_ip_space']) $_POST['reg_ip_space'] = 3600;
-        
+
         $_POST['authorized'] = intval($_POST['authorized']);
         $_POST['register_review'] = intval($_POST['register_review']);
         $_POST['close_register'] = intval($_POST['close_register']);
         $_POST['close_upload'] = intval($_POST['close_upload']);
         $_POST['show_debug'] = intval($_POST['show_debug']);
         $_POST['img_shuiyin'] = intval($_POST['img_shuiyin']);
-        
+
         $_POST['jquery_lib'] = filter_chr($_POST['jquery_lib']);
-        if(!$_POST['jquery_lib']) $_POST['jquery_lib'] = '/static/js/jquery-1.6.4.js';
-        
+        if(!$_POST['jquery_lib']) $_POST['jquery_lib'] = '/static/js/jquery-1.9.1.min.js';
+
         $_POST['safe_imgdomain'] = filter_chr($_POST['safe_imgdomain']);
 
         // qq_scope
@@ -81,8 +81,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $qq_scope = 'get_user_info,'.$qq_scope;
         }
         $_POST['qq_scope'] = $qq_scope;
-        
-        // 安全图床域名白名单 格式 www.xxx.com 
+
+        // 安全图床域名白名单 格式 www.xxx.com
         $safe_imgdomain = trim($_POST['safe_imgdomain']);
         if($safe_imgdomain){
             $safe_imgdomain = str_replace("\n\r", "\n", $safe_imgdomain);
@@ -102,7 +102,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $safe_arr = array_filter(array_unique($safe_arr));
             $_POST['safe_imgdomain'] = implode("|", $safe_arr);
         }
-        
+
         // 确保main_nodes正确
         $_POST['main_nodes'] = filter_chr($_POST['main_nodes']);
         if($_POST['main_nodes'] && ($options['main_nodes'] != $_POST['main_nodes'] ) ){
@@ -129,14 +129,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST['main_nodes'] = '';
             }
         }
-        
+
         // spam_words
         $spam_words = filter_chr($_POST['spam_words']);
         $spam_words = str_replace("，", ",", $spam_words);
         $spam_words_arr = explode(",", $spam_words);
         $spam_words_arr = array_filter(array_unique($spam_words_arr));
         $_POST['spam_words'] = implode(",", $spam_words_arr);
-        
+
         // ext_list 扩展名列表
         $_POST['ext_list'] = filter_chr($_POST['ext_list']);
         if($_POST['ext_list'] && ($options['ext_list'] != $_POST['ext_list'] ) ){
@@ -185,9 +185,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_favorites`");
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_qqweibo`");
         $DBS->query("DROP TABLE IF EXISTS `yunbbs_weibo`");
-        
+
         //$MMC->flush();
-        
+
         $tip3 = '所有数据已删除';
         header('location: /install');
         exit;

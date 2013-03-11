@@ -87,7 +87,7 @@ INSERT INTO yunbbs_settings VALUES('close_upload', '0');
 INSERT INTO yunbbs_settings VALUES('ext_list', '');
 INSERT INTO yunbbs_settings VALUES('img_shuiyin', '0');
 INSERT INTO yunbbs_settings VALUES('show_debug', '0');
-INSERT INTO yunbbs_settings VALUES('jquery_lib', '/static/js/jquery-1.6.4.js');
+INSERT INTO yunbbs_settings VALUES('jquery_lib', '/static/js/jquery-1.9.1.min.js');
 INSERT INTO yunbbs_settings VALUES('head_meta', '');
 INSERT INTO yunbbs_settings VALUES('analytics_code', '');
 INSERT INTO yunbbs_settings VALUES('safe_imgdomain', '');

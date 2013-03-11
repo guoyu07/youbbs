@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <a name="1"></a>
@@ -97,7 +97,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
         <td width="auto" align="left">扩展设置</td>
@@ -108,9 +108,9 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
-        <td width="auto" align="left"><textarea class="ml wb80" name="head_meta">',str_replace('\\', '', $options['head_meta']),'</textarea> 
-        示例:<br/> 
-        ',htmlspecialchars('<meta property="qc:admins" content="331146677212163161xxxxxxx" />'),'<br/> 
+        <td width="auto" align="left"><textarea class="ml wb80" name="head_meta">',str_replace('\\', '', $options['head_meta']),'</textarea>
+        示例:<br/>
+        ',htmlspecialchars('<meta property="qc:admins" content="331146677212163161xxxxxxx" />'),'<br/>
         ',htmlspecialchars('<meta name="cpalead-verification" content="ymEun344mP9vt-B2idFRxxxxxxx" />'),'
         </td>
     </tr>
@@ -154,7 +154,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right"> » </td>
         <td width="auto" align="left">其它设置（下面一般保持默认）</td>
@@ -195,7 +195,7 @@ echo '
         <td width="120" align="right">注册最小间隔时间</td>
         <td width="auto" align="left"><input type="text" class="sl w100" name="reg_ip_space" value="',$options['reg_ip_space'],'" />秒 默认3600秒</td>
     </tr>
-    
+
     <tr>
         <td width="120" align="right">回复内容最少字数</td>
         <td width="auto" align="left"><input type="text" class="sl w100" name="comment_min_len" value="',$options['comment_min_len'],'" /> 默认4</td>
@@ -238,13 +238,13 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">调用jquery库地址</td>
-        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/js/jquery-1.6.4.js</td>
+        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/js/jquery-1.9.1.min.js</td>
     </tr>
     <tr>
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 </div>';

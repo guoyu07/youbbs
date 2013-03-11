@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <a name="1"></a>
@@ -89,7 +89,7 @@ echo '
         <td width="120" align="right">允许扩展名</td>
         <td width="auto" align="left"><input type="text" class="sl" name="ext_list" value="',$options['ext_list'],'" /> <br/>默认留空（任何文件），用逗号分隔</td>
     </tr>
-    
+
     <tr>
         <td width="120" align="right">是否添加图片水印</td>
         <td width="auto" align="left"><input type="text" class="sl w50" name="img_shuiyin" value="',$options['img_shuiyin'],'" /> 默认0（不加水印），若想添加（网址）水印则设为1</td>
@@ -98,7 +98,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right">扩展设置</td>
         <td width="auto" align="left"></td>
@@ -109,9 +109,9 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
-        <td width="auto" align="left"><textarea class="ml w450" name="head_meta">',str_replace('\\', '', $options['head_meta']),'</textarea> 
-        示例:<br/> 
-        ',htmlspecialchars('<meta property="qc:admins" content="331146677212163161xxxxxxx" />'),'<br/> 
+        <td width="auto" align="left"><textarea class="ml w450" name="head_meta">',str_replace('\\', '', $options['head_meta']),'</textarea>
+        示例:<br/>
+        ',htmlspecialchars('<meta property="qc:admins" content="331146677212163161xxxxxxx" />'),'<br/>
         ',htmlspecialchars('<meta name="cpalead-verification" content="ymEun344mP9vt-B2idFRxxxxxxx" />'),'
         </td>
     </tr>
@@ -155,7 +155,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
     <tr bgcolor="#EEE" height="24">
         <td width="120" align="right">其它设置</td>
         <td width="auto" align="left">下面一般保持默认</td>
@@ -212,7 +212,7 @@ echo '
         <td width="120" align="right">注册最小间隔时间</td>
         <td width="auto" align="left"><input type="text" class="sl w100" name="reg_ip_space" value="',$options['reg_ip_space'],'" />秒 默认3600（一个小时）</td>
     </tr>
-    
+
     <tr>
         <td width="120" align="right">网站暂时关闭</td>
         <td width="auto" align="left"><input type="text" class="sl w50" name="close" value="',$options['close'],'" /> 默认0，若要暂时关闭就设为1</td>
@@ -239,13 +239,13 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">调用jquery库地址</td>
-        <td width="auto" align="left"><input type="text" class="sl" name="jquery_lib" value="',$options['jquery_lib'],'" /> 默认/static/js/jquery-1.6.4.js</td>
+        <td width="auto" align="left"><input type="text" class="sl" name="jquery_lib" value="',$options['jquery_lib'],'" /> 默认/static/js/jquery-1.9.1.min.js</td>
     </tr>
     <tr>
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 </div>';
