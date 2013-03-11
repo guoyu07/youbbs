@@ -208,7 +208,7 @@ function set_content($text,$spider='0'){
         }
     }
     // gist
-    if(strpos($text, '://gist')){
+    if(strpos($text, 'gist.github.com')){
         $text = preg_replace('/(https?:\/\/gist\.github\.com\/([a-zA-Z0-9-]+\/)?[\d]+)/', '<script src="\1.js"></script>', $text);
     }
     // mentions
