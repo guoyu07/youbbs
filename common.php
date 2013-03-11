@@ -177,9 +177,27 @@ function showtime($db_time){
 function set_content($text,$spider='0'){
     global $options;
     // images
-    $img_re = '/(http[s]?:\/\/?('.$options['safe_imgdomain'].').+\.(jpg|jpe|jpeg|gif|png))\w*/';
+    $img_re = '/(http[s]?:\/\/?('.$options['safe_imgdomain'].').+\.(jpg|jpe|jpeg|gif|png))/';
     if(preg_match($img_re, $text)){
-        $text = preg_replace($img_re, '<img src="\1" alt="" />', $text);
+        $text = preg_replace($img_re, '<a href="\1" target="_blank"><img src="\1" alt="" /></a>', $text);
+    }
+    // 腾讯微博图片
+    if(strpos($text, 'qpic.cn')){
+        // http://t1.qpic.cn/mblogpic/4c7dfb4b2d3c665c4fa4/
+        // http://t1.qpic.cn/mblogpic/4c7dfb4b2d3c665c4fa4/160
+        // http://t1.qpic.cn/mblogpic/4c7dfb4b2d3c665c4fa4/460
+        // http://t1.qpic.cn/mblogpic/4c7dfb4b2d3c665c4fa4/2000
+        // 还有很多尺寸，如 220 500 等，但普通用户一般获取不到，不再识别。
+        $qq_img_re = '/(http:\/\/t(0|1|2|3|4)\.qpic\.cn\/mblogpic\/[a-z0-9]{20})\/?(160|460|2000)?/';
+        $text = preg_replace($qq_img_re, '<a href="\1/2000" target="_blank"><img src="\1/460" alt="" /></a>', $text);
+    }
+    // 新浪微博图片
+    if(strpos($text, 'sinaimg.cn')){
+        // http://ww4.sinaimg.cn/thumbnail/a74ecc4cjw1dzj789ylioj.jpg
+        // http://ww4.sinaimg.cn/bmiddle/a74ecc4cjw1dzj789ylioj.jpg
+        // http://ww4.sinaimg.cn/large/a74ecc4cjw1dzj789ylioj.jpg
+        $sina_img_re = '/(http:\/\/ww(1|2|3|4)\.sinaimg\.cn)\/(thumbnail|bmiddle|large)\/([a-z0-9]{22}\.jpg)/';
+        $text = preg_replace($sina_img_re, '<a href="\1/large/\4" target="_blank"><img src="\1/bmiddle/\4" alt="" /></a>', $text);
     }
     // 各大网站的视频地址格式经常变，能识别一些，不能识别了再改。
     // youku
