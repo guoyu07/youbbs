@@ -138,7 +138,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }
 
                 try{
-                    $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
+                    $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','filename'=>$up_name));
                     if($response['status']==200){
                         $rsp['status'] = 200;
                         $rsp['url'] = TUCHUANG_URL.$bcs_object;
@@ -159,7 +159,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                 $bcs_object = '/'.$upload_filename;
                 try{
-                    $response = (array)$baidu_bcs->create_object(BUCKET, $bcs_object, $_FILES['filetoupload']['tmp_name'], array('acl'=>'public-read'));
+                    $response = (array)$baidu_bcs->create_object(BUCKET, $bcs_object, $_FILES['filetoupload']['tmp_name'], array('acl'=>'public-read','filename'=>$up_name));
                     if($response['status']==200){
                         $rsp['status'] = 200;
                         $rsp['url'] = '附件：'.$up_name.' '.TUCHUANG_URL.$bcs_object;
