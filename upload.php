@@ -125,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                 // 上传到云存储
                 include(dirname(__FILE__) . '/bcs.class.php');
-                $baidu_bcs =new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;
 
