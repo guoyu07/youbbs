@@ -162,7 +162,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $response = (array)$baidu_bcs->create_object(BUCKET, $bcs_object, $_FILES['filetoupload']['tmp_name'], array('acl'=>'public-read','filename'=>$up_name));
                     if($response['status']==200){
                         $rsp['status'] = 200;
-                        $rsp['url'] = '附件：'.$up_name.' '.TUCHUANG_URL.$bcs_object;
+                        if ( $_FILES['filetoupload']['size'] < 1048576) {
+                            $file_size = round($_FILES['filetoupload']['size'] / 1024, 2);
+                            $rsp['url'] = '附件：'.$up_name.' ('.$file_size.' KB) '.TUCHUANG_URL.$bcs_object;
+                        } else {
+                            $file_size = round($_FILES['filetoupload']['size'] / 1048576, 2);
+                            $rsp['url'] = '附件：'.$up_name.' ('.$file_size.' MB) '.TUCHUANG_URL.$bcs_object;
+                        }
                         $rsp['msg'] = '附件已成功上传';
                     }else{
                         $rsp['msg'] = '附件保存失败，请稍后再试';
