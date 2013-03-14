@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 ob_start();
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -32,7 +32,7 @@ echo '
     <div class="header">
         <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
         <div class="banner">';
-        
+
 if($cur_user){
     echo '<a href="/member/',$cur_user['id'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/></a>&nbsp;&nbsp;<a href="/favorites">收藏</a>&nbsp;<a href="/setting">设置</a>&nbsp;<a href="/logout">退出</a>';
 }else{
@@ -69,7 +69,7 @@ if($cur_user){
 
 if($options['close']){
 echo '
-<div class="tiptitle">论坛暂时关闭公告 &raquo; 
+<div class="tiptitle">论坛暂时关闭公告 &raquo;
 <span style="color:yellow;">';
 if($options['close_note']){
     echo $options['close_note'];
@@ -138,7 +138,7 @@ echo '       </div>
 <div class="footer-wrap">
     <div class="footer">
     <p class="float-left"><a href="/feed">订阅</a>';
-    
+
 if($is_mobie){
     echo ' • <a href="/viewat-desktop">桌面版</a>';
 }
@@ -166,6 +166,18 @@ echo '
 
 $_output = ob_get_contents();
 ob_end_clean();
+
+// 304
+$etag = md5($_output);
+if($_SERVER['HTTP_IF_NONE_MATCH'] == $etag){
+    header("HTTP/1.1 304 Not Modified");
+    header("Status: 304 Not Modified");
+    header("Etag: ".$etag);
+    exit;
+}else{
+    header("Etag: ".$etag);
+}
+
 echo $_output;
 
 ?>
