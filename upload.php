@@ -138,7 +138,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }
 
                 try{
-                    $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read','filename'=>$up_name));
+                    $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
                     if($response['status']==200){
                         $rsp['status'] = 200;
                         $rsp['url'] = TUCHUANG_URL.$bcs_object;
