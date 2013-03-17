@@ -36,7 +36,7 @@ class BaiduBCS {
 	 **********************************************************/
 	const STATEMETS = 'statements';
 	//Action 用户动作
-	//'*'代表所有action 
+	//'*'代表所有action
 	const BCS_SDK_ACL_ACTION_ALL = '*';
 	//与bucket相关的action
 	const BCS_SDK_ACL_ACTION_LIST_OBJECT = 'list_object';
@@ -50,21 +50,21 @@ class BaiduBCS {
 	const BCS_SDK_ACL_ACTION_PUT_OBJECT_POLICY = 'put_object_policy';
 	const BCS_SDK_ACL_ACTION_GET_OBJECT_POLICY = 'get_object_policy';
 	static $ACL_ACTIONS = array (
-			self::BCS_SDK_ACL_ACTION_ALL, 
-			self::BCS_SDK_ACL_ACTION_LIST_OBJECT, 
-			self::BCS_SDK_ACL_ACTION_PUT_BUCKET_POLICY, 
-			self::BCS_SDK_ACL_ACTION_GET_BUCKET_POLICY, 
-			self::BCS_SDK_ACL_ACTION_DELETE_BUCKET, 
-			self::BCS_SDK_ACL_ACTION_GET_OBJECT, 
-			self::BCS_SDK_ACL_ACTION_PUT_OBJECT, 
-			self::BCS_SDK_ACL_ACTION_DELETE_OBJECT, 
-			self::BCS_SDK_ACL_ACTION_PUT_OBJECT_POLICY, 
+			self::BCS_SDK_ACL_ACTION_ALL,
+			self::BCS_SDK_ACL_ACTION_LIST_OBJECT,
+			self::BCS_SDK_ACL_ACTION_PUT_BUCKET_POLICY,
+			self::BCS_SDK_ACL_ACTION_GET_BUCKET_POLICY,
+			self::BCS_SDK_ACL_ACTION_DELETE_BUCKET,
+			self::BCS_SDK_ACL_ACTION_GET_OBJECT,
+			self::BCS_SDK_ACL_ACTION_PUT_OBJECT,
+			self::BCS_SDK_ACL_ACTION_DELETE_OBJECT,
+			self::BCS_SDK_ACL_ACTION_PUT_OBJECT_POLICY,
 			self::BCS_SDK_ACL_ACTION_GET_OBJECT_POLICY );
 	//EFFECT:
 	const BCS_SDK_ACL_EFFECT_ALLOW = "allow";
 	const BCS_SDK_ACL_EFFECT_DENY = "deny";
 	static $ACL_EFFECTS = array (
-			self::BCS_SDK_ACL_EFFECT_ALLOW, 
+			self::BCS_SDK_ACL_EFFECT_ALLOW,
 			self::BCS_SDK_ACL_EFFECT_DENY );
 	//ACL_TYPE:
 	//公开读权限
@@ -79,10 +79,10 @@ class BaiduBCS {
 	const BCS_SDK_ACL_TYPE_PRIVATE = "private";
 	//SDK中开放此上五种acl_tpe
 	static $ACL_TYPES = array (
-			self::BCS_SDK_ACL_TYPE_PUBLIC_READ, 
-			self::BCS_SDK_ACL_TYPE_PUBLIC_WRITE, 
-			self::BCS_SDK_ACL_TYPE_PUBLIC_READ_WRITE, 
-			self::BCS_SDK_ACL_TYPE_PUBLIC_CONTROL, 
+			self::BCS_SDK_ACL_TYPE_PUBLIC_READ,
+			self::BCS_SDK_ACL_TYPE_PUBLIC_WRITE,
+			self::BCS_SDK_ACL_TYPE_PUBLIC_READ_WRITE,
+			self::BCS_SDK_ACL_TYPE_PUBLIC_CONTROL,
 			self::BCS_SDK_ACL_TYPE_PRIVATE );
 	/*%******************************************************************************************%*/
 	// PROPERTIES
@@ -122,7 +122,7 @@ class BaiduBCS {
 		} else {
 			throw new BCS_Exception ( 'Construct can not get ak &sk pair, please check!' );
 		}
-		//valid $hostname 
+		//valid $hostname
 		if (NULL !== $hostname) {
 			$this->hostname = $hostname;
 		} elseif (false !== getenv ( 'HTTP_BAE_ENV_ADDR_BCS' )) {
@@ -141,7 +141,7 @@ class BaiduBCS {
 		//set common param into opt
 		$opt [self::AK] = $this->ak;
 		$opt [self::SK] = $this->sk;
-		
+
 		// Validate the S3 bucket name, only list_bucket didnot need validate_bucket
 		if (! ('/' == $opt [self::OBJECT] && '' == $opt [self::BUCKET] && 'GET' == $opt [self::METHOD] && ! isset ( $opt [self::QUERY_STRING] [self::ACL] )) && ! self::validate_bucket ( $opt [self::BUCKET] )) {
 			throw new BCS_Exception ( $opt [self::BUCKET] . 'is not valid, please check!' );
@@ -159,9 +159,13 @@ class BaiduBCS {
 		$this->log ( "[method:" . $opt [self::METHOD] . "][url:$url]", $opt );
 		//build request
 		$request = new BCS_RequestCore ( $opt ['url'] );
+		// Attempt to guess the correct mime-type
+		$extension = explode ( '.', $opt ['object'] );
+		$extension = array_pop ( $extension );
+		$mime_type = BCS_MimeTypes::get_mimetype ( $extension );
 		$headers = array (
-				'Content-Type' => 'application/x-www-form-urlencoded' );
-		
+				'Content-Type' => $mime_type );
+
 		$request->set_method ( $opt [self::METHOD] );
 		//Write get_object content to fileWriteTo
 		if (isset ( $opt ['fileWriteTo'] )) {
@@ -195,13 +199,6 @@ class BaiduBCS {
 				$length -= ( integer ) $opt ['seekTo'];
 			}
 			$request->set_read_stream_size ( $length );
-			// Attempt to guess the correct mime-type
-			if ($headers ['Content-Type'] === 'application/x-www-form-urlencoded') {
-				$extension = explode ( '.', $opt ['fileUpload'] );
-				$extension = array_pop ( $extension );
-				$mime_type = BCS_MimeTypes::get_mimetype ( $extension );
-				$headers ['Content-Type'] = $mime_type;
-			}
 			$headers ['Content-MD5'] = '';
 		}
 		// Handle streaming file offsets
@@ -213,7 +210,7 @@ class BaiduBCS {
 		foreach ( $headers as $header_key => $header_value ) {
 			// Strip linebreaks from header values as they're illegal and can allow for security issues
 			$header_value = str_replace ( array (
-					"\r", 
+					"\r",
 					"\n" ), '', $header_value );
 			// Add the header if it has a value
 			if ($header_value !== '') {
@@ -230,7 +227,7 @@ class BaiduBCS {
 
 	/**
 	 * 获取当前密钥对拥有者的bucket列表
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * BaiduBCS::IMPORT_BCS_LOG_METHOD - String - Optional: 支持用户传入日志处理函数，函数定义如 function f($log)
 	 * @throws BCS_Exception
 	 * @return BCS_ResponseCore
@@ -249,7 +246,7 @@ class BaiduBCS {
 	 * 创建 bucket
 	 * @param string $bucket (Required) bucket名称
 	 * @param string $acl (Optional)    bucket权限设置，若为null，使用server分配的默认权限
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * @throws BCS_Exception
 	 * @return BCS_ResponseCore
 	 */
@@ -370,7 +367,7 @@ class BaiduBCS {
 	 * @param string $list_model (Required)
 	 * 目录展现形式，值可以为0,1,2，默认为2，以下对各个值的功能进行介绍：
 	 * 0->只返回object列表，不返回子目录列表
-	 * 1->只返回子目录列表，不返回object列表 
+	 * 1->只返回子目录列表，不返回object列表
 	 * 2->同时返回子目录列表和object列表
 	 * @param array $opt (Optional)
 	 * start : 主要用于翻页功能，用法同mysql中start的用法
@@ -393,10 +390,10 @@ class BaiduBCS {
 		if (isset ( $opt ['limit'] ) && is_int ( $opt ['limit'] )) {
 			$opt [self::QUERY_STRING] ['limit'] = $opt ['limit'];
 		}
-		
+
 		$opt [self::QUERY_STRING] ['prefix'] = rawurlencode ( $dir );
 		$opt [self::QUERY_STRING] ['dir'] = $list_model;
-		
+
 		$response = $this->authenticate ( $opt );
 		$this->log ( $response->isOK () ? "List object success!" : "Lit object failed! Response: [" . $response->body . "]", $opt );
 		return $response;
@@ -404,10 +401,10 @@ class BaiduBCS {
 
 	/**
 	 * 上传文件
-	 * @param string $bucket (Required) 
-	 * @param string $object (Required) 
+	 * @param string $bucket (Required)
+	 * @param string $object (Required)
 	 * @param string $file (Required); 需要上传的文件的文件路径
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * filename - Optional; 指定文件名
 	 * acl - Optional ; 上传文件的acl，只能使用acl_type
 	 * seekTo - Optional; 上传文件的偏移位置
@@ -438,10 +435,10 @@ class BaiduBCS {
 
 	/**
 	 * 上传文件
-	 * @param string $bucket (Required) 
-	 * @param string $object (Required) 
+	 * @param string $bucket (Required)
+	 * @param string $object (Required)
 	 * @param string $file (Required); 需要上传的文件的文件路径
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * filename - Optional; 指定文件名
 	 * acl - Optional ; 上传文件的acl，只能使用acl_type
 	 * @return BCS_ResponseCore
@@ -474,10 +471,10 @@ class BaiduBCS {
 
 	/**
 	 * 通过superfile的方式上传文件
-	 * @param string $bucket (Required) 
-	 * @param string $object (Required) 
+	 * @param string $bucket (Required)
+	 * @param string $object (Required)
 	 * @param string $file (Required); 需要上传的文件的文件路径
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * filename - Optional; 指定文件名
 	 * sub_object_size - Optional; 指定子文件的划分大小，单位B，建议以256KB为单位进行子object划分，默认为1MB进行划分
 	 * @return BCS_ResponseCore
@@ -522,7 +519,7 @@ class BaiduBCS {
 		for($i = 0; $i < $sliceNum; $i ++) {
 			//send slice
 			$opt ['seekTo'] = $i * $sub_object_size;
-			
+
 			if (($i + 1) === $sliceNum) {
 				//last sub object
 				$opt ['length'] = (0 === $fileSize % $sub_object_size) ? $sub_object_size : $fileSize % $sub_object_size;
@@ -561,14 +558,14 @@ class BaiduBCS {
 
 	/**
 	 * 将目录中的所有文件进行上传，每个文件为单独object，object命名方式下详：
-	 * 如有 /home/worker/a/b/c.txt  需上传目录为$dir=/home/worker/a  
+	 * 如有 /home/worker/a/b/c.txt  需上传目录为$dir=/home/worker/a
 	 * object命令方式为
 	 * 1. object默认命名方式为 “子目录名 +文件名”，如上述文件c.txt，默认为 '/b/c.txt'
 	 * 2. 增强命名模式，在$opt中有可选参数进行配置
-	 * 举例说明 ：prefix . has_sub_directory?"/b":"" . '/c.txt' 
-	 * @param string $bucket (Required) 
-	 * @param string $dir (Required) 
-	 * @param array $opt(Optional) 
+	 * 举例说明 ：prefix . has_sub_directory?"/b":"" . '/c.txt'
+	 * @param string $bucket (Required)
+	 * @param string $dir (Required)
+	 * @param array $opt(Optional)
 	 * string prefix 文件object前缀
 	 * boolean has_sub_directory(default=true)   object命名中是否携带文件的子目录结构，若置为false，请确认待上传的目录和所有子目录中没有重名文件，否则会产生object覆盖问题
 	 * BaiduBCS::IMPORT_BCS_PRE_FILTER   用户可自定义上传文件前的操作函数
@@ -584,7 +581,7 @@ class BaiduBCS {
 	 * 'success' => int  上传成功的文件数目
 	 * 'skipped' => int  被跳过的文件
 	 * 'failed' => array()   上传失败的文件
-	 * 
+	 *
 	 */
 	public function upload_directory($bucket, $dir, $opt = array()) {
 		$this->assertParameterArray ( $opt );
@@ -592,8 +589,8 @@ class BaiduBCS {
 			throw new BCS_Exception ( "$dir is not a dir!", - 1 );
 		}
 		$result = array (
-				"success" => 0, 
-				"failed" => array (), 
+				"success" => 0,
+				"failed" => array (),
 				"skipped" => 0 );
 		$prefix = "";
 		if (isset ( $opt ['prefix'] )) {
@@ -623,7 +620,7 @@ class BaiduBCS {
 		if (isset ( $opt ["seek_object_id"] ) && isset ( $opt ["seek_object"] )) {
 			throw new BCS_Exception ( "Can not set see_object_id and seek_object at the same time!", - 1 );
 		}
-		
+
 		$num = 1;
 		if (isset ( $opt ["seek_object"] )) {
 			if (isset ( $objects [$opt ["seek_object"]] )) {
@@ -729,7 +726,7 @@ class BaiduBCS {
 	 * @param array $dest (Required)    待拷贝的目标object
 	 * bucket(Required)
 	 * object(Required)
-	 * @param array $opt (Optional) 
+	 * @param array $opt (Optional)
 	 * source_tag 指定拷贝对象的版本号
 	 * @throws BCS_Exception
 	 * @return BCS_ResponseCore
@@ -757,9 +754,9 @@ class BaiduBCS {
 
 	/**
 	 * 设置object的meta信息
-	 * @param string $bucket (Required) 
-	 * @param string $object (Required) 
-	 * @param array $opt (Optional) 
+	 * @param string $bucket (Required)
+	 * @param string $object (Required)
+	 * @param array $opt (Optional)
 	 * 目前支持的meta信息如下：
 	 * Content-Type
 	 * Cache-Control
@@ -784,7 +781,7 @@ class BaiduBCS {
 			self::set_header_into_opt ( $header, $value, $opt );
 		}
 		$source = array (
-				self::BUCKET => $bucket, 
+				self::BUCKET => $bucket,
 				self::OBJECT => $object );
 		$response = $this->copy_object ( $source, $source, $opt );
 		$this->log ( $response->isOK () ? "Set object meta success!" : "Set object meta failed! Response: [" . $response->body . "]", $opt );
@@ -793,9 +790,9 @@ class BaiduBCS {
 
 	/**
 	 * 获取object的acl
-	 * @param string $bucket (Required) 
-	 * @param string $object (Required) 
-	 * @param array $opt (Optional) 
+	 * @param string $bucket (Required)
+	 * @param string $object (Required)
+	 * @param array $opt (Optional)
 	 * @throws BCS_Exception
 	 * @return BCS_ResponseCore
 	 */
@@ -1031,8 +1028,8 @@ class BaiduBCS {
 
 	/**
 	 * 校验bucket是否合法，bucket规范
-	 * 1. 由小写字母，数字和横线'-'组成，长度为6~63位 
-	 * 2. 不能以数字作为Bucket开头 
+	 * 1. 由小写字母，数字和横线'-'组成，长度为6~63位
+	 * 2. 不能以数字作为Bucket开头
 	 * 3. 不能以'-'作为Bucket的开头或者结尾
 	 * @param string $bucket
 	 * @return boolean
@@ -1093,7 +1090,7 @@ class BaiduBCS {
 			} else {
 				$array [$key] = $function ( $value );
 			}
-			
+
 			if ($apply_to_keys_also && is_string ( $key )) {
 				$new_key = $function ( $key );
 				if ($new_key != $key) {
@@ -1215,7 +1212,7 @@ class BaiduBCS {
 				}
 			}
 		}
-		
+
 		return self::array_to_json ( $acl );
 	}
 
@@ -1293,7 +1290,7 @@ class BaiduBCS {
 
 	/**
 	 * make sure $opt is an array
-	 * @param $opt 
+	 * @param $opt
 	 */
 	private function assertParameterArray($opt) {
 		if (! is_array ( $opt )) {
