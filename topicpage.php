@@ -136,6 +136,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $c_content = '';
                     header('location: /t-'.$tid.'-'.$new_taltol_page);
                     exit;
+                }else{
+                    $cur_ucode = $new_ucode;
+                    $formhash = formhash();
                 }
 
                 // 若不转向
