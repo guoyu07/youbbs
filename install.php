@@ -34,7 +34,7 @@ if($DBS->geterrdesc()) {
 	}
 }
 
-$query - $DBS->query("SELECT COUNT(*) FROM yunbbs_settings", 'SILENT');
+$DBS->query("SELECT COUNT(*) FROM yunbbs_settings", 'SILENT');
 if(!$DBS->geterrdesc()) {
 	// BAE目前不支持清空缓存
 	// $MMC->flush();

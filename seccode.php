@@ -2,7 +2,7 @@
 
 error_reporting(0);
 session_start();
-session_register('code');
+//session_register('code');
 $_SESSION['code'] = '';
 $width            = '58';//图片宽
 $height           = '27';//图片高
