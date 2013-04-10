@@ -29,7 +29,7 @@ $mtime = explode(' ', microtime());
 $starttime = $mtime[1] + $mtime[0];
 $timestamp = time();
 $php_self = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
-$url_path = substr($php_self, 0,-4);
+$url_path = substr($php_self, 1,-4);
 
 include (dirname(__FILE__) . '/include/mysql.class.php');
 // 初始化从数据类，若要写、删除数据则需要定义主数据类
@@ -109,7 +109,7 @@ if(strpos($_SERVER["REQUEST_URI"], '.php')){
 
 // 只允许注册用户访问
 if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
-    if( !in_array($url_path, array('/login','/logout','/sigin','/forgot','/qqlogin','/qqcallback','/qqsetname','/wblogin','/wbcallback','/wbsetname'))){
+    if( !in_array($url_path, array('login','logout','sigin','forgot','qqlogin','qqcallback','qqsetname','wblogin','wbcallback','wbsetname'))){
         header('location: /login');
         exit('authorized only');
     }
@@ -117,7 +117,7 @@ if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
 
 // 网站暂时关闭
 if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
-    if( !in_array($url_path, array('/login','/forgot'))){
+    if( !in_array($url_path, array('login','forgot'))){
         header('location: /login');
         exit('site close');
     }
