@@ -1,12 +1,12 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title"><a href="/">',$options['name'],'</a> &raquo; ';
-if($url_path == 'sigin'){
+if($url_path == '/sigin'){
     echo '注 册';
 }
-if($url_path == 'login'){
+if($url_path == '/login'){
     echo '登 录';
 }
 echo '</div>
@@ -29,7 +29,7 @@ echo '</p>
 <p><label>登录名： <input type="text" name="name" class="sl w200" value="',htmlspecialchars($name),'" /></label>  <span class="fs12">允许字母、数字、中文，不能全为数字，4~12个字节</span></p>
 <p><label>密　码： <input type="password" name="pw" class="sl w200" value="" /></label></p>';
 
-if($url_path == 'sigin'){
+if($url_path == '/sigin'){
     if($regip){
         echo '<p class="red">一个ip最小注册间隔时间是 ',$options['reg_ip_space'],' 秒，请稍后再来注册 或 让管理员把这个时间改小点。</p>';
     }else{
@@ -39,10 +39,10 @@ if($url_path == 'sigin'){
 }
 
 echo '<p><input type="submit" value="';
-if($url_path == 'sigin'){
+if($url_path == '/sigin'){
     echo '注 册';
 }
-if($url_path == 'login'){
+if($url_path == '/login'){
     echo '登 录';
 }
 echo '" name="submit" class="textbtn" style="margin-left:60px;" /></p>';
@@ -58,7 +58,7 @@ if(($options['wb_key'] && $options['wb_secret']) && ($options['qq_appid'] && $op
     }
 }
 
-if($url_path == 'login'){
+if($url_path == '/login'){
     if($options['close_register'] || $options['close']){
         echo '<p class="grey fs12">网站暂时关闭 或 已停止新用户注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘记密码？ <a href="/forgot">马上找回</a>';
     }else{
