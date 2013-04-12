@@ -13,7 +13,6 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link href="/feed" rel="alternate" title="',htmlspecialchars($options['name']),' - 订阅" type="application/atom+xml"/>
 <script src="',$options['jquery_lib'],'" type="text/javascript"></script>
-<link rel="top" title="Back to Top" href="#" />
 ';
 if($options['head_meta']){
     echo $options['head_meta'];
@@ -132,6 +131,20 @@ if($options['show_debug']){
 echo '  </div></div>
     <!-- footer end -->
 </div>
+<script type="text/javascript" src="/static/default/go-top.js"></script>
+<script>
+/* <![CDATA[ */
+(new GoTop()).init({
+    pageWidth        :980,
+    nodeId           :\'go-top\',
+    nodeWidth        :50,
+    distanceToBottom :50,
+    distanceToPage   :20,
+    hideRegionHeight :130,
+    text             :\'\'
+});
+/* ]]> */
+</script>
 ';
 
 if($options['analytics_code']){

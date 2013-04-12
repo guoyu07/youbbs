@@ -239,7 +239,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">调用jquery库地址</td>
-        <td width="auto" align="left"><input type="text" class="sl" name="jquery_lib" value="',$options['jquery_lib'],'" /> 默认/static/js/jquery-1.9.1.min.js</td>
+        <td width="auto" align="left"><input type="text" class="sl" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br />默认/static/default/jquery-1.9.1.min.js</td>
     </tr>
     <tr>
         <td width="120" align="right"></td>
@@ -281,7 +281,7 @@ echo '
 
 <form action="',$_SERVER["REQUEST_URI"],'#3" method="post" onSubmit="javascript:return window.confirm(\'你确认要删除网站所有数据吗？\')">
 <input type="hidden" name="action" value="flushdata"/>
-<p class="red">清除所有数据，操作不可恢复。没事别点下面按钮</p>
+<p class="red">清除所有数据，操作不可恢复，没事别点下面按钮！</p>
 <p><input type="submit" value=" 清除所有数据 " name="submit" class="textbtn" /></p>
 </form>
 </div>

@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="float-right grey fs12">
@@ -13,7 +13,7 @@ echo '<input id="filetoupload" type="file" name="filetoupload" style="width:200p
 </div>
 
 <!-- ajaxfileupload -->
-<script type="text/javascript" src="/static/js/jquery.upload-1.0.2.min.js"></script>
+<script type="text/javascript" src="/static/default/jquery.upload-1.0.2.min.js"></script>
 
 <script type="text/javascript">
 $("#filetoupload").change(function() {
