@@ -16,7 +16,7 @@ small { font-size: 11px; }
 img { border: none; }
 p {line-height:180%;margin-bottom:20px;}
 html {height: 100%;}
-body {padding: 0px;margin: 0px;font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;background-color: #fff;-webkit-text-size-adjust: none;}
+body {padding: 0px;margin: 0px;font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;background-color: #fff;height: 100%;}
 
 a:link {color: #15C;text-decoration: none;}
 a:active {color: #bd0a01;text-decoration: none;}
@@ -52,8 +52,8 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
         .banner {float:right;padding:15px;}
         .banner img{vertical-align: middle;}
         .avatar-mini {max-height:24px;max-width:24px;}
-    
-.main-wrap {width:100%;background-color:#CCC;padding:10px 0 1px 0;}
+
+.main-wrap {min-height:75%;height: auto !important;height: 75%;width:100%;background-color:#CCC;padding:10px 0 1px 0;}
     .main {width:100%;margin:0;}
         .main-content {width:100%;}
             .tiptitle {margin:0 auto;width:80%;margin-bottom:10px;border-bottom:2px solid #CCC;padding:10px;color:#CCC;font-size:12px;background-color:#000;border-radius:5px;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);}
@@ -68,7 +68,7 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .topic-title-date {font-size:12px;color:#999;border-bottom: 1px solid #EFEFEF;padding-bottom:8px;}
                 .topic-title-date a {color:#A0A0A0;font-weight:bold;}
                 .topic-title-date a:hover {color:#707070;}
-                
+
                 .detail-avatar {width:48px;height:48px;float:right;}
                 .detail-avatar img {border-radius: 4px;}
                 .topic-content {WORD-WRAP: break-word;}
@@ -86,7 +86,7 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .item-count a {font-size: 12px;line-height: 14px;font-weight: bold;border-radius: 14px;display: inline-block;background-color: #AAB0C6;color: #FFF;padding: 2px 10px 2px 10px;}
                 .item-count a:hover {text-decoration:none;background-color:#778087;}
                 .item-count a:visited {color:#AAA;background-color:#E5E5E5;}
-                
+
                 .item-content h1 {font-size: 16px;line-height:130%;margin-bottom:8px;min-height:28px;}
                 .node-detail {border-bottom:1px solid #EFEFEF;margin-bottom:15px;}
                 .node-img {float:left;margin:0 10px 10px 0;height:73px;width:73px;}
@@ -99,7 +99,7 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .newpostbtn {font-size:12px;display:block;line-height:1.2em;padding:2px 5px 2px 5px;border:1px solid #A2A2A2;border-radius: 5px;background-color: #f5f5f5; color: #333; text-shadow: 0px 1px 1px #fff; text-decoration: none; font-weight: bold; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.3); }
                 .newpostbtn:hover { background-color: #fff; color: #333; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
                 .newpostbtn:active { background-color: #e2e2e2; color: #333; text-shadow: 0px 1px 1px #fff; text-decoration: none; text-decoration: none; font-weight: bold; cursor: pointer; -moz-box-shadow: 0px 1px 2px rgba(66, 66, 77, 0.2); }
-                
+
                 .commont-item {border-bottom: 1px solid #EFEFEF;padding:0 10px 0 10px;padding:0 10px 0 10px;margin-bottom:15px;background: url("img/bg_item.png") repeat-x bottom center;}
                 .commont-avatar {width:32px;height:28px;float:left;}
                 .commont-avatar img {max-height:24px;max-width:24px;border-radius: 4px;}
@@ -107,7 +107,7 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .commont-data-date {color:#999;font-size: 12px;margin-bottom:4px;}
                 .commont-data-date a {color:#666;}
                 .commont-data-date a:hover {color:#222;}
-                
+
                 .commonet-count {font-size: 12px;line-height: 12px;font-weight: 500;border-radius: 10px;display: inline-block;background-color: #E0E0E0;color: #808080;padding: 2px 5px 2px 5px;}
                 .comment-text {width: 95%; height: 150px;}
                 .commont-content {WORD-WRAP: break-word;}
@@ -125,8 +125,8 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
     .footer {margin:0 auto;padding:10px;}
     .footer p {margin-bottom:1px;line-height:100%;}
     .footer p a {color:#606060;font-weight:500;}
-    .footer p a:hover {color:#303030;text-decoration:underline;} 
-    
+    .footer p a:hover {color:#303030;text-decoration:underline;}
+
 
 /* FORM Copy from babel v2.4.0-RC1 */
 
