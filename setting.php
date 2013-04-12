@@ -70,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
                     // 上传到云存储
-                    include(dirname(__FILE__) . '/bcs.class.php');
+                    include(dirname(__FILE__) . '/libs/bcs.class.php');
                     $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                     $bcs_object = '/avatar/large/'.$cur_uid.'.png';

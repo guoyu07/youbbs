@@ -166,7 +166,7 @@ if(isset($gotohome)){
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
 
             // 保存头像到云存储
-            include(dirname(__FILE__) . '/bcs.class.php');
+            include(dirname(__FILE__) . '/libs/bcs.class.php');
             $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
             $bcs_object = '/avatar/large/'.$cur_uid.'.png';

@@ -12,7 +12,7 @@ $sql = fread($fp, 2048000);
 fclose($fp);
 
 include (dirname(__FILE__) . '/config.php');
-include (dirname(__FILE__) . '/include/mysql.class.php');
+include (dirname(__FILE__) . '/libs/mysql.class.php');
 
 $DBS = new DB_MySQL;
 $DBS->connect($servername, $dbport, $dbusername, $dbpassword, $dbname);
@@ -54,7 +54,7 @@ $DBS->close();
 
 // 拷贝三种格式默认头像
 // 上传到云存储
-include(dirname(__FILE__) . '/bcs.class.php');
+include(dirname(__FILE__) . '/libs/bcs.class.php');
 
 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 

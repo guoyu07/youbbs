@@ -124,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 imagedestroy($img_obj);
 
                 // 上传到云存储
-                include(dirname(__FILE__) . '/bcs.class.php');
+                include(dirname(__FILE__) . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;
@@ -154,7 +154,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 // 其它文件
                 // 上传到云存储
-                include(dirname(__FILE__) . '/bcs.class.php');
+                include(dirname(__FILE__) . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;

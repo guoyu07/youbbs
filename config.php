@@ -9,7 +9,7 @@
  *http://www.sinosky.org
  */
 // 定义头像、图库基础网址
-define('TUCHUANG_URL', 'http://bcs.duapp.com/XXXXX');  //XXXXX换成自己的bucket名称
+define('TUCHUANG_URL', 'http://bcs.duapp.com/XXXXX'); //XXXXX 换成自己的 bucket 名称
 
 //数据库主机名或IP
 $servername = getenv('HTTP_BAE_ENV_ADDR_SQL_IP');
@@ -18,7 +18,7 @@ $dbusername = getenv('HTTP_BAE_ENV_AK');
 //数据库密码
 $dbpassword = getenv('HTTP_BAE_ENV_SK');
 //数据库名
-$dbname = 'XXXXX';//自己的数据库名称
+$dbname = 'XXXXX'; //XXXXX 换成自己的数据库名称
 //数据端口
 $dbport = getenv('HTTP_BAE_ENV_ADDR_SQL_PORT');
 

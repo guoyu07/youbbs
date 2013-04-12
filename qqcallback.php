@@ -1,4 +1,4 @@
-<?php 
+<?php
 define('IN_SAESPOT', 1);
 
 include(dirname(__FILE__) . '/config.php');
@@ -12,7 +12,7 @@ $_SESSION["appkey"]   = $options['qq_appkey'];
 
 $_SESSION["callback"] = 'http://'.$_SERVER['HTTP_HOST'].'/qqcallback';
 
-include(dirname(__FILE__) . "/api/qq_utils.php");
+include(dirname(__FILE__) . "/libs/qq_utils.php");
 
 function qq_callback()
 {
@@ -51,7 +51,7 @@ function qq_callback()
         $_SESSION["access_token"] = $params["access_token"];
 
     }
-    else 
+    else
     {
         echo("The state does not match. You may be a victim of CSRF.");
     }
@@ -59,7 +59,7 @@ function qq_callback()
 
 function get_openid()
 {
-    $graph_url = "https://graph.qq.com/oauth2.0/me?access_token=" 
+    $graph_url = "https://graph.qq.com/oauth2.0/me?access_token="
         . $_SESSION['access_token'];
 
     $str  = get_url_contents($graph_url);
@@ -137,23 +137,23 @@ if($db_openid && $db_openid['uid']){
         $cur_user = $db_user;
         unset($db_user);
     }
-    
+
     header("Location:/");
-    exit;    
+    exit;
 }
 
 
 ///
 if(strpos(' '.$_SESSION["scope"], 'get_info')){
     $user_info = get_info();
-    
+
     /**
      * $user_info['data']['head'] 头像 /100
      * $user_info['data']['name'] 微博地址 http://t.qq.com/#{name}
      * $user_info['data']['nick'] 网站名字
      * $user_info['data']['regtime'] 判断是否是新用户，至少三个月
      */
-    
+
     $regtime = intval($user_info['data']['regtime']);
     if(!$regtime || ($timestamp - $regtime)<7776000){
         echo '<h3>抱歉，您还没开通腾讯微博，或者开通未达到3个月，请先去开通 <a href="http://t.qq.com" target="_blank">http://t.qq.com</a></h3>';
@@ -161,26 +161,26 @@ if(strpos(' '.$_SESSION["scope"], 'get_info')){
         echo '<h3><a href="/">返回首页</a></h3>';
         exit;
     }
-    
+
     $name = $user_info['data']['name'];
-    
+
     $_SESSION["nick"] = $user_info['data']['nick'];
     if($user_info['data']['head']){
         $_SESSION["avatar"] = $user_info['data']['head'].'/100';
     }
-    
+
 }else{
     $user_info = get_user_info();
-    
+
     /**
      * $user_info['figureurl_2'] 头像 100px
-     * $user_info['nickname'] 
-     */    
-    
+     * $user_info['nickname']
+     */
+
     $name = "";
     $_SESSION["nick"] = $user_info['nickname'];
     $_SESSION["avatar"] = $user_info['figureurl_2'];
-    
+
 }
 
 
@@ -195,7 +195,7 @@ if($db_openid){
     $DBS->query("INSERT INTO yunbbs_qqweibo (id,uid,name,openid) VALUES (null,'0','$name', '$openid')");
     header("Location:/qqsetname");
     exit;
-    
+
 }
 
 ?>

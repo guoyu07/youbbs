@@ -1,9 +1,9 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
 
 echo '
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; 会员：',$m_obj['name'],' 
+    <a href="/">',$options['name'],'</a> &raquo; 会员：',$m_obj['name'],'
 </div>
 
 <div class="main-box">
@@ -42,7 +42,7 @@ echo '
 foreach($articledb as $article){
 echo '
 <div class="post-list">
-    <div class="item-avatar"><a href="/member/',$m_obj['id'],'"><img src="',$options['base_avatar_url'],'/',$m_obj['avatar'],'.jpg!mini" alt="',$m_obj['name'],'" /></a></div>
+    <div class="item-avatar"><a href="/member/',$m_obj['id'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
         <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>';

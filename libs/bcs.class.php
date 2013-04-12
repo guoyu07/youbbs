@@ -3,8 +3,8 @@ if (! defined ( 'BCS_API_PATH' )) {
 	define ( 'BCS_API_PATH', dirname ( __FILE__ ) );
 }
 require_once (BCS_API_PATH . '/conf.inc.php');
-require_once (BCS_API_PATH . '/libs/requestcore/requestcore.class.php');
-require_once (BCS_API_PATH . '/utils/mimetypes.class.php');
+require_once (BCS_API_PATH . '/libs/requestcore.class.php');
+require_once (BCS_API_PATH . '/libs/mimetypes.class.php');
 /**
  * Default BCS Exception.
  */

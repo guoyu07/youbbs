@@ -31,7 +31,7 @@ $timestamp = time();
 $php_self = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
 $url_path = substr($php_self, 1,-4);
 
-include (dirname(__FILE__) . '/include/mysql.class.php');
+include (dirname(__FILE__) . '/libs/mysql.class.php');
 // 初始化从数据类，若要写、删除数据则需要定义主数据类
 $DBS = new DB_MySQL;
 $DBS->connect($servername, $dbport, $dbusername, $dbpassword, $dbname);

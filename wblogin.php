@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-include(dirname(__FILE__) . "/api/saetv2.ex.class.php");
+include(dirname(__FILE__) . "/libs/saetv2.ex.class.php");
 
 $o = new SaeTOAuthV2( $options['wb_key'] , $options['wb_secret'] );
 

@@ -1,10 +1,10 @@
-<?php 
+<?php
 define('IN_SAESPOT', 1);
 
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-include(dirname(__FILE__) . "/api/saetv2.ex.class.php");
+include(dirname(__FILE__) . "/libs/saetv2.ex.class.php");
 
 error_reporting(0);
 session_start();
@@ -39,15 +39,15 @@ if ($token) {
        ["uid"]=>
        string(10) "12246xxxxx"
      }
-     
+
      */
     $openid = $token['uid'];
     $_SESSION["openid"] = $openid;
-    
+
     $db_openid = $DBS->fetch_one_array("SELECT `id`,`uid`,`name` FROM `yunbbs_weibo` WHERE `openid`='".$openid."'");
-    
+
     if($db_openid && $db_openid['uid']){
-        
+
         // 直接登录
         $cur_uid = $db_openid['uid'];
         $db_user = $DBS->fetch_one_array("SELECT * FROM `yunbbs_users` WHERE `id`='".$cur_uid."' LIMIT 1");
@@ -63,11 +63,11 @@ if ($token) {
             $cur_user = $db_user;
             unset($db_user);
         }
-        
+
         header("Location:/");
-        exit; 
+        exit;
     }
-    
+
     /// 获取用户信息
     $c = new SaeTClientV2( $options['wb_key'] , $options['wb_secret'] , $token['access_token'] );
     $uid_get = $c->get_uid();
@@ -82,14 +82,14 @@ if ($token) {
      * avatar_large 用户大头像地址
      */
     ///
-    
+
     // 尝试获取用户信息（通过审核才能获取）
     $name = $user_info['profile_url'];
     $_SESSION["nick"] = $user_info['name'];
     if($user_info['avatar_large']){
         $_SESSION["avatar"] = $user_info['avatar_large'];
     }
-    
+
     if($db_openid){
         if($db_openid['uid']){
             // pass
@@ -102,7 +102,7 @@ if ($token) {
         header("Location:/wbsetname");
         exit;
     }
-    
+
 } else {
     echo 'Get token failed. <a href="/">Go back Home</a>';
     exit;

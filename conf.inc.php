@@ -10,7 +10,7 @@ define ( 'BCS_SK', 'XXXXX' );
 define ( 'BCS_SUPERFILE_POSTFIX', '_bcs_superfile_' );
 //sdk superfile分片大小 ，单位 B（字节）
 define ( 'BCS_SUPERFILE_SLICE_SIZE', 1024 * 1024 );
-//bucket名称
+//bucket 名称
 define( 'BUCKET','XXXXX' );
 
 ?>
