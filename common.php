@@ -1,6 +1,6 @@
 <?php
 define('SAESPOT_VER', '1.04');
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 // 获得IP地址
 if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
@@ -93,7 +93,7 @@ $formhash = formhash();
 
 // 限制不能打开.php的网址
 if(strpos($_SERVER["REQUEST_URI"], '.php')){
-    header('location: /404.html');
+    header('location: /static/error/404.html');
     exit('no php script');
 }
 

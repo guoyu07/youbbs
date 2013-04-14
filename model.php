@@ -1,7 +1,7 @@
 <?php
 //一些常用的数据操作
 
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 //获取网站基本配置
 $options = $MMC->get('options');

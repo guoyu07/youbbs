@@ -4,13 +4,13 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<88) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<88) exit(header('location: /static/error/403.html'));
 
 $tid = intval($_GET['tid']);
 $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
-    exit(header('location: /404.html'));
+    exit(header('location: /static/error/404.html'));
 }
 
 if($t_obj['closecomment']){

@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
 
 $act = trim($_GET['act']);
 $lid = intval($_GET['lid']);
@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
             }
-            
+
         }else{
             $tip2 = '链接名 和 网址 不能留空';
         }
@@ -58,7 +58,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $DBS->unbuffered_query("DELETE FROM yunbbs_links WHERE id='$lid'");
         $MMC->delete('site_links');
     }
-    
+
 }
 
 // 获取链接列表

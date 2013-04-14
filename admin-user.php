@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
 
 
 $tip1 = '';
@@ -14,7 +14,7 @@ $act = trim($_GET['act']);
 $mid = intval(trim($_GET['mid']));
 
 if($act=='pass' || $act=='active'){
-    
+
     if($DBS->unbuffered_query("UPDATE yunbbs_users SET flag=5 WHERE id='$mid'")){
         //更新缓存
         $MMC->delete('u_'.$mid);
@@ -25,15 +25,15 @@ if($act=='pass' || $act=='active'){
             $tip2 = '已成功操作';
             $MMC->delete('flag0_users');
         }
-        
+
     }else{
         if($act=='pass'){
             $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
         }else{
             $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
-        }        
+        }
     }
-    
+
 }
 
 
@@ -73,7 +73,7 @@ if(!$userdb2 && $userdb2 !== ''){
     }else{
         $MMC->set('flag0_users', '', 0, 300);
     }
-    
+
 }
 
 // 页面变量

@@ -4,9 +4,9 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /401.html'));
+if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
-    exit(header('location: /403.html'));
+    exit(header('location: /static/error/403.html'));
 }else if($cur_user['flag']==1){
     exit('error: 401 Access Denied');
 }
@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
-        exit(header('location: /404.html'));
+        exit(header('location: /static/error/404.html'));
     }
 }
 // 页面变量

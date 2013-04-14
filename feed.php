@@ -5,7 +5,7 @@ include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
 if($options['authorized'] || $options['close']){
-    exit(header('location: /403.html'));
+    exit(header('location: /static/error/403.html'));
 }
 
 // 获取最近文章列表

@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
 
 $tip1 = '';
 $tip2 = '';

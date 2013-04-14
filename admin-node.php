@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
 
 $nid = intval($_GET['nid']);
 if($nid){
@@ -20,7 +20,7 @@ $tip1 = '';
 $tip2 = '';
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
-    
+
     if($action=='find'){
         $n_id = trim($_POST['findid']);
         if($n_id){
@@ -65,11 +65,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
             }
-            
+
         }else{
             $tip2 = '分类名不能留空';
         }
-        
+
     }
 
 }

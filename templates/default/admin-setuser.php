@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 echo '
 <a name="4"></a>
 <div class="title">修改用户权限 - <span class="red">',$m_obj['name'],'</span></div>
@@ -26,7 +26,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="保存设置" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -56,7 +56,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="保存设置" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -73,8 +73,8 @@ echo '
     <tbody><tr>
         <td width="120" align="right">当前头像</td>
         <td width="auto" align="left">
-        <img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp; 
-        <img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp; 
+        <img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp;
+        <img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp;
         <img src="',TUCHUANG_URL,'/avatar/mini/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto="">
         </td>
     </tr>
@@ -86,7 +86,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="更新头像" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -112,7 +112,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="重设密码" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 

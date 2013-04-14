@@ -4,18 +4,18 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
 
 $rid = intval($_GET['rid']);
 $query = "SELECT id,articleid,content FROM yunbbs_comments WHERE id='$rid'";
 $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
-    exit(header('location: /404.html'));
+    exit(header('location: /static/error/404.html'));
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $r_content = addslashes(trim($_POST['content']));
-    
+
     if($r_content){
         $r_content = htmlspecialchars($r_content);
         $DBS->unbuffered_query("UPDATE yunbbs_comments SET content='$r_content' WHERE id='$rid'");

@@ -59,17 +59,17 @@ include(dirname(__FILE__) . '/libs/bcs.class.php');
 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
 try{
-    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/large/0.png', 'static/0-large.png', array('acl'=>'public-read'));
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/large/0.png', 'static/avatar/0-large.png', array('acl'=>'public-read'));
 }catch (Exception $e){
     exit('百度云存储创建large对象失败，请稍后再试！' );
 }
 try{
-    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/normal/0.png', 'static/0-normal.png', array('acl'=>'public-read'));
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/normal/0.png', 'static/avatar/0-normal.png', array('acl'=>'public-read'));
 }catch (Exception $e){
     exit('百度云存储创建normal对象失败，请稍后再试！' );
 }
 try{
-    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/mini/0.png', 'static/0-mini.png', array('acl'=>'public-read'));
+    $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/mini/0.png', 'static/avatar/0-mini.png', array('acl'=>'public-read'));
 }catch (Exception $e){
     exit('百度云存储创建normal对象失败，请稍后再试！' );
 }

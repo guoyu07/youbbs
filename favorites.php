@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /401.html'));
+if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
     exit('error: 403 该帐户已被禁用');
@@ -38,7 +38,7 @@ if($act && $tid){
                     $content = implode(',', $ids_arr);
                     $user_fav['content'] = $content;
                     $user_fav['articles'] = $articles;
-                    
+
                     $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
                     $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
                     $MMC->delete('favorites_'.$cur_uid);
@@ -49,7 +49,7 @@ if($act && $tid){
             }else{
                 $user_fav['content'] = $tid;
                 $user_fav['articles'] = 1;
-                
+
                 $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='1',content='$tid' WHERE uid='$cur_uid'");
                 $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
                 $MMC->delete('favorites_'.$cur_uid);
@@ -57,7 +57,7 @@ if($act && $tid){
                 $MMC->delete('t-'.$tid.'_ios');
             }
         }else{
-            
+
             $user_fav= array('id'=>'','uid'=>$cur_uid, 'articles'=>1, 'content' => $tid);
             $DBS->query("INSERT INTO yunbbs_favorites (id,uid,articles,content) VALUES (null,'$cur_uid','1','$tid')");
             $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
@@ -65,7 +65,7 @@ if($act && $tid){
             $MMC->delete('t-'.$tid);
             $MMC->delete('t-'.$tid.'_ios');
         }
-        
+
     }else if($act == 'del'){
         // 删除
         if($user_fav){
@@ -82,7 +82,7 @@ if($act && $tid){
                     $content = implode(',', $ids_arr);
                     $user_fav['content'] = $content;
                     $user_fav['articles'] = $articles;
-                    
+
                     $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
                     $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites-1 WHERE id='$tid'");
                     $MMC->delete('favorites_'.$cur_uid);
@@ -120,7 +120,7 @@ if($user_fav['articles']){
     if($page == 0) $page = 1;
     $from_i = $options['list_shownum']*($page-1);
     $to_i = $from_i + $options['list_shownum'];
-    
+
     if($user_fav['articles'] > 1){
         $id_arr = array_slice( explode(',', $user_fav['content']), $from_i, $to_i);
     }else{
@@ -129,7 +129,7 @@ if($user_fav['articles']){
     $ids = implode(',', $id_arr);
     //exit($ids);
     $query_sql = "SELECT a.id,a.uid,a.cid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
-        FROM yunbbs_articles a 
+        FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
@@ -140,7 +140,7 @@ if($user_fav['articles']){
     foreach($id_arr as $aid){
         $articledb[$aid] = '';
     }
-    
+
     while ($article = $DBS->fetch_array($query)) {
         // 格式化内容
         $article['addtime'] = showtime($article['addtime']);

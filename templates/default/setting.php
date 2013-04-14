@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 echo '
 <a name="1"></a>
 <div class="title"><a href="/">',$options['name'],'</a> &raquo; 设置</div>
@@ -28,7 +28,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="保存设置" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -45,8 +45,8 @@ echo '
     <tbody><tr>
         <td width="120" align="right">当前头像</td>
         <td width="auto" align="left">
-      <img src="',TUCHUANG_URL,'/avatar/large/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp; 
-        <img src="',TUCHUANG_URL,'/avatar/normal/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp; 
+      <img src="',TUCHUANG_URL,'/avatar/large/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp;
+        <img src="',TUCHUANG_URL,'/avatar/normal/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""> &nbsp;
         <img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png','" class="avatar" border="0" align="default" auto=""></td>
     </tr>
     <tr>
@@ -57,7 +57,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="更新头像" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -90,7 +90,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="更改密码" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -123,7 +123,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="设置登录密码" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 

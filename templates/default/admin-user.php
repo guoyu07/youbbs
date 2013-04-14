@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 if($userdb || $userdb2){
 if($userdb){

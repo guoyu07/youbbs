@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 define ( 'BCS_HOST', 'bcs.duapp.com' );
 //AK 公钥

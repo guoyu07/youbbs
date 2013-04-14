@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 require(dirname(__FILE__) . '/config.php');
 require(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /401.html'));
+if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
     exit('error: 403 该帐户已被禁用');

@@ -21,7 +21,7 @@ session_start();
 $name = $_SESSION["nick"];
 $openid = $_SESSION["openid"];
 
-if(!$openid) exit(header('location: /403.html'));
+if(!$openid) exit(header('location: /static/error/403.html'));
 
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){

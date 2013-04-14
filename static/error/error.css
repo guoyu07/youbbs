@@ -11,7 +11,7 @@ html {
 body {
     background-color: #F3F1E5;
     color: #4D505D;
-    font-family: Microsoft YaHei;
+    font-family: "Microsoft YaHei",arial,sans-serif;
     font-size: small;
     height: 100%;
 }

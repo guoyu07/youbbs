@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">

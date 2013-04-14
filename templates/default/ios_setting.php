@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 echo '
 <a name="1"></a>
 <div class="title"><a href="/">',$options['name'],'</a> &raquo; ',$title,'</div>
@@ -32,7 +32,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="保存设置" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -68,7 +68,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="更改密码" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
@@ -103,7 +103,7 @@ echo '
         <td width="120" align="right"></td>
         <td width="auto" align="left"><input type="submit" value="设置登录密码" name="submit" class="textbtn" /></td>
     </tr>
-    
+
 </tbody></table>
 </form>
 
