@@ -1,5 +1,5 @@
 <?php
-define('SAESPOT_VER', '1.04');
+define('SAESPOT_VER', '1.5');
 if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 
 // 获得IP地址
