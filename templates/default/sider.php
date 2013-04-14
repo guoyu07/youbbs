@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 if($cur_user && $cur_user['flag']>=99){
 echo '
@@ -30,13 +30,13 @@ echo '
 if($options['close']){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">论坛暂时关闭公告</div>
+    <div class="sider-box-title">社区暂时关闭公告</div>
     <div class="sider-box-content">
     <h2>';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '论坛维护中……';
+    echo '社区维护中……';
 }
 echo '</h2>
     <div class="c"></div>
@@ -45,6 +45,17 @@ echo '</h2>
 
 }
 
+/*
+echo '
+<div class="sider-box">
+    <div class="sider-box-title">微信机器人</div>
+    <div class="sider-box-content">
+    <img src="/static/wechat_qrcode_250.jpg" alt="微信公众号" height="250" width="250">
+    <div class="c"></div>
+    </div>
+</div>
+';
+*/
 
 if(isset($newpost_page)){
 echo '
@@ -72,7 +83,7 @@ echo '
     <div class="sider-box-content">
     <div class="btn">';
 foreach(array_slice($bot_nodes, 0, intval($options['hot_node_num']), true) as $k=>$v ){
-    echo '<a href="/',$k,'">',$v,'</a>';
+    echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '    </div>
     <div class="c"></div>
@@ -87,7 +98,7 @@ echo '
     <div class="sider-box-content">
     <div class="btn">';
 foreach( $newest_nodes as $k=>$v ){
-    echo '<a href="/',$k,'">',$v,'</a>';
+    echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '    </div>
     <div class="c"></div>
@@ -123,5 +134,5 @@ echo '    </ul>
     <div class="c"></div>
     </div>
 </div>';
-} 
+}
 ?>

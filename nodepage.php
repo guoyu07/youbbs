@@ -21,19 +21,14 @@ if(!$c_obj){
 
 // 处理正确的页数
 $taltol_page = ceil($c_obj['articles']/$options['list_shownum']);
-if($page<0){
-    header('location: /n-'.$cid);
+if($page<=0){
+    header('location: /node-'.$cid.'-1.html');
     exit;
-}else if($page==1){
-    header('location: /n-'.$cid);
-    exit;
-}else{
-    if($page>$taltol_page){
-        header('location: /n-'.$cid.'-'.$taltol_page);
-        exit;
-    }
 }
-
+if($page!=1 && $page>$taltol_page){
+    header('location: /node-'.$cid.'-'.$taltol_page.'.html');
+    exit;
+}
 
 // 获取最近文章列表
 if($page == 0) $page = 1;
@@ -41,7 +36,7 @@ $mc_key = 'cat-page-article-list-'.$cid.'-'.$page;
 $articledb = $MMC->get($mc_key);
 if(!$articledb){
     $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
-        FROM yunbbs_articles a 
+        FROM yunbbs_articles a
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
         WHERE a.cid='".$cid."' ORDER BY edittime DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
@@ -59,11 +54,18 @@ if(!$articledb){
 }
 
 // 页面变量
-$title = $options['name'].' > '.$c_obj['name'];
+if ($page>=2) {
+    $title = $options['name'].' 社区 › '.$c_obj['name'].' - 第 '.$page.' 页';
+} else {
+    $title = $options['name'].' 社区 › '.$c_obj['name'];
+}
 $newest_nodes = get_newest_nodes();
 $show_sider_ad = "1";
 $links = get_links();
-$meta_des = $c_obj['name'].' - '.htmlspecialchars(mb_substr($c_obj['about'], 0, 150, 'utf-8')).' - page '.$page;
+//$meta_keywords = htmlspecialchars();
+if ($c_obj['about']) {
+    $meta_des = htmlspecialchars(mb_substr($c_obj['about'], 0, 150, 'utf-8'));
+}
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'node.php';
 

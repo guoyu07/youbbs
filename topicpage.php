@@ -54,19 +54,14 @@ if(!$t_obj){
 }
 // 处理正确的评论页数
 $taltol_page = ceil($t_obj['comments']/$options['commentlist_num']);
-if($page<0){
-    header('location: /t-'.$tid);
+if($page<=0){
+    header('location: /topic-'.$tid.'-1.html');
     exit;
-}else if($page==1){
-    header('location: /t-'.$tid);
-    exit;
-}else{
-    if($page>$taltol_page){
-        header('location: /t-'.$tid.'-'.$taltol_page);
-        exit;
-    }
 }
-
+if($page!=1 && $page>$taltol_page){
+    header('location: /topic-'.$tid.'-'.$taltol_page.',html');
+    exit;
+}
 
 // 处理提交评论
 $tip = '';
@@ -134,7 +129,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // 跳到评论最后一页
                 if($page<$new_taltol_page){
                     $c_content = '';
-                    header('location: /t-'.$tid.'-'.$new_taltol_page);
+                    header('location: /topic-'.$tid.'-'.$new_taltol_page.'.html');
                     exit;
                 }else{
                     $cur_ucode = $new_ucode;
@@ -232,14 +227,20 @@ if ($cur_user){
 }
 
 // 页面变量
-$title = $t_obj['title'].' - '.$options['name'];
+if ($page>=2) {
+    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'].' 社区';
+} else {
+    $title = $t_obj['title'].' - '.$options['name'].' 社区';
+}
 $newest_nodes = get_newest_nodes();
 $links = get_links();
-$meta_des = $c_obj['name'].' - '.$t_obj['author'].' - '.htmlspecialchars(mb_substr($t_obj['content'], 0, 150, 'utf-8'));
+//$meta_keywords = htmlspecialchars();
+if ($t_obj['content']) {
+    $meta_des = htmlspecialchars(mb_substr($t_obj['content'], 0, 150, 'utf-8'));
+}
 
 // 设置回复图片最大宽度
 $img_max_w = 590;
-$canonical = '/t-'.$t_obj['id'];
 $show_sider_ad = "1";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'postpage.php';

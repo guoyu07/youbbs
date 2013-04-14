@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit('error: 401 login please');
+if (!$cur_user) exit(header('location: /401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
     exit('error: 403 该帐户已被禁用');
@@ -152,7 +152,7 @@ if($user_fav['articles']){
 }
 
 // 页面变量
-$title = '收藏的帖子 - '.$options['name'];
+$title = '收藏的帖子 - '.$options['name'].' 社区';
 $newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'favorites.php';

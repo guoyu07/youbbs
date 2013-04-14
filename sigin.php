@@ -111,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '注册 - '.$options['name'];
+$title = '注册 - '.$options['name'].' 社区';
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 

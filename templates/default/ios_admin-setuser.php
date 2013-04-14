@@ -1,5 +1,5 @@
 <?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
 echo '
 <a name="4"></a>
 <div class="title">修改用户权限 - <span class="red">',$m_obj['name'],'</span></div>

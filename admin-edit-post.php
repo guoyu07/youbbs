@@ -4,13 +4,13 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<88) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<88) exit(header('location: /403.html'));
 
 $tid = intval($_GET['tid']);
 $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
-    exit('404');
+    exit(header('location: /404.html'));
 }
 
 if($t_obj['closecomment']){
@@ -39,7 +39,7 @@ if(!$all_nodes){
         $all_nodes[$c_obj['id']] = $c_obj['name'];
     }
     $MMC->set('all_nodes', $all_nodes, 0 ,600);
-    
+
     unset($node);
     $DBS->free_result($query);
 }
@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $p_content = addslashes(trim($_POST['content']));
     $p_closecomment = intval($_POST['closecomment']);
     $p_visible = intval($_POST['visible']);
-    
+
     if($p_title){
         $p_title = htmlspecialchars($p_title);
         $p_content = htmlspecialchars($p_content);
@@ -62,8 +62,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles+1 WHERE id='$p_cid'");
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles-1 WHERE id='$old_cid'");
         }
-        
-        header('location: /t-'.$tid);
+
+        header('location: /topic-'.$tid.'.html');
         exit;
     }else{
         $tip = '标题 不能留空';
@@ -74,7 +74,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
 }
 // 页面变量
-$title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'];
+$title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'].' 社区';
 // 设置回复图片最大宽度
 $img_max_w = 650;
 

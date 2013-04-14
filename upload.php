@@ -4,11 +4,11 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit('error: 401 login please');
+if (!$cur_user) exit(header('location: /401.html'));
 if ($cur_user['flag']==0){
-    exit('error: 403 Access Denied');
+    exit(header('location: /403.html'));
 }else if($cur_user['flag']==1){
-    exit('error: 401 Access Denied');
+    exit(header('location: /401.html'));
 }
 
 if($options['close_upload']) exit('error: 403 附件上传已禁用');

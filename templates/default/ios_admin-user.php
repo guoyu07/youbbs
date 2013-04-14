@@ -1,5 +1,5 @@
 <?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
 
 if($userdb || $userdb2){
 if($userdb){

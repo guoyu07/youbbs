@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 require(dirname(__FILE__) . '/config.php');
 require(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit('error: 401 login please');
+if (!$cur_user) exit(header('location: /401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
     exit('error: 403 该帐户已被禁用');
@@ -232,7 +232,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '设置 - '.$options['name'];
+$title = '设置 - '.$options['name'].' 社区';
 
 $newest_nodes = get_newest_nodes();
 

@@ -18,14 +18,14 @@ if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
     header("Status: 404 Not Found");
     include(dirname(__FILE__) . '/404.html');
     exit;
-    
+
 }
 
 $m_obj = $DBS->fetch_one_array($query);
 if($m_obj){
     if(!$mid){
-        // 可以重定向到网址 /member/id 为了减少请求，下面用 $canonical 来让SEO感觉友好
-        header('location: /member/'.$m_obj['id']);
+        // 可以重定向到网址 /member-id.html 为了减少请求，下面用 $canonical 来让SEO感觉友好
+        header('location: /member-'.$m_obj['id'].'.html');
         exit;
         $mid = $m_obj['id'];
     }
@@ -38,7 +38,7 @@ if($m_obj){
     $openid_user = $DBS->fetch_one_array("SELECT name FROM yunbbs_qqweibo WHERE uid='".$mid."'");
     $weibo_user = $DBS->fetch_one_array("SELECT `openid` FROM `yunbbs_weibo` WHERE `uid`='".$mid."'");
 }else{
-    exit('404');
+    exit(header('location: /404.html'));
 }
 
 $m_obj['regtime'] = showtime($m_obj['regtime']);
@@ -49,7 +49,7 @@ if($m_obj['articles']){
     $articledb = $MMC->get($mc_key);
     if(!$articledb){
         $query_sql = "SELECT a.id,a.cid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,ru.name as rauthor
-            FROM yunbbs_articles a 
+            FROM yunbbs_articles a
             LEFT JOIN yunbbs_categories c ON c.id=a.cid
             LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
             WHERE a.uid='".$mid."' ORDER BY id DESC LIMIT 10";
@@ -68,15 +68,18 @@ if($m_obj['articles']){
 }
 
 // 用户最近回复文章列表不能获取
-// 若想实现则在users 表里添加一列来保存最近回复文章的id
+// 若想实现则在 users 表里添加一列来保存最近回复文章的id
 
 
 // 页面变量
-$title =  $options['name'].' > '.$m_obj['name'];
+$title =  $options['name'].' 社区 › '.$m_obj['name'];
 $newest_nodes = get_newest_nodes();
-$canonical = '/member/'.$m_obj['id'];
+$canonical = '/member-'.$m_obj['id'].'.html';
 $show_sider_ad = "1";
-$meta_des = $m_obj['name'].' - '.htmlspecialchars(mb_substr($m_obj['about'], 0, 150, 'utf-8'));
+//$meta_keywords = htmlspecialchars();
+if ($m_obj['about']) {
+    $meta_des = htmlspecialchars(mb_substr($m_obj['about'], 0, 150, 'utf-8'));
+}
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'member.php';
 

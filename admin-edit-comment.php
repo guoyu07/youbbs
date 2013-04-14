@@ -4,13 +4,13 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
 
 $rid = intval($_GET['rid']);
 $query = "SELECT id,articleid,content FROM yunbbs_comments WHERE id='$rid'";
 $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
-    exit('404');
+    exit(header('location: /404.html'));
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '修改评论 - '.$options['name'];
+$title = '修改评论 - '.$options['name'].' 社区';
 // 设置回复图片最大宽度
 $img_max_w = 590;
 

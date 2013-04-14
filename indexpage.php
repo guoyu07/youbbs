@@ -10,24 +10,20 @@ $page = intval($_GET['page']);
 $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_articles'");
 $taltol_article = $table_status['Auto_increment'] -1;
 $taltol_page = ceil($taltol_article/$options['list_shownum']);
-if($page<0){
-    header('location: /');
+if($page<=0){
+    header('location: /page-1.html');
     exit;
-}else if($page==1){
-    header('location: /');
+}
+if($page!=1 && $page>$taltol_page){
+    header('location: /page-'.$taltol_page.'.html');
     exit;
-}else{
-    if($page>$taltol_page){
-        header('location: /page/'.$taltol_page);
-        exit;
-    }
 }
 
 // 获取最近文章列表
 if($page == 0) $page = 1;
 
 $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
-    FROM `yunbbs_articles` a 
+    FROM `yunbbs_articles` a
     LEFT JOIN `yunbbs_categories` c ON c.id=a.cid
     LEFT JOIN `yunbbs_users` u ON a.uid=u.id
     LEFT JOIN `yunbbs_users` ru ON a.ruid=ru.id
@@ -45,7 +41,7 @@ $DBS->free_result($query);
 
 
 // 页面变量
-$title = $options['name'].' - page '.$page;
+$title = $options['name'].' 社区 - 第 '.$page.' 页';
 
 $site_infos = get_site_infos();
 $newest_nodes = get_newest_nodes();
@@ -56,8 +52,11 @@ if(count($newest_nodes)==$options['newest_node_num']){
 $show_sider_ad = "1";
 $links = get_links();
 
+if($options['keywords']){
+    $meta_keywords = htmlspecialchars($options['keywords']);
+}
 if($options['site_des']){
-    $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8')).' - page '.$page;
+    $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8'));
 }
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'indexpage.php';

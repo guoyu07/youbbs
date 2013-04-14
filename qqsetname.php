@@ -21,7 +21,7 @@ session_start();
 $name = $_SESSION["nick"];
 $openid = $_SESSION["openid"];
 
-if(!$openid) exit('error: 403 Access Denied');
+if(!$openid) exit(header('location: /403.html'));
 
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -248,7 +248,7 @@ if(isset($gotohome)){
 
 /////
 // 页面变量
-$title = '设置名字 - '.$options['name'];
+$title = '设置名字 - '.$options['name'].' 社区';
 $logintype = "QQ";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';

@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
 
 $nid = intval($_GET['nid']);
 if($nid){
@@ -75,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '分类管理 - '.$options['name'];
+$title = '分类管理 - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-node.php';

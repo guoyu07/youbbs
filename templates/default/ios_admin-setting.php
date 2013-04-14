@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 echo '
 <a name="1"></a>
@@ -26,8 +26,16 @@ echo '
         <td width="auto" align="left"><input type="text" class="sl wb50" name="name" value="',htmlspecialchars($options['name']),'" /> <a href="http://youbbs.sinaapp.com/t-425" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
+        <td width="120" align="right">网站副标题</td>
+        <td width="auto" align="left"><input type="text" class="sl wb60" name="description" value="',htmlspecialchars($options['description']),'" /> <br/>可选，显示在网站首页的title中，如红色部分：youbbs - <span class="red">u社区</span></td>
+    </tr>
+    <tr>
+        <td width="120" align="right">网站关键词</td>
+        <td width="auto" align="left"><input type="text" class="sl wb60" name="keywords" value="',$options['keywords'],'" /> <br/>可选，给搜索引擎看的，用逗号分隔</td>
+    </tr>
+    <tr>
         <td width="120" align="right">网站描述</td>
-        <td width="auto" align="left"><textarea class="ml wb80 h60" name="site_des">',str_replace('\\', '', $options['site_des']),'</textarea> <br/>给搜索引擎看的，150字以内</td>
+        <td width="auto" align="left"><textarea class="ml wb80 h60" name="site_des">',str_replace('\\', '', $options['site_des']),'</textarea> 可选，给搜索引擎看的，150字以内</td>
     </tr>
     <tr>
         <td width="120" align="right">备案号</td>
@@ -104,7 +112,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">主分类id</td>
-        <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主分类id，用逗号隔开 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
+        <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主分类id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
@@ -238,7 +246,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">调用jquery库地址</td>
-        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/js/jquery-1.9.1.min.js</td>
+        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/default/jquery-1.9.1.min.js</td>
     </tr>
     <tr>
         <td width="120" align="right"></td>

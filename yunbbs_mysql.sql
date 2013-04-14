@@ -50,7 +50,7 @@ CREATE TABLE yunbbs_links (
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM ;
 
-INSERT INTO yunbbs_links VALUES(null,'YouBBS', 'http://youbbs.sinaapp.com');
+INSERT INTO yunbbs_links VALUES(null,'YouBBS', 'http://youbbs.sinaapp.com/');
 
 DROP TABLE IF EXISTS yunbbs_settings;
 CREATE TABLE yunbbs_settings (
@@ -60,8 +60,10 @@ CREATE TABLE yunbbs_settings (
 ) ENGINE=MyISAM ;
 
 
-INSERT INTO yunbbs_settings VALUES('name', 'youbbs');
-INSERT INTO yunbbs_settings VALUES('site_des', '又是一个YouBBS');
+INSERT INTO yunbbs_settings VALUES('name', 'YouBBS');
+INSERT INTO yunbbs_settings VALUES('keywords', '');
+INSERT INTO yunbbs_settings VALUES('description', '');
+INSERT INTO yunbbs_settings VALUES('site_des', '');
 INSERT INTO yunbbs_settings VALUES('site_create', '0');
 INSERT INTO yunbbs_settings VALUES('icp', '');
 INSERT INTO yunbbs_settings VALUES('admin_email', '');
@@ -87,7 +89,7 @@ INSERT INTO yunbbs_settings VALUES('close_upload', '0');
 INSERT INTO yunbbs_settings VALUES('ext_list', '');
 INSERT INTO yunbbs_settings VALUES('img_shuiyin', '0');
 INSERT INTO yunbbs_settings VALUES('show_debug', '0');
-INSERT INTO yunbbs_settings VALUES('jquery_lib', '/static/js/jquery-1.9.1.min.js');
+INSERT INTO yunbbs_settings VALUES('jquery_lib', '/static/default/jquery-1.9.1.min.js');
 INSERT INTO yunbbs_settings VALUES('head_meta', '');
 INSERT INTO yunbbs_settings VALUES('analytics_code', '');
 INSERT INTO yunbbs_settings VALUES('safe_imgdomain', '');

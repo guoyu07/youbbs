@@ -1,5 +1,5 @@
 <?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html')); 
 
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">
@@ -37,7 +37,7 @@ if(!$options['close_upload']){
 }
 
 echo '
-<p><label><input type="checkbox" name="closecomment" value="1" ',$t_obj['closecomment'],'/> 关闭评论</label>  •  <label><input type="checkbox" name="visible" value="1" ',$t_obj['visible'],'/> 显示帖子</label></p>
+<p><label><input type="checkbox" name="closecomment" value="1" ',$t_obj['closecomment'],'/> 关闭评论</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="visible" value="1" ',$t_obj['visible'],'/> 显示帖子</label></p>
 <p><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></p>
 </form>
 <p class="fs12 c666">发帖指南：</p>

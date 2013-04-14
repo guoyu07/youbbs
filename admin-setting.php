@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
 
 $tip1 = '';
 $tip2 = '';
@@ -15,6 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($action =='base'){
         // 修改设置一些默认参数
         $_POST['name'] = filter_chr($_POST['name']);
+        $_POST['description'] = filter_chr($_POST['description']);
         $_POST['site_des'] = filter_chr($_POST['site_des']);
         $_POST['icp'] = filter_chr($_POST['icp']);
 
@@ -154,6 +155,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
 
+        //keywords
+        $_POST['keywords'] = filter_chr($_POST['keywords']);
+        if($_POST['keywords'] && ($options['keywords'] != $_POST['keywords'] ) ){
+            $keywords = str_replace(" ", ",", $_POST['keywords']);
+            $keywords = str_replace("/", ",", $keywords);
+            $keywords = str_replace("，", ",", $keywords);
+            $keywords = str_replace("。", ",", $keywords);
+            $keywords = str_replace("、", ",", $keywords);
+            $keywords_arr = explode(",", $keywords);
+            $keywords_arr = array_filter(array_unique($keywords_arr));
+            if($keywords_arr){
+                $_POST['keywords'] = implode(", ", $keywords_arr);
+            }else{
+                $_POST['keywords'] = '';
+            }
+        }
+
         $changed = 0;
         foreach($options as $k=>$v){
             if($k != 'site_create'){
@@ -194,7 +212,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 // 页面变量
-$title = '网站设置 - '.$options['name'];
+$title = '网站设置 - '.$options['name'].' 社区';
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setting.php';
 

@@ -1,7 +1,7 @@
 <?php
 //一些常用的数据操作
 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 //获取网站基本配置
 $options = $MMC->get('options');
@@ -24,12 +24,12 @@ if(!$options){
     }
 
     $options = stripslashes_array($options);
-    
+
     if(!$options['safe_imgdomain']){
         $options['safe_imgdomain'] = $_SERVER['HTTP_HOST'];
     }
     $MMC->set('options', $options);
-    
+
     unset($setting);
     $DBS->free_result($query);
 }
@@ -67,7 +67,7 @@ function get_newest_nodes() {
         $query = $DBS->query("SELECT `id`, `name`, `articles` FROM `yunbbs_categories` ORDER BY  `id` DESC LIMIT ".$options['newest_node_num']);
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
-            $node_arr['n-'.$node['id']] = $node['name'];
+            $node_arr['node-'.$node['id']] = $node['name'];
         }
         if($node_arr){
             $MMC->set('newest_nodes', $node_arr, 0 ,3600);
@@ -89,7 +89,7 @@ function get_bot_nodes() {
         $query = $DBS->query("SELECT `id`, `name`, `articles` FROM `yunbbs_categories` ORDER BY  `articles` DESC LIMIT ".$options['bot_node_num']);
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
-            $node_arr['n-'.$node['id']] = $node['name'];
+            $node_arr['node-'.$node['id']] = $node['name'];
         }
         if($node_arr){
             $MMC->set('bot_nodes', $node_arr, 0 ,3600);
@@ -118,10 +118,10 @@ function get_site_infos() {
         $site_infos['帖子'] = $table_status['Auto_increment'] -1;
         $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_comments'");
         $site_infos['回复'] = $table_status['Auto_increment'] -1;
-        
+
         $MMC->set('site_infos', $site_infos, 0 ,3600);
         return $site_infos;
-    }    
+    }
 }
 
 ?>

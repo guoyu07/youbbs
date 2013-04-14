@@ -8,7 +8,7 @@ include(dirname(__FILE__) . '/common.php');
 $articledb = $MMC->get('home-article-list');
 if(!$articledb){
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
-        FROM yunbbs_articles a 
+        FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
@@ -27,7 +27,11 @@ if(!$articledb){
 }
 
 // 页面变量
-$title = $options['name'];
+if ($options['description']) {
+    $title = $options['name'].' 社区 - '.$options['description'];
+} else {
+    $title = $options['name'].' 社区';
+}
 
 $site_infos = get_site_infos();
 $newest_nodes = get_newest_nodes();
@@ -38,6 +42,9 @@ if(count($newest_nodes)==$options['newest_node_num']){
 $show_sider_ad = "1";
 $links = get_links();
 
+if($options['keywords']){
+    $meta_keywords = htmlspecialchars($options['keywords']);
+}
 if($options['site_des']){
     $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8'));
 }

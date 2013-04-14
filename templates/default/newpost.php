@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">
@@ -18,7 +18,7 @@ if($options['main_nodes']){
     }
     echo '</select>';
 }else{
-    echo '    <a href="/n-',$c_obj['id'],'">',$c_obj['name'],'</a> (',$c_obj['articles'],')';
+    echo '    <a href="/node-',$c_obj['id'],'-1.html">',$c_obj['name'],'</a> (',$c_obj['articles'],')';
 }
 echo '
      - 发新帖

@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied');
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 echo '
 <div class="title">
@@ -43,13 +43,13 @@ foreach($articledb as $article){
 echo '
 <div class="post-list">
     <div class="item-avatar">
-        <a href="/member/',$m_obj['id'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></a>
+        <a href="/member-',$m_obj['id'],'.html"><img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" alt="',$m_obj['name'],'" /></a>
     </div>
     <div class="item-content">
-        <h1><a href="/t-',$article['id'],'">',$article['title'],'</a></h1>
-        <span class="item-date"><a href="/n-',$article['cid'],'">',$article['cname'],'</a>  •  <a href="/member/',$m_obj['id'],'">',$m_obj['name'],'</a>';
+        <h1><a href="/topic-',$article['id'],'-1.html">',$article['title'],'</a></h1>
+        <span class="item-date"><a href="/node-',$article['cid'],'-1.html">',$article['cname'],'</a>  •  <a href="/member-',$m_obj['id'],'.html">',$m_obj['name'],'</a>';
 if($article['comments']){
-    echo ' •  ',$article['edittime'],' •  最后回复来自 <a href="/member/',$article['ruid'],'">',$article['rauthor'],'</a>';
+    echo ' •  ',$article['edittime'],' •  最后回复来自 <a href="/member-',$article['ruid'],'.html">',$article['rauthor'],'</a>';
 }else{
     echo ' •  ',$article['addtime'];
 }
@@ -57,12 +57,7 @@ echo '        </span>
     </div>';
 if($article['comments']){
     $gotopage = ceil($article['comments']/$options['commentlist_num']);
-    if($gotopage == 1){
-        $c_page = '';
-    }else{
-        $c_page = '-'.$gotopage;
-    }
-    echo '<div class="item-count"><a href="/t-',$article['id'],$c_page,'#reply',$article['comments'],'">',$article['comments'],'</a></div>';
+    echo '<div class="item-count"><a href="/topic-',$article['id'],'-',$gotopage,'.html#reply',$article['comments'],'">',$article['comments'],'</a></div>';
 }
 echo '    <div class="c"></div>
 </div>';

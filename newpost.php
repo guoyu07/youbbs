@@ -4,9 +4,9 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit('error: 401 login please');
+if (!$cur_user) exit(header('location: /401.html'));
 if ($cur_user['flag']==0){
-    exit('error: 403 Access Denied');
+    exit(header('location: /403.html'));
 }else if($cur_user['flag']==1){
     exit('error: 401 Access Denied');
 }
@@ -24,12 +24,12 @@ if($options['main_nodes']){
     }
     $main_nodes_str = implode(",", $main_nodes_arr);
     $query = $DBS->query("SELECT `id`, `name` FROM `yunbbs_categories` WHERE `id` in($main_nodes_str)");
-    
+
     $main_nodes_arr = array();
     while($node = $DBS->fetch_array($query)) {
         $main_nodes_arr[$node['id']] = $node['name'];
     }
-    
+
     unset($node);
     $DBS->free_result($query);
 }
@@ -39,14 +39,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
     	exit('403: unknown referer.');
     }
-    
+
     $p_title = addslashes(trim($_POST['title']));
     $p_content = addslashes(trim($_POST['content']));
-    
+
     if($p_title =='test' || $p_title=='测试'){
         exit('403: no test anymore.');
     }
-    
+
     // spam_words
     if($options['spam_words'] && $cur_user['flag']<99){
         $check_con = ' '.$p_title.$p_content;
@@ -60,8 +60,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
     }
-    
-    
+
+
     if($options['main_nodes']){
         $cid = $_POST['select_cid'];
     }
@@ -98,12 +98,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             $DBS->unbuffered_query("UPDATE yunbbs_users SET notic =  concat('$new_aid,', notic) WHERE name='$m_name'");
                         }
                     }
-                    
+
                     // 保存内容md5值
                     $MMC->set('cm_'.$conmd5, '1', 0, 3600);
-                    
+
                     $p_title = $p_content = '';
-                    header('location: /t-'.$new_aid);
+                    header('location: /topic-'.$new_aid.'.html');
                     exit;
                 }
             }else{
@@ -121,11 +121,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
-        exit('error: 404');
+        exit(header('location: /404.html'));
     }
 }
 // 页面变量
-$title = '发新帖子 - '.$options['name'];
+$title = '发新帖子 - '.$options['name'].' 社区';
 // 设置处理图片的最大宽度
 $img_max_w = 650;
 $newpost_page = '1';

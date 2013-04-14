@@ -248,7 +248,7 @@ if(isset($gotohome)){
 
 /////
 // 页面变量
-$title = '设置名字 - '.$options['name'];
+$title = '设置名字 - '.$options['name'].' 社区';
 $logintype = "新浪微博";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';

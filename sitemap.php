@@ -22,7 +22,7 @@ if($to_i > $post_num){
 }
 
 for($i = $from_i; $i < $to_i; $i++){
-    $xml .= '<url><loc>'.$base_url.'/t-'.$i.'</loc></url>'."\n ";
+    $xml .= '<url><loc>'.$base_url.'/topic-'.$i.'.html</loc></url>'."\n ";
 }
 
 $xml .= '</urlset>';

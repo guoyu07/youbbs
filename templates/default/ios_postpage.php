@@ -1,13 +1,13 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 echo '
 <div class="title">
     <div class="float-left fs14">
-        &raquo; <a href="/n-',$c_obj['id'],'">',$c_obj['name'],'</a> (',$c_obj['articles'],')
+        &raquo; <a href="/node-',$c_obj['id'],'.html">',$c_obj['name'],'</a> (',$c_obj['articles'],')
     </div>';
 if($cur_user && $cur_user['flag']>4){
-    echo '<div class="float-right"><a href="/newpost/',$t_obj['cid'],'" rel="nofollow" class="newpostbtn">+发新帖</a></div>';
+    echo '<div class="float-right"><a href="/newpost-',$t_obj['cid'],' class="newpostbtn">+发新帖</a></div>';
 }
 echo '    <div class="c"></div>
 </div>
@@ -17,7 +17,7 @@ echo '    <div class="c"></div>
     <div class="topic-title-main float-left">
         <h1>',$t_obj['title'],'</h1>
         <div class="topic-title-date">
-        <a href="/member/',$t_obj['uid'],'">',$t_obj['author'],'</a> ',$t_obj['addtime'],' • ',$t_obj['views'],'点击';
+        <a href="/member-',$t_obj['uid'],'.html">',$t_obj['author'],'</a> ',$t_obj['addtime'],' • ',$t_obj['views'],'点击';
 if($t_obj['favorites']){
     echo ' • ',$t_obj['favorites'],'收藏';
 }
@@ -30,14 +30,14 @@ if($cur_user && $cur_user['flag']>4){
     }else{
         echo ' • <a href="/favorites?act=add&id=',$t_obj['id'],'" title="点击收藏">收藏</a>';
     }
-    
+
     if($cur_user['flag']>=88){
         echo ' &nbsp;&nbsp;• <a href="/admin-edit-post-',$t_obj['id'],'">编辑</a>';
     }
 }
 echo '        </div>
     </div>
-    <div class="detail-avatar"><a href="/member/',$t_obj['uid'],'"><img src="',TUCHUANG_URL,'/avatar/normal/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />  </a></div>
+    <div class="detail-avatar"><a href="/member-',$t_obj['uid'],'.html"><img src="',TUCHUANG_URL,'/avatar/normal/',$t_obj['uavatar'],'.png" alt="',$t_obj['author'],'" />  </a></div>
     <div class="c"></div>
 </div>
 <div class="topic-content">
@@ -61,21 +61,21 @@ foreach($commentdb as $comment){
 $count_n += 1;
 echo '
     <div class="commont-item">
-        <div class="commont-avatar"><a href="/member/',$comment['uid'],'"><img src="',TUCHUANG_URL,'/avatar/mini/',$comment['avatar'],'.png" alt="',$comment['author'],'" /></a></div>
+        <div class="commont-avatar"><a href="/member-',$comment['uid'],'.html"><img src="',TUCHUANG_URL,'/avatar/mini/',$comment['avatar'],'.png" alt="',$comment['author'],'" /></a></div>
         <div class="commont-data">
             <div class="commont-content">
             <p>',$comment['content'],'</p>
             </div>
-            
+
             <div class="commont-data-date">
-                <div class="float-left"><a href="/member/',$comment['uid'],'">',$comment['author'],'</a> at ',$comment['addtime'];
+                <div class="float-left"><a href="/member-',$comment['uid'],'.html">',$comment['author'],'</a> at ',$comment['addtime'];
 if($cur_user && $cur_user['flag']>=88){
     echo ' &nbsp;&nbsp;&nbsp; • <a href="/admin-edit-comment-',$comment['id'],'">编辑</a>';
 }
                 echo '</div>
                 <div class="float-right">';
 if(!$t_obj['closecomment'] && $cur_user && $cur_user['flag']>4 && $cur_user['name'] != $comment['author']){
-    echo '&laquo; <a href="#new-comment" onclick="replyto(\'',$comment['author'],'\');">回复</a>'; 
+    echo '&laquo; <a href="#new-comment" onclick="replyto(\'',$comment['author'],'\');">回复</a>';
 }
 echo '                <span class="commonet-count">',$count_n,'</span></div>
                 <div class="c"></div>
@@ -86,20 +86,20 @@ echo '                <span class="commonet-count">',$count_n,'</span></div>
     </div>';
 }
 
-if($t_obj['comments'] > $options['commentlist_num']){ 
+if($t_obj['comments'] > $options['commentlist_num']){
 echo '<div class="pagination">';
 if($page>1){
-echo '<a href="/t-',$tid,'-',$page-1,'" class="float-left">&laquo; 上一页</a>';
+echo '<a href="/topic-',$tid,'-',$page-1,'" class="float-left">&laquo; 上一页</a>';
 }
 if($page<$taltol_page){
-echo '<a href="/t-',$tid,'-',$page+1,'" class="float-right">下一页 &raquo;</a>';
+echo '<a href="/topic-',$tid,'-',$page+1,'" class="float-right">下一页 &raquo;</a>';
 }
 echo '<div class="c"></div>
 </div>';
 }
 
 echo '
-    
+
 </div>
 <!-- comment list end -->
 
@@ -125,7 +125,7 @@ echo '<a name="new-comment"></a>
 <div class="title">
     <div class="float-left">添加一条新回复</div>
     <div class="float-right"><a href="#">↑ 回到顶部</a></div>
-    <div class="c"></div>    
+    <div class="c"></div>
 </div>
 <div class="main-box">';
 if($tip){

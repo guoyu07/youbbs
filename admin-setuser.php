@@ -4,7 +4,7 @@ define('IN_SAESPOT', 1);
 include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit('error: 403 Access Denied');
+if (!$cur_user || $cur_user['flag']<99) exit(header('location: /403.html'));
 
 $mid = intval($_GET['mid']);
 if($mid==$cur_user['id']){
@@ -15,7 +15,7 @@ if($mid==$cur_user['id']){
 $query = "SELECT * FROM yunbbs_users WHERE id='$mid'";
 $m_obj = $DBS->fetch_one_array($query);
 if(!$m_obj){
-    exit('404');
+    exit(header('location: /404.html'));
 }
 $m_obj['regtime'] = showtime($m_obj['regtime']);
 
@@ -225,7 +225,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 // 页面变量
-$title = '修改用户资料  - '.$options['name'];
+$title = '修改用户资料  - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setuser.php';

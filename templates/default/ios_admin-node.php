@@ -1,5 +1,5 @@
-<?php 
-if (!defined('IN_SAESPOT')) exit('error: 403 Access Denied'); 
+<?php
+if (!defined('IN_SAESPOT')) exit(header('location: /403.html'));
 
 echo '
 <a name="add"></a>
@@ -45,7 +45,7 @@ echo '
 }else{
 echo '
 <input type="hidden" name="action" value="find"/>
-<p>输入分类id查找： 如红色部分：n-<span class="red">1</span><br/><input type="text" class="sl wb40" name="findid" value="" /> 
+<p>输入分类id查找： 如红色部分：node-<span class="red">1</span>-1.html<br/><input type="text" class="sl wb40" name="findid" value="" />
 <input type="submit" value=" 查 找 " name="submit" class="textbtn" /></p>';
 
 }

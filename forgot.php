@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '找回密码  - '.$options['name'];
+$title = '找回密码  - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'forgot.php';

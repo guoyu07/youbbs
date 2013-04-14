@@ -5,14 +5,14 @@ include(dirname(__FILE__) . '/config.php');
 include(dirname(__FILE__) . '/common.php');
 
 if($options['authorized'] || $options['close']){
-    exit('error: 403 Access Denied');
+    exit(header('location: /403.html'));
 }
 
 // 获取最近文章列表
 $articledb = $MMC->get('feed-article-list');
 if(!$articledb){
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.comments,c.name as cname,u.name as author
-        FROM yunbbs_articles a 
+        FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         ORDER BY id DESC LIMIT 10";
@@ -50,7 +50,7 @@ echo '
   <entry>
     <title>',htmlspecialchars($article['title']),'</title>
     <id>t-',$article['id'],'</id>
-	<link rel="alternate" type="text/html" href="',$base_url,'/t-',$article['id'],'" />
+	<link rel="alternate" type="text/html" href="',$base_url,'/topic-',$article['id'],'.html" />
     <published>',$article['addtime'],'</published>
     <updated>',$article['edittime'],'</updated>
     <content type="html">
