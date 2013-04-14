@@ -228,9 +228,9 @@ if ($cur_user){
 
 // 页面变量
 if ($page>=2) {
-    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'].' 社区';
+    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'];
 } else {
-    $title = $t_obj['title'].' - '.$options['name'].' 社区';
+    $title = $t_obj['title'].' - '.$options['name'];
 }
 $newest_nodes = get_newest_nodes();
 $links = get_links();

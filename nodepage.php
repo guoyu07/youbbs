@@ -55,9 +55,9 @@ if(!$articledb){
 
 // 页面变量
 if ($page>=2) {
-    $title = $options['name'].' 社区 › '.$c_obj['name'].' - 第 '.$page.' 页';
+    $title = $options['name'].' › '.$c_obj['name'].' - 第 '.$page.' 页';
 } else {
-    $title = $options['name'].' 社区 › '.$c_obj['name'];
+    $title = $options['name'].' › '.$c_obj['name'];
 }
 $newest_nodes = get_newest_nodes();
 $show_sider_ad = "1";

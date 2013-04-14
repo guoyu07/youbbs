@@ -28,9 +28,9 @@ if(!$articledb){
 
 // 页面变量
 if ($options['description']) {
-    $title = $options['name'].' 社区 - '.$options['description'];
+    $title = $options['name'].' - '.$options['description'];
 } else {
-    $title = $options['name'].' 社区';
+    $title = $options['name'];
 }
 
 $site_infos = get_site_infos();

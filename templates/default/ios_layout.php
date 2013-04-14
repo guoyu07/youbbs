@@ -12,7 +12,6 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link href="/static/default/style_ios.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="top" title="Back to Top" href="#" />
 ';
 if($options['head_meta']){
     echo $options['head_meta'];
@@ -35,7 +34,7 @@ echo '
 <body>
 <div class="header-wrap">
     <div class="header">
-        <div class="logo"><a href="/" name="top"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
+        <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
         <div class="banner">';
 
 if($cur_user){
@@ -74,12 +73,12 @@ if($cur_user){
 
 if($options['close']){
 echo '
-<div class="tiptitle">社区暂时关闭公告 &raquo;
+<div class="tiptitle">网站暂时关闭公告 &raquo;
 <span style="color:yellow;">';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '社区维护中……';
+    echo '网站维护中……';
 }
 echo '</span>
 </div>';
@@ -142,14 +141,15 @@ echo '       </div>
 
 <div class="footer-wrap">
     <div class="footer">
-    <p class="float-left"><a href="/topic-4.html">关于</a> • <a href="/feed">订阅</a> • <a href="http://www.sinosky.org">博客</a> • <a href="http://lixian.sinosky.org">离线下载</a>';
+    <p class="float-left"><a href="/feed">订阅</a>';
 
 if($is_mobie){
     echo ' • <a href="/viewat-desktop">桌面版</a>';
 }
 
+$year = date("Y");
 echo '</p>
-<p class="float-right">&copy; 2013 - <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a></p>
+<p class="float-right">&copy; ',$yaer,' - <a href="/">',$options['name'],'</a></p>
 <div class="c"></div>';
 
 echo '    </div>

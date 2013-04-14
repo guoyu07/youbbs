@@ -125,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 // 页面变量
-$title = '发新帖子 - '.$options['name'].' 社区';
+$title = '发新帖子 - '.$options['name'];
 // 设置处理图片的最大宽度
 $img_max_w = 650;
 $newpost_page = '1';

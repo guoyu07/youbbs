@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '修改评论 - '.$options['name'].' 社区';
+$title = '修改评论 - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 590;
 

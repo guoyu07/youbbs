@@ -30,13 +30,13 @@ echo '
 if($options['close']){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">社区暂时关闭公告</div>
+    <div class="sider-box-title">网站暂时关闭公告</div>
     <div class="sider-box-content">
     <h2>';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '社区维护中……';
+    echo '网站维护中……';
 }
 echo '</h2>
     <div class="c"></div>
@@ -45,17 +45,6 @@ echo '</h2>
 
 }
 
-/*
-echo '
-<div class="sider-box">
-    <div class="sider-box-title">微信机器人</div>
-    <div class="sider-box-content">
-    <img src="/static/wechat_qrcode_250.jpg" alt="微信公众号" height="250" width="250">
-    <div class="c"></div>
-    </div>
-</div>
-';
-*/
 
 if(isset($newpost_page)){
 echo '

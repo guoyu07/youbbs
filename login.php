@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
     	exit('403: unknown referer.');
     }
-    
+
     $name = addslashes(strtolower(trim($_POST["name"])));
     $pw = addslashes(trim($_POST["pw"]));
     if($name && $pw){
@@ -94,12 +94,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $errors[] = '用户名 或 密码 太长了';
         }
     }else{
-       $errors[] = '用户名 和 密码 必填'; 
+       $errors[] = '用户名 和 密码 必填';
     }
 }
 
 // 页面变量
-$title = '登录 - '.$options['name'].' 社区';
+$title = '登录 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 

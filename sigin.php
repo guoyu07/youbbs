@@ -38,12 +38,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
     	exit('403: unknown referer.');
     }
-    
+
     if($regip){
         header("content-Type: text/html; charset=UTF-8");
         exit('一个ip最小注册间隔时间是 '.$options['reg_ip_space'].' 秒，请稍后再来注册 或 让管理员把这个时间改小点。');
     }
-    
+
     $name = addslashes(strtolower(trim($_POST["name"])));
     $pw = addslashes(trim($_POST["pw"]));
     $pw2 = addslashes(trim($_POST["pw2"]));
@@ -76,15 +76,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $errors[] = '用户名 或 密码 太长了';
             }
         }else{
-            $errors[] = '密码、重复密码 输入不一致'; 
+            $errors[] = '密码、重复密码 输入不一致';
         }
     }else{
-       $errors[] = '用户名、密码、重复密码、验证码 必填'; 
+       $errors[] = '用户名、密码、重复密码、验证码 必填';
     }
     ////
     if(!$errors){
         $pwmd5 = md5($pw);
-        
+
         if($options['register_review']){
             $flag = 1;
         }else{
@@ -98,7 +98,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $MMC->delete('site_infos');
         // 记录已注册ip
         $MMC->set('regip_'.$onlineip, '1', 0, intval($options['reg_ip_space']));
-        
+
         //设置cookie
         $db_ucode = md5($new_uid.$pwmd5.$timestamp.'00');
         $cur_uid = $new_uid;
@@ -111,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '注册 - '.$options['name'].' 社区';
+$title = '注册 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 

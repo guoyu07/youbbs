@@ -72,7 +72,7 @@ if($m_obj['articles']){
 
 
 // 页面变量
-$title =  $options['name'].' 社区 › '.$m_obj['name'];
+$title =  $options['name'].' › '.$m_obj['name'];
 $newest_nodes = get_newest_nodes();
 $canonical = '/member-'.$m_obj['id'].'.html';
 $show_sider_ad = "1";

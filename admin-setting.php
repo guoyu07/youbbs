@@ -212,7 +212,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 // 页面变量
-$title = '网站设置 - '.$options['name'].' 社区';
+$title = '网站设置 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setting.php';
 

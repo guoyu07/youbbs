@@ -77,7 +77,7 @@ if(!$userdb2 && $userdb2 !== ''){
 }
 
 // 页面变量
-$title = '用户管理 - '.$options['name'].' 社区';
+$title = '用户管理 - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-user.php';

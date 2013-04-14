@@ -44,12 +44,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $errors[] = '用户名 或 email 太长了';
         }
     }else{
-       $errors[] = '用户名 和 邮箱 必填'; 
+       $errors[] = '用户名 和 邮箱 必填';
     }
 }
 
 // 页面变量
-$title = '找回密码  - '.$options['name'].' 社区';
+$title = '找回密码  - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'forgot.php';

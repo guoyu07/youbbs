@@ -39,7 +39,7 @@ echo '
 if ($options['description']) {
     echo ' - ',$options['description'];
 }
-echo '"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
+echo '">',htmlspecialchars($options['name']),'</a></div>
         <div class="scbox">
             <script type="text/javascript">
                 var dispatch = function() {
@@ -86,7 +86,7 @@ if($cur_user){
         echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
 */
-    echo '<a href="/" title="社区首页">首页</a>&nbsp;&nbsp;&nbsp;';
+    echo '<a href="/" title="网站首页">首页</a>&nbsp;&nbsp;&nbsp;';
 //  if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
         if(!$options['close_register']){
             echo '<a href="/sigin" title="注册">注册</a>&nbsp;&nbsp;&nbsp;';
@@ -122,25 +122,26 @@ echo '       </div>
 echo '
 <div class="footer-wrap">
     <div class="footer">
-    <div class="left">
-    <a href="/topic-4.html">关于</a> • <a href="/feed">订阅</a> • <a href="http://www.sinosky.org">博客</a> • <a href="http://lixian.sinosky.org">离线下载</a>';
+    <div class="left"><a href="/feed">订阅</a>';
 if($is_mobie){
     echo ' • <a href="/viewat-mobile">手机版</a>';
 }
 
-echo '</div><div class="right">';
-
+$year = date("Y");
+echo '</div>
+    <div class="right">&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
 if($options['icp']){
-    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
+    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
 }
-echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a>, All Rights Reserved. Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>.';
+echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
     $totaltime = number_format(($mtime[1] + $mtime[0] - $starttime), 6);
     echo '<p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
 }
-echo '  </div></div>
+echo '</div>
+    </div>
     <!-- footer end -->
 </div>
 <script type="text/javascript" src="/static/default/go-top.js"></script>

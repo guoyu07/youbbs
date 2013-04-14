@@ -41,7 +41,7 @@ $DBS->free_result($query);
 
 
 // 页面变量
-$title = $options['name'].' 社区 - 第 '.$page.' 页';
+$title = $options['name'].' - 第 '.$page.' 页';
 
 $site_infos = get_site_infos();
 $newest_nodes = get_newest_nodes();
