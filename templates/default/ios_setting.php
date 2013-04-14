@@ -22,7 +22,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">个人网站</td>
-        <td width="auto" align="left"><input type="text" class="sl wb80" name="url" value="',htmlspecialchars(stripslashes($cur_user['url'])),'" /></td>
+        <td width="auto" align="left"><input type="text" class="sl wb80" name="url" value="',htmlspecialchars(stripslashes($cur_user['url'])),'" /> <br/><span class="grey fs12">不要忘了 http:// 或 https:// </span></td>
     </tr>
     <tr>
         <td width="120" align="right" valign="top">个人简介</td>
@@ -54,7 +54,7 @@ echo '
     <tbody>
     <tr>
         <td width="120" align="right">当前密码</td>
-        <td width="65%" align="left"><input type="password" class="sl wb80" name="password_current" value="" /></td>
+        <td width="auto" align="left"><input type="password" class="sl wb80" name="password_current" value="" /></td>
     </tr>
     <tr>
         <td width="120" align="right">新密码</td>

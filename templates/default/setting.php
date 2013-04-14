@@ -18,7 +18,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">个人网站</td>
-        <td width="auto" align="left"><input type="text" class="sl" name="url" value="',htmlspecialchars(stripslashes($cur_user['url'])),'" /></td>
+        <td width="auto" align="left"><input type="text" class="sl" name="url" value="',htmlspecialchars(stripslashes($cur_user['url'])),'" /> 不要忘了 http:// 或 https:// </td>
     </tr>
     <tr>
         <td width="120" align="right">个人简介</td>

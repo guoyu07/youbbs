@@ -39,7 +39,7 @@ echo '
 if ($options['description']) {
     echo ' - ',$options['description'];
 }
-echo '"><img border="0" width="153" height="56" src="/static/logo-top.png" alt="',htmlspecialchars($options['name']),'"></a></div>
+echo '"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
         <div class="scbox">
             <script type="text/javascript">
                 var dispatch = function() {

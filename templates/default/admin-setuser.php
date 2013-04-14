@@ -73,9 +73,9 @@ echo '
     <tbody><tr>
         <td width="120" align="right">当前头像</td>
         <td width="auto" align="left">
-        <img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp;
-        <img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto=""> &nbsp;
-        <img src="',TUCHUANG_URL,'/avatar/mini/',$m_obj['avatar'],'.png',$av_time,'" class="avatar" border="0" align="default" auto="">
+        <img src="',TUCHUANG_URL,'/avatar/large/',$m_obj['avatar'],'.png" class="avatar" border="0" align="default" auto=""> &nbsp;
+        <img src="',TUCHUANG_URL,'/avatar/normal/',$m_obj['avatar'],'.png" class="avatar" border="0" align="default" auto=""> &nbsp;
+        <img src="',TUCHUANG_URL,'/avatar/mini/',$m_obj['avatar'],'.png" class="avatar" border="0" align="default" auto="">
         </td>
     </tr>
     <tr>

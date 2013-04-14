@@ -104,7 +104,7 @@ if ($token) {
     }
 
 } else {
-    echo 'Get token failed. <a href="/">Go back Home</a>';
+    echo '获取 token 失败，返回<a href="/">首页</a>';
     exit;
 }
 

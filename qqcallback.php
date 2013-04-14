@@ -155,8 +155,10 @@ if(strpos(' '.$_SESSION["scope"], 'get_info')){
      */
 
     $regtime = intval($user_info['data']['regtime']);
-    if(!$regtime || ($timestamp - $regtime)<7776000){
-        echo '<h3>抱歉，您还没开通腾讯微博，或者开通未达到3个月，请先去开通 <a href="http://t.qq.com" target="_blank">http://t.qq.com</a></h3>';
+//  if(!$regtime || ($timestamp - $regtime)<7776000){
+//      echo '<h3>抱歉，您还没开通腾讯微博，或者开通未达到3个月，请先去<a href="http://reg.t.qq.com/" target="_blank">开通</a></h3>';
+    if(!$regtime){
+        echo '<h3>抱歉，您还没开通腾讯微博，请先去<a href="http://reg.t.qq.com/" target="_blank">开通</a></h3>';
         echo '<h3><a href="/qqlogin">尝试再登录</a></h3>';
         echo '<h3><a href="/">返回首页</a></h3>';
         exit;

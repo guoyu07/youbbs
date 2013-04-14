@@ -37,7 +37,7 @@ if($act=='pass' || $act=='active'){
 }
 
 
-// users表flag 列没加入到索引，如果用户上10万，获取下面用户有点慢，8~10秒
+// users 表 flag 列没加入到索引，如果用户上10万，获取下面用户有点慢，8~10秒
 
 // 获取最近等待审核的用户
 $userdb = $MMC->get('flag1_users');

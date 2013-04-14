@@ -71,7 +71,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">scope</td>
-        <td width="auto" align="left"><input type="text" class="sl w200" name="qq_scope" value="',$options['qq_scope'],'" /> 默认get_user_info，可选get_info</td>
+        <td width="auto" align="left"><input type="text" class="sl w200" name="qq_scope" value="',$options['qq_scope'],'" /> 默认get_info（微博），可选get_user_info（QQ）</td>
     </tr>
     <tr>
         <td width="120" align="right">appid</td>

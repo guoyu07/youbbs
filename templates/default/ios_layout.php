@@ -35,7 +35,7 @@ echo '
 <body>
 <div class="header-wrap">
     <div class="header">
-        <div class="logo"><a href="/" name="top"><img border="0" width="153" height="56" src="/static/logo-top.png" alt="SinoSky"></a></div>
+        <div class="logo"><a href="/" name="top"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
         <div class="banner">';
 
 if($cur_user){

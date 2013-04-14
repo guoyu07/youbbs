@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     include(dirname(__FILE__) . '/libs/bcs.class.php');
                     $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
-                    $bcs_object = '/avatar/large/'.$cur_uid.'.png';
+                    $bcs_object = '/avatar/large/'.$mid.'.png';
 
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
@@ -111,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
-                    $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
+                    $bcs_object = '/avatar/normal/'.$mid.'.png';
 
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
@@ -141,7 +141,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
                     imagedestroy($img_obj);
 
-                    $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
+                    $bcs_object = '/avatar/mini/'.$mid.'.png';
 
                     ob_start();
                     imagejpeg($new_image, NULL, 95);
@@ -158,10 +158,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     unset($out_img);
 
                     //
-                    if($cur_user['avatar']!=$cur_user['id']){
-                        if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
-                            $cur_user['avatar'] = $cur_user['id'];
-                            $MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
+                    if($cur_user['avatar']!=$mid){
+                        if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$mid' WHERE id='$mid'")){
+                            $MMC->delete('u_'.$mid);
                         }else{
                             $tip2 = '图片保存失败，请稍后再试';
                         }
