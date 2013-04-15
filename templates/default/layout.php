@@ -78,14 +78,12 @@ if($cur_user){
     }
     echo '<a href="/" title="社区首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member-',$cur_user['id'],'.html" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
 }else{
-/*
     if($options['wb_key'] && $options['wb_secret']){
         echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用新浪微博登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
     if($options['qq_appid'] && $options['qq_appkey']){
         echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
     }
-*/
     echo '<a href="/" title="网站首页">首页</a>&nbsp;&nbsp;&nbsp;';
 //  if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
         if(!$options['close_register']){
