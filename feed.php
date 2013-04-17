@@ -36,10 +36,15 @@ ob_start();
 echo '<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>',htmlspecialchars($options['name']),'</title>
+';
+if ($options['description']) {
+  echo '  <description>', $options['description'], '</description>
+';
+}
+echo '  <link>',$base_url,'</link>
   <link rel="self" type="application/atom+xml" href="',$base_url,'/feed"/>
-  <link rel="hub" href="http://pubsubhubbub.appspot.com"/>
+  <link rel="hub" href="https://code.google.com/p/pubsubhubbub/"/>
   <updated>',gmdate('Y-m-dTH:M:SZ',$timestamp),'</updated>
-  <id>',$_SERVER["REQUEST_URI"],'</id>
   <author>
     <name>',htmlspecialchars($options['name']),'</name>
   </author>
@@ -49,18 +54,23 @@ foreach($articledb as $article){
 echo '
   <entry>
     <title>',htmlspecialchars($article['title']),'</title>
-    <id>t-',$article['id'],'</id>
-	<link rel="alternate" type="text/html" href="',$base_url,'/topic-',$article['id'],'.html" />
+    <id>',$article['id'],'</id>
+	<link rel="alternate" type="text/html" href="',$base_url,'/topic-',$article['id'],'-1.html" />
     <published>',$article['addtime'],'</published>
     <updated>',$article['edittime'],'</updated>
     <content type="html">
-      ',htmlspecialchars($article['cname']),' - ',htmlspecialchars($article['author']),' - ',htmlspecialchars(mb_substr($article['content'], 0, 150, 'utf-8')),'
+      ',htmlspecialchars($article['cname']),' - ',htmlspecialchars($article['author']);
+if ($article['content']) {
+  echo ' - ',htmlspecialchars(mb_substr($article['content'], 0, 150, 'utf-8'));
+}
+  echo '
     </content>
   </entry>';
 
 }
 
-echo '</feed>';
+echo '
+</feed>';
 
 $_output = ob_get_contents();
 ob_end_clean();

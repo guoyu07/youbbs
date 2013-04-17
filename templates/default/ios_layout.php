@@ -106,7 +106,7 @@ echo '
 <div class="main-box main-box-node">
 <div class="btn">';
 foreach( $newest_nodes as $k=>$v ){
-    echo '<a href="/',$k,'">',$v,'</a>';
+    echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '
 <div class="c"></div>
@@ -122,7 +122,7 @@ echo '
 <div class="main-box main-box-node">
 <div class="btn">';
 foreach( $bot_nodes as $k=>$v ){
-    echo '<a href="/',$k,'">',$v,'</a>';
+    echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '
 <div class="c"></div>

@@ -6,9 +6,12 @@ include(dirname(__FILE__) . '/common.php');
 
 if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
-    exit(header('location: /static/error/403.html'));
-}else if($cur_user['flag']==1){
-    exit('error: 401 Access Denied');
+    header("content-Type: text/html; charset=UTF-8");
+    exit('Error 403: 该帐户已被禁用');
+}
+if ($cur_user['flag']==1){
+    header("content-Type: text/html; charset=UTF-8");
+    exit('Error 401: 该帐户还在审核中');
 }
 
 $cid = intval($_GET['cid']);
@@ -37,14 +40,14 @@ if($options['main_nodes']){
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('403: unknown referer.');
+    	exit('Error 403: unknown referer.');
     }
 
     $p_title = addslashes(trim($_POST['title']));
     $p_content = addslashes(trim($_POST['content']));
 
     if($p_title =='test' || $p_title=='测试'){
-        exit('403: no test anymore.');
+        exit('Error 403: no test anymore.');
     }
 
     // spam_words
@@ -103,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $MMC->set('cm_'.$conmd5, '1', 0, 3600);
 
                     $p_title = $p_content = '';
-                    header('location: /topic-'.$new_aid.'.html');
+                    header('location: /topic-'.$new_aid.'-1.html');
                     exit;
                 }
             }else{

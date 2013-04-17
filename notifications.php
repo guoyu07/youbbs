@@ -7,12 +7,12 @@ include(dirname(__FILE__) . '/common.php');
 if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
-    exit('error: 403 该帐户已被禁用');
-}else if($cur_user['flag']==1){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('error: 401 该帐户还在审核中');
+    exit('Error 403: 该帐户已被禁用');
 }
-
+if ($cur_user['flag']==1){
+    header("content-Type: text/html; charset=UTF-8");
+    exit('Error 401: 该帐户还在审核中');
+}
 
 // 获取提醒文章列表
 $cur_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");

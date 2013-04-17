@@ -7,10 +7,11 @@ include(dirname(__FILE__) . '/common.php');
 if (!$cur_user) exit(header('location: /static/error/401.html'));
 if ($cur_user['flag']==0){
     header("content-Type: text/html; charset=UTF-8");
-    exit('error: 403 该帐户已被禁用');
-}else if($cur_user['flag']==1){
+    exit('Error 403: 该帐户已被禁用');
+}
+if ($cur_user['flag']==1){
     header("content-Type: text/html; charset=UTF-8");
-    exit('error: 401 该帐户还在审核中');
+    exit('Error 401: 该帐户还在审核中');
 }
 
 
@@ -99,20 +100,17 @@ if($act && $tid){
 // 第一页是1
 if($user_fav && $user_fav['articles']){
     $taltol_page = ceil($user_fav['articles']/$options['list_shownum']);
-    if($page<0){
-        header('location: /favorites');
+    if($page<=0){
+        header('location: /favorites?page=1');
         exit;
-    }else if($page==1){
-        header('location: /favorites');
-        exit;
-    }else{
-        if($page>$taltol_page){
-            header('location: /favorites?page='.$taltol_page);
-            exit;
-        }
     }
-}else{
-    $page = 0;
+    if($page!=1 && $page>$taltol_page){
+        header('location: /favorites?page='.$taltol_page);
+        exit;
+    }
+}else if($page) {
+    header('location: /favorites');
+    exit;
 }
 
 // 获取收藏文章列表

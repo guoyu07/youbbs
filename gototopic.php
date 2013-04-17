@@ -20,6 +20,6 @@ if($db_user['notic']){
     unset($n_arr);
     unset($new_notic);
 }
-header('location: /topic-'.$tid.'.html');
+header('location: /topic-'.$tid.'-1.html');
 exit;
 ?>

@@ -63,7 +63,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles-1 WHERE id='$old_cid'");
         }
 
-        header('location: /topic-'.$tid.'.html');
+        header('location: /topic-'.$tid.'-1.html');
         exit;
     }else{
         $tip = '标题 不能留空';
