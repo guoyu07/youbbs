@@ -56,7 +56,7 @@ echo '
 <div class="main-box main-box-node">
 <span class="btn">';
 foreach( $bot_nodes as $k=>$v ){
-    echo '<a href="/',$k,'">',$v,'</a>';
+    echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '
 </span>
