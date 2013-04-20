@@ -1,6 +1,6 @@
 /* reset */
 body, h1, h2, h3, h4, h5, h6, p, blockquote,dl, dt, dd, ul, ol, li,pre,fieldset, lengend, button, input, textarea,th, td {margin: 0;padding: 0;}
-body, button, input, select, textarea {font: 14px/1 'Microsoft YaHei', 'Segoe UI', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;}
+body, button, input, select, textarea {font: 14px/1 'MicroSoft YaHei UI', 'Microsoft YaHei', 'Segoe UI', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;}
 button, input, select, textarea { padding:3px; line-height:1em; margin:0;}
 textarea {line-height:150%;resize: none;}
 input { line-height:normal; }
