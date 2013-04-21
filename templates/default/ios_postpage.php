@@ -4,7 +4,7 @@ if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
 echo '
 <div class="title">
     <div class="float-left fs14">
-        &raquo; <a href="/node-',$c_obj['id'],'.html">',$c_obj['name'],'</a> (',$c_obj['articles'],')
+        &raquo; <a href="/node-',$c_obj['id'],'-1.html">',$c_obj['name'],'</a> (',$c_obj['articles'],')
     </div>';
 if($cur_user && $cur_user['flag']>4){
     echo '<div class="float-right"><a href="/newpost-',$t_obj['cid'],' class="newpostbtn">+发新帖</a></div>';
