@@ -117,7 +117,7 @@ if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
 $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 if($user_agent){
     $is_spider = preg_match('/(bot|crawl|spider|slurp|sohu-search|lycos|robozilla|google)/i', $user_agent);
-    $is_mobie = preg_match('/(iPod|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP)/i', $user_agent);
+    $is_mobie = preg_match('/(iPod|iPhone|Android|Nokia|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP)/i', $user_agent);
 
     if($is_mobie){
         // 设置模板前缀
