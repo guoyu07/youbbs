@@ -33,8 +33,7 @@ echo '        </span>
     </div>';
 if($article['comments']){
     $gotopage = ceil($article['comments']/$options['commentlist_num']);
-    $c_page = '-'.$gotopage;
-    echo '<div class="item-count"><a href="/topic-',$article['id'],$c_page,'.html#reply',$article['comments'],'">',$article['comments'],'</a></div>';
+    echo '<div class="item-count"><a href="/topic-',$article['id'],'-',$gotopage,'.html#reply',$article['comments'],'">',$article['comments'],'</a></div>';
 }
 echo '    <div class="c"></div>
 </div>';
