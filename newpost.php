@@ -130,7 +130,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
-        exit(header('Location: /static/error/404.html'));
+        $error_code = 4042;
+        $title = $options['name'].' 社区 › 节点未找到';
+        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+        exit;
     }
 }
 // 页面变量

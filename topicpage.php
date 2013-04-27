@@ -26,7 +26,7 @@ if(!$t_obj){
     if(!$t_obj || ($t_obj && !$t_obj['visible'] && (!$cur_user || ($cur_user && $cur_user['flag']<99)))){
         $error_code = 4043;
         $title = $options['name'].' 社区 › 主题未找到';
-        $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
     }

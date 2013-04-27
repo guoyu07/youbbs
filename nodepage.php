@@ -13,7 +13,7 @@ if(!$c_obj){
     if(!$c_obj){
         $error_code = 4042;
         $title = $options['name'].' 社区 › 节点未找到';
-        $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
     }

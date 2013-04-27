@@ -19,8 +19,10 @@ $rid = intval($_GET['rid']);
 $query = "SELECT id,articleid,content FROM yunbbs_comments WHERE id='$rid'";
 $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
-    header("HTTP/1.1 404 Not Found");
-    header("Status: 404 Not Found");
+    $error_code = 4044;
+    $title = $options['name'].' 社区 › 评论未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 

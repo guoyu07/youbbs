@@ -16,7 +16,7 @@ if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
 }else{
     $error_code = 4041;
     $title = $options['name'].' 社区 › 用户未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
@@ -36,7 +36,7 @@ if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || ($cur_user && $cur_user['fl
 }else{
     $error_code = 4041;
     $title = $options['name'].' 社区 › 用户未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
 }

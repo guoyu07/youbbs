@@ -20,7 +20,10 @@ if($nid){
     $query = "SELECT * FROM yunbbs_categories WHERE id='$nid'";
     $c_obj = $DBS->fetch_one_array($query);
     if(!$c_obj){
-        header('Location: /admin-node#edit');
+        $error_code = 4046;
+        $title = $options['name'].' 社区 › 节点未找到';
+        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
     }
 }

@@ -25,7 +25,8 @@ $query = "SELECT * FROM yunbbs_users WHERE id='$mid'";
 $m_obj = $DBS->fetch_one_array($query);
 if(!$m_obj){
     $error_code = 4041;
-    $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+    $title = $options['name'].' 社区 › 用户未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
 }

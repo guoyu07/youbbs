@@ -19,8 +19,10 @@ $tid = intval($_GET['tid']);
 $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
-    header("HTTP/1.1 404 Not Found");
-    header("Status: 404 Not Found");
+    $error_code = 4047;
+    $title = $options['name'].' 社区 › 主题未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 
