@@ -51,7 +51,7 @@ if(function_exists('imagecreate') && function_exists('imagecolorset') && functio
     $bordercolor = imagecolorallocate($im , 150, 150, 150);
     imagerectangle($im, 0, 0, $width-1, $height-1, $bordercolor);
 
-    header('Content-type: image/png');
+    header('Content-Type: image/png');
     imagepng($im);
     imagedestroy($im);
 

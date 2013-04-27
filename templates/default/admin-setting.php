@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 echo '
 <a name="1"></a>
@@ -112,8 +118,8 @@ echo '
         <td width="auto" align="left"></td>
     </tr>
     <tr>
-        <td width="120" align="right">主分类id</td>
-        <td width="auto" align="left"><input type="text" class="sl" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主分类id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
+        <td width="120" align="right">主节点id</td>
+        <td width="auto" align="left"><input type="text" class="sl" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主节点id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
@@ -177,16 +183,16 @@ echo '
         <td width="auto" align="left"><input type="text" class="sl w100" name="list_shownum" value="',$options['list_shownum'],'" /> 默认20</td>
     </tr>
     <tr>
-        <td width="120" align="right">最近添加的分类数</td>
+        <td width="120" align="right">最近新增节点数</td>
         <td width="auto" align="left"><input type="text" class="sl w100" name="newest_node_num" value="',$options['newest_node_num'],'" /> 默认20</td>
     </tr>
     <tr>
-        <td width="120" align="right">最热主题数</td>
+        <td width="120" align="right">热门节点数</td>
         <td width="auto" align="left"><input type="text" class="sl w100" name="hot_node_num" value="',$options['hot_node_num'],'" /> 默认20（要小于',$options['bot_node_num'],'）</td>
     </tr>
     <tr>
-        <td width="120" align="right">首页底部热门分类数</td>
-        <td width="auto" align="left"><input type="text" class="sl w100" name="bot_node_num" value="',$options['bot_node_num'],'" /> 默认100（要大于',$options['hot_node_num'],'，总分类数大于',$options['newest_node_num'],'底部才会显示）</td>
+        <td width="120" align="right">首页底部节点导航数</td>
+        <td width="auto" align="left"><input type="text" class="sl w100" name="bot_node_num" value="',$options['bot_node_num'],'" /> 默认100（要大于',$options['hot_node_num'],'，总节点数大于',$options['newest_node_num'],'底部才会显示）</td>
     </tr>
     <tr>
         <td width="120" align="right">帖子标题最多字数</td>

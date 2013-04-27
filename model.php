@@ -1,12 +1,15 @@
 <?php
 //一些常用的数据操作
 
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+};
 
 //获取网站基本配置
 $options = $MMC->get('options');
 if(!$options){
-    $query = $DBS->query("SELECT `title`, `value` FROM `yunbbs_settings`");
+    $query = $DBS->query("SELECT title, value FROM yunbbs_settings");
     $options = array();
     while($setting = $DBS->fetch_array($query)) {
         $options[$setting['title']] = $setting['value'];
@@ -42,7 +45,7 @@ function get_links() {
         return $links;
     }else{
         global $DBS;
-        $query = $DBS->query("SELECT `name`, `url` FROM `yunbbs_links`");
+        $query = $DBS->query("SELECT name, url FROM yunbbs_links");
         $links = array();
         while($link = $DBS->fetch_array($query)) {
             $links[$link['name']] = $link['url'];
@@ -56,7 +59,7 @@ function get_links() {
     }
 }
 
-// 获取最新添加的分类
+// 获取最新添加的节点
 function get_newest_nodes() {
     global $MMC;
     $newest_nodes = $MMC->get('newest_nodes');
@@ -64,7 +67,7 @@ function get_newest_nodes() {
         return $newest_nodes;
     }else{
         global $DBS, $options;
-        $query = $DBS->query("SELECT `id`, `name`, `articles` FROM `yunbbs_categories` ORDER BY  `id` DESC LIMIT ".$options['newest_node_num']);
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY  id DESC LIMIT ".$options['newest_node_num']);
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
@@ -78,7 +81,7 @@ function get_newest_nodes() {
     }
 }
 
-// 获取热门分类
+// 获取热门节点
 function get_bot_nodes() {
     global $MMC;
     $newest_nodes = $MMC->get('bot_nodes');
@@ -86,7 +89,7 @@ function get_bot_nodes() {
         return $newest_nodes;
     }else{
         global $DBS, $options;
-        $query = $DBS->query("SELECT `id`, `name`, `articles` FROM `yunbbs_categories` ORDER BY  `articles` DESC LIMIT ".$options['bot_node_num']);
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY  articles DESC LIMIT ".$options['bot_node_num']);
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
@@ -113,7 +116,7 @@ function get_site_infos() {
         $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_users'");
         $site_infos['会员'] = $table_status['Auto_increment'] -1;
         $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
-        $site_infos['分类'] = $table_status['Auto_increment'] -1;
+        $site_infos['节点'] = $table_status['Auto_increment'] -1;
         $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_articles'");
         $site_infos['帖子'] = $table_status['Auto_increment'] -1;
         $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_comments'");

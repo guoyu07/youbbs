@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 
 $tid = intval($_GET['tid']);
@@ -23,25 +23,14 @@ if(!$t_obj){
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         WHERE a.id='$tid'";
     $t_obj = $DBS->fetch_one_array($query);
-    if($t_obj){
-        if(!$t_obj['visible']){
-            if($cur_user && $cur_user['flag']>=99){
-                exit('404: <a href="/">Go back HomePage</a> <a href="/admin-edit-post-'.$tid.'">Edit</a>');
-            }else{
-                header("HTTP/1.0 404 Not Found");
-                header("Status: 404 Not Found");
-                include(dirname(__FILE__) . '/404.html');
-                exit;
-
-            }
-        }
-    }else{
-        header("HTTP/1.0 404 Not Found");
-        header("Status: 404 Not Found");
-        include(dirname(__FILE__) . '/404.html');
+    if(!$t_obj || ($t_obj && !$t_obj['visible'] && (!$cur_user || ($cur_user && $cur_user['flag']<99)))){
+        $error_code = 4043;
+        $title = $options['name'].' 社区 › 主题未找到';
+        $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
-
     }
+
     $t_obj['addtime'] = showtime($t_obj['addtime']);
     $t_obj['edittime'] = showtime($t_obj['edittime']);
     if($is_spider || $tpl){
@@ -54,20 +43,25 @@ if(!$t_obj){
 }
 // 处理正确的评论页数
 $taltol_page = ceil($t_obj['comments']/$options['commentlist_num']);
-if($page<=0){
-    header('location: /topic-'.$tid.'-1.html');
+if ($taltol_page == 0) $taltol_page = 1;
+if ($page<=0) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Status: 301 Moved Permanently");
+    header('Location: /topic-'.$tid.'-1.html');
     exit;
 }
-if($page!=1 && $page>$taltol_page){
-    header('location: /topic-'.$tid.'-'.$taltol_page.',html');
+if ($page>$taltol_page) {
+    header('Location: /topic-'.$tid.'-'.$taltol_page.'.html');
     exit;
 }
 
 // 处理提交评论
-$tip = '';
+unset($tip);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('403: unknown referer.');
+        $error_code = 4033;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
     }
 
     $c_content = addslashes(trim($_POST['content']));
@@ -76,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($c_con_len>=$options['comment_min_len'] && $c_con_len<=$options['comment_max_len']){
             $conmd5 = md5($c_content);
             if($MMC->get('cm_'.$conmd5)){
-                $tip = '请勿发布相同的内容 或 灌水';
+                $tip = '请勿 发布相同的内容 或 灌水';
             }else{
                 // spam_words
                 if($options['spam_words'] && $cur_user['flag']<99){
@@ -87,7 +81,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             // has spam word
                             $DBS->unbuffered_query("UPDATE yunbbs_users SET flag='0' WHERE id='$cur_uid'");
                             $MMC->delete('u_'.$cur_uid);
-                            exit('403: dont post any spam.');
+                            $error_code = 4034;
+                            include_once(dirname(__FILE__) . '/403.php');
+                            exit;
                         }
                     }
                 }
@@ -129,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // 跳到评论最后一页
                 if($page<$new_taltol_page){
                     $c_content = '';
-                    header('location: /topic-'.$tid.'-'.$new_taltol_page.'.html');
+                    header('Location: /topic-'.$tid.'-'.$new_taltol_page.'.html');
                     exit;
                 }else{
                     $cur_ucode = $new_ucode;
@@ -151,7 +147,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $c_content = '';
 }
 
-// 获取分类
+// 获取节点
 $c_obj = $MMC->get('n-'.$t_obj['cid']);
 if(!$c_obj){
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$t_obj['cid']."'");
@@ -228,9 +224,9 @@ if ($cur_user){
 
 // 页面变量
 if ($page>=2) {
-    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'];
+    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'].' 社区';
 } else {
-    $title = $t_obj['title'].' - '.$options['name'];
+    $title = $t_obj['title'].' - '.$options['name'].' 社区';
 }
 $newest_nodes = get_newest_nodes();
 $links = get_links();
@@ -245,6 +241,6 @@ $show_sider_ad = "1";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'postpage.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

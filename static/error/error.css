@@ -1,0 +1,118 @@
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+*,html,body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F3F1E5;
+    color: #4D505D;
+    font-family: "Microsoft YaHei UI","Microsoft YaHei",arial,sans-serif;
+    font-size: small;
+    height: 100%;
+}
+
+.clear {
+    background-color: transparent;
+    border: 0px;
+    clear: both;
+    display: block;
+    font-size: 0px;
+    height: 0px;
+    line-height: 0px;
+    overflow: hidden;
+}
+
+.icon {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width:16px;
+    height:16px;
+}
+
+.logo {
+    float: left;
+    padding: 162px 12px 0;
+    width: 153px;
+}
+
+.wrapper {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+}
+
+.content {
+    background: url("/static/error/zz.jpg") repeat-x scroll center bottom white;
+    border-color: #E6E5D9;
+    border-style: solid solid none;
+    border-width: 1px;
+    margin: 0 auto;
+    position: relative;
+    width: 700px;
+    top: 60px;
+}
+
+.main {
+    border-left: 1px solid #E6E5D9;
+    float: right;
+    font-size: 15px;
+    margin: 24px 0;
+    padding: 12px 24px;
+    width: 470px;
+    height: 338px;
+}
+
+.main a {
+    text-decoration: none;
+}
+
+.main p {
+    margin: 12px 0;
+}
+
+.footerWrapper {
+    background-color: #FFFFFF;
+    border-top: 1px solid #E6E5D9;
+    bottom: 0;
+    padding: 12px 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.footerWrapper a {
+    text-decoration: none;
+}
+
+.img-404, .img-403, .img-500 {
+    box-shadow: 0 0 5px #E6E5D9;
+    margin: 20px 0 0 45px;
+    padding: 5px;
+}
+
+.a-404, .a-403, .a-500 {
+    margin: 20px 50px 0 0 ;
+    text-align: right;
+}
+
+.img-403 {
+    margin: 20px 0 0 60px;
+}
+
+.a-403 {
+    margin: 20px 75px 0 0 ;
+}
+
+.img-500 {
+    margin: 25px 0 0 25px;
+}
+
+.a-500 {
+    margin: 25px 35px 0 0 ;
+}

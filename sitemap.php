@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 $base_url = 'http://'.$_SERVER['HTTP_HOST'];
 $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n ";
@@ -27,6 +27,6 @@ for($i = $from_i; $i < $to_i; $i++){
 
 $xml .= '</urlset>';
 
-header("content-Type: text/xml");
+header("Content-Type: text/xml");
 echo $xml;
 ?>

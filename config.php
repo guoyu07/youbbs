@@ -1,4 +1,9 @@
 <?php
+if (!defined('IN_SAESPOT')) {
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+};
+
 // 定义头像、图库基础网址
 define('TUCHUANG_URL', 'http://bcs.duapp.com/XXXXX'); //XXXXX 换成自己的 bucket 名称
 

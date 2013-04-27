@@ -1,20 +1,30 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /static/error/401.html'));
-if ($cur_user['flag']==0){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 403: 该帐户已被禁用');
-}
-if ($cur_user['flag']==1){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 401: 该帐户还在审核中');
+if (!$cur_user) {
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+} else {
+    if ($cur_user['flag'] == 0){
+        $error_code = 4032;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
+    if ($cur_user['flag'] == 1){
+        $error_code = 4011;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
 }
 
-if($options['close_upload']) exit('error: 403 附件上传已禁用');
+if ($options['close_upload']) {
+    $error_code = 4035;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $mw = intval($_GET['mw']);
 
@@ -49,10 +59,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if($img_info[2]==1){
                     $img_obj = imagecreatefromgif($_FILES['filetoupload']['tmp_name']);
                     $t_ext = 'gif';
-                }else if($img_info[2]==2){
+                }elseif($img_info[2]==2){
                     $img_obj = imagecreatefromjpeg($_FILES['filetoupload']['tmp_name']);
                     $t_ext = 'jpg';
-                }else if($img_info[2]==3){
+                }elseif($img_info[2]==3){
                     $img_obj = imagecreatefrompng($_FILES['filetoupload']['tmp_name']);
                     $t_ext = 'png';
                 }
@@ -127,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 imagedestroy($img_obj);
 
                 // 上传到云存储
-                include(dirname(__FILE__) . '/libs/bcs.class.php');
+                include_once(dirname(__FILE__) . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;
@@ -157,7 +167,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 // 其它文件
                 // 上传到云存储
-                include(dirname(__FILE__) . '/libs/bcs.class.php');
+                include_once(dirname(__FILE__) . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;
@@ -187,7 +197,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $rsp['msg'] = '附件数据没有正确上传';
     }
 
-    header("Content-Type: text/html");
+    header("Content-Type: text/html; charset=UTF-8");
     echo json_encode($rsp);
 }
 ?>

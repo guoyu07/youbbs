@@ -1,10 +1,16 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 echo '
 <a name="add"></a>
 <div class="title">
-    <a href="/">',$options['name'],'</a> &raquo; - 添加分类
+    <a href="/">',$options['name'],'</a> &raquo; - 添加节点
 </div>
 
 <div class="main-box">';
@@ -15,17 +21,17 @@ if($tip1){
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'#add" method="post">
 <input type="hidden" name="action" value="add"/>
-<p>输入新分类名： <br/><input type="text" class="sl wb40" name="name" value="" /><br/>
-分类简介： (255个字节以内)<br/>
+<p>输入新节点名： <br/><input type="text" class="sl wb40" name="name" value="" /><br/>
+节点简介： (255个字节以内)<br/>
 <textarea class="ml wb96" name="about"></textarea><br/>
 <input type="submit" value=" 添 加 " name="submit" class="textbtn" /></p>
-<p class="grey fs12">注：分类添加后不能删除，只能修改。</p>
+<p class="grey fs12">注：节点添加后不能删除，只能修改。</p>
 </form>
 </div>';
 
 echo '
 <a name="edit"></a>
-<div class="title">修改分类</div>
+<div class="title">修改节点</div>
 
 <div class="main-box">';
 if($tip2){
@@ -37,15 +43,15 @@ echo '
 if($c_obj){
 echo '
 <input type="hidden" name="action" value="edit"/>
-<p>分类名： <input type="text" class="sl wb40" name="name" value="',htmlspecialchars($c_obj['name']),'" /><br/>
-分类简介： (255个字节以内)<br/>
+<p>节点名： <input type="text" class="sl wb40" name="name" value="',htmlspecialchars($c_obj['name']),'" /><br/>
+节点简介： (255个字节以内)<br/>
 <textarea class="ml w500" name="about">',htmlspecialchars(stripslashes($c_obj['about'])),'</textarea><br/>
 <input type="submit" value=" 保 存 " name="submit" class="textbtn" /></p>';
 
 }else{
 echo '
 <input type="hidden" name="action" value="find"/>
-<p>输入分类id查找： 如红色部分：node-<span class="red">1</span>-1.html<br/><input type="text" class="sl wb40" name="findid" value="" />
+<p>输入节点id查找： 如红色部分：node-<span class="red">1</span>-1.html<br/><input type="text" class="sl wb40" name="findid" value="" />
 <input type="submit" value=" 查 找 " name="submit" class="textbtn" /></p>';
 
 }

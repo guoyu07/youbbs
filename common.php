@@ -1,19 +1,32 @@
 <?php
 define('SAESPOT_VER', '1.5');
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+
+if (!defined('IN_SAESPOT')) {
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+};
 
 // 获得IP地址
-if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+/*
+if (getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
     $onlineip = getenv('HTTP_CLIENT_IP');
-} elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
-    $onlineip = getenv('HTTP_X_FORWARDED_FOR');
-} elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+}
+if (getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
     $onlineip = getenv('REMOTE_ADDR');
-} elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+}
+if (isset($_SERVER['REMOTE_ADDR']) && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
     $onlineip = $_SERVER['REMOTE_ADDR'];
 }
-$onlineip = addslashes($onlineip);
-//if(!$onlineip) exit('error: 400 no ip');
+*/
+if (getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+    if (preg_match('/(\d{1,3}\.){3}\d{1,3}/', getenv('HTTP_X_FORWARDED_FOR'), $matches)) {
+        $onlineip = $matches[0];
+    } else {
+        $error_code = 4036;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
+}
 
 $mtime = explode(' ', microtime());
 $starttime = $mtime[1] + $mtime[0];
@@ -21,7 +34,7 @@ $timestamp = time();
 $php_self = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
 $url_path = substr($php_self, 1,-4);
 
-include (dirname(__FILE__) . '/libs/mysql.class.php');
+include_once (dirname(__FILE__) . '/libs/mysql.class.php');
 // 初始化从数据类，若要写、删除数据则需要定义主数据类
 $DBS = new DB_MySQL;
 $DBS->connect($servername, $dbport, $dbusername, $dbpassword, $dbname);
@@ -32,7 +45,7 @@ function stripslashes_array(&$array) {
 		foreach ($array as $k => $v) {
 			$array[$k] = stripslashes_array($v);
 		}
-	} else if (is_string($array)) {
+	} elseif (is_string($array)) {
 		$array = stripslashes($array);
 	}
 	return $array;
@@ -81,7 +94,7 @@ if($cur_uname && $cur_uid && $cur_ucode){
     }
 }
 
-include (dirname(__FILE__) . '/model.php');
+include_once (dirname(__FILE__) . '/model.php');
 
 // 获得散列
 function formhash() {
@@ -91,16 +104,10 @@ function formhash() {
 
 $formhash = formhash();
 
-// 限制不能打开.php的网址
-if(strpos($_SERVER["REQUEST_URI"], '.php')){
-    header('location: /static/error/404.html');
-    exit('no php script');
-}
-
 // 只允许注册用户访问
 if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
     if( !in_array($url_path, array('login','logout','sigin','forgot','qqlogin','qqcallback','qqsetname','wblogin','wbcallback','wbsetname'))){
-        header('location: /login');
+        header('Location: /login');
         exit('authorized only');
     }
 }
@@ -108,7 +115,7 @@ if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
 // 网站暂时关闭
 if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
     if( !in_array($url_path, array('login','forgot'))){
-        header('location: /login');
+        header('Location: /login');
         exit('site close');
     }
 }
@@ -150,9 +157,9 @@ function showtime($db_time){
         // 小于1年如下显示
         if($diftime>=86400){
             return round($diftime/86400,1).'天前';
-        }else if($diftime>=3600){
+        }elseif($diftime>=3600){
             return round($diftime/3600,1).'小时前';
-        }else if($diftime>=60){
+        }elseif($diftime>=60){
             return round($diftime/60,1).'分钟前';
         }else{
             return ($diftime+1).'秒钟前';
@@ -201,7 +208,7 @@ function set_content($text,$spider='0'){
     if(strpos($text, 'www.tudou.com')){
         if(strpos($text, 'programs/view')){
             $text = preg_replace('/http:\/\/www\.tudou\.com\/(programs\/view|listplay)\/([a-zA-Z0-9=_-]+)(\/|\.html?)?/', '<embed src="http://www.tudou.com/v/\2/" quality="high" width="638" height="420" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>', $text);
-        }else if(strpos($text, 'albumplay')){
+        }elseif(strpos($text, 'albumplay')){
             $text = preg_replace('/http:\/\/www\.tudou\.com\/albumplay\/([a-zA-Z0-9=_-]+)\/([a-zA-Z0-9=_-]+)(\/|\.html?)?/', '<embed src="http://www.tudou.com/a/\1/" quality="high" width="638" height="420" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>', $text);
         }else{
             $text = preg_replace('/http:\/\/www\.tudou\.com\/(programs\/view|listplay)\/([a-zA-Z0-9=_-]+)(\/|\.html?)?/', '<embed src="http://www.tudou.com/l/\2/" quality="high" width="638" height="420" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>', $text);

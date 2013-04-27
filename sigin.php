@@ -1,13 +1,13 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
+// 屏蔽下面几行可以通过 用户名 和 密码 注册
 /*
-// 屏蔽下面几行可以通过 用户名和密码 注册
 if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $options['wb_secret'])){
-    header("content-Type: text/html; charset=UTF-8");
+    header("Content-Type: text/html; charset=UTF-8");
     echo '请用 ';
     if($options['wb_key'] && $options['wb_secret']){
         echo '&nbsp;<a href="/wblogin">微博登录</a>';
@@ -21,11 +21,11 @@ if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $op
 */
 
 if($cur_user){
-    header('location: /');
+    header('Location: /');
     exit;
 }else{
     if($options['close_register']){
-        header('location: /login');
+        header('Location: /login');
         exit;
     }
 }
@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     if($regip){
-        header("content-Type: text/html; charset=UTF-8");
+        header("Content-Type: text/html; charset=UTF-8");
         exit('一个ip最小注册间隔时间是 '.$options['reg_ip_space'].' 秒，请稍后再来注册 或 让管理员把这个时间改小点。');
     }
 
@@ -105,16 +105,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         setcookie("cur_uid", $cur_uid, $timestamp+ 86400 * 365, '/');
         setcookie("cur_uname", $name, $timestamp+86400 * 365, '/');
         setcookie("cur_ucode", $db_ucode, $timestamp+86400 * 365, '/');
-        header('location: /');
+        header('Location: /');
         exit;
     }
 }
 
 // 页面变量
-$title = '注册 - '.$options['name'];
+$title = '注册 - '.$options['name'].' 社区';
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 echo '
 <a name="4"></a>
 <div class="title">修改用户权限 - <span class="red">',$m_obj['name'],'</span></div>
@@ -20,10 +26,11 @@ echo '
     <tr>
         <td width="120" align="right">权限说明</td>
             <td width="auto" align="left">
-0: 禁用，不能发帖子、回复；<br/>
-1: 等待审核，当开启注册用户审核才有效；<br/>
-5: 一般用户，可发帖子、回复；<br/>
-99： 管理员。
+0：禁用，不能发帖子、回复<br/>
+1：等待审核，当开启注册用户审核才有效<br/>
+5：一般用户，可发帖子、回复<br/>
+88：版主，可编辑帖子和回复<br/>
+99：管理员，拥有全部权限
 </td>
         </tr>
     <tr>

@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 // 获取最近文章列表
 $articledb = $MMC->get('home-article-list');
@@ -28,9 +28,9 @@ if(!$articledb){
 
 // 页面变量
 if ($options['description']) {
-    $title = $options['name'].' - '.$options['description'];
+    $title = $options['name'].' 社区 - '.$options['description'];
 } else {
-    $title = $options['name'];
+    $title = $options['name'].' 社区';
 }
 
 $site_infos = get_site_infos();
@@ -51,6 +51,6 @@ if($options['site_des']){
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'home.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

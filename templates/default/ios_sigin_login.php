@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 echo '
 <div class="title"><a href="/">',$options['name'],'</a> &raquo; ';
@@ -34,7 +40,7 @@ if($url_path == 'sigin'){
         echo '<p class="red">一个ip最小注册间隔时间是 ',$options['reg_ip_space'],' 秒，请稍后再来注册 或 让管理员把这个时间改小点。</p>';
     }else{
         echo '<p><label>重　复： <input type="password" name="pw2" class="sl wb50" value="" /></label></p>';
-        echo '<p><label>验证码： <input type="text" name="seccode" class="sl wb20" value="" /></label> <img src="/seccode.php" align="absmiddle" /></p>';
+        echo '<p><label>验证码： <input type="text" name="seccode" class="sl wb20" value="" /></label> <img src="/seccode" align="absmiddle" /></p>';
     }
 }
 

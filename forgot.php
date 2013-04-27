@@ -1,15 +1,14 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if($cur_user && $cur_user['flag'] == 0){
-    header('location: /');
+if ($cur_user && $cur_user['flag'] == 0) {
+    $error_code = 4032;
+    include_once(dirname(__FILE__) . '/403.php');
     exit;
 }
-
-//
 
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -24,11 +23,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isemail($email)){
                         $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE name='".$name."' LIMIT 1");
                         if($db_user){
-                            if($email == $db_user['email']){
-                                header("content-Type: text/html; charset=UTF-8");
-                                exit('请用该邮箱: '.$db_user['email'].' 给管理员（管理员信箱'.$options['admin_email'].'）发送一封密码重设请求，内容只需包含您的用户名“'.$name.'”');
+                            if($db_user['flag'] != 0 || $db_user['flag'] != 1){
+                                if($email == $db_user['email']){
+                                    header("Content-Type: text/html; charset=UTF-8");
+                                    exit('请用该邮箱: '.$db_user['email'].' 给管理员（管理员信箱'.$options['admin_email'].'）发送一封密码重设请求，内容只需包含您的用户名“'.$name.'”');
+                                }else{
+                                    $errors[] = '填写的邮箱 与 个人设置里的邮箱 不一致';
+                                }
                             }else{
-                                $errors[] = '填写的邮箱 和 个人设置里的邮箱 不一致';
+                                $errors[] = '该账户 已禁用 或 还在审核中，不允许找回密码';
                             }
                         }else{
                             $errors[] = '用户名 错误';
@@ -41,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $errors[] = '名字 太长 或 太短 或 包含非法字符';
             }
         }else{
-            $errors[] = '用户名 或 email 太长了';
+            $errors[] = '用户名 或 邮箱 太长了';
         }
     }else{
        $errors[] = '用户名 和 邮箱 必填';
@@ -49,11 +52,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '找回密码  - '.$options['name'];
+$title = '找回密码  - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'forgot.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

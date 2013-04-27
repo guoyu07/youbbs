@@ -1,5 +1,12 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
+
 ob_start();
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,11 +23,11 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 if($options['head_meta']){
     echo $options['head_meta'];
 }
-if(isset($meta_keywords) && $meta_keywords){
+if($meta_keywords){
     echo '
 <meta name="keywords" content="',$meta_keywords,'" />';
 }
-if(isset($meta_des) && $meta_des){
+if($meta_des){
     echo '
 <meta name="description" content="',$meta_des,'" />';
 }
@@ -34,7 +41,7 @@ echo '
 <body>
 <div class="header-wrap">
     <div class="header">
-        <div class="logo"><a href="/" name="top">',htmlspecialchars($options['name']),'</a></div>
+        <div class="logo"><a href="/" name="top"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
         <div class="banner">';
 
 if($cur_user){
@@ -58,7 +65,7 @@ echo '       </div>
 if($cur_user){
     if($cur_user['flag'] == 0){
         echo '<div class="tiptitle">站内提醒 &raquo; <span style="color:yellow;">帐户已被管理员禁用</span></div>';
-    }else if($cur_user['flag'] == 1){
+    }elseif($cur_user['flag'] == 1){
         echo '<div class="tiptitle">站内提醒 &raquo; <span style="color:yellow;">帐户在等待管理员审核</span></div>';
     }else{
         if(!$cur_user['password']){
@@ -73,12 +80,12 @@ if($cur_user){
 
 if($options['close']){
 echo '
-<div class="tiptitle">网站暂时关闭公告 &raquo;
+<div class="tiptitle">社区暂时关闭公告 &raquo;
 <span style="color:yellow;">';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '网站维护中……';
+    echo '社区维护中……';
 }
 echo '</span>
 </div>';
@@ -89,7 +96,7 @@ echo '
 <div class="title">管理员面板</div>
 <div class="main-box main-box-node">
 <div class="btn">
-<a href="/admin-node">分类管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>';
+<a href="/admin-node">节点管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>';
 
 echo '
 <div class="c"></div>
@@ -98,11 +105,11 @@ echo '
 </div>';
 }
 
-include($pagefile);
+include_once($pagefile);
 
-if(isset($newest_nodes) && $newest_nodes){
+if($newest_nodes){
 echo '
-<div class="title">最近添加的分类</div>
+<div class="title">最近新增节点</div>
 <div class="main-box main-box-node">
 <div class="btn">';
 foreach( $newest_nodes as $k=>$v ){
@@ -116,9 +123,9 @@ echo '
 }
 
 
-if(isset($bot_nodes)){
+if($bot_nodes){
 echo '
-<div class="title">热门分类</div>
+<div class="title">热门节点</div>
 <div class="main-box main-box-node">
 <div class="btn">';
 foreach( $bot_nodes as $k=>$v ){
@@ -141,22 +148,21 @@ echo '       </div>
 
 <div class="footer-wrap">
     <div class="footer">
-    <p class="float-left"><a href="/feed">订阅</a>';
+    <p class="float-left"><a href="/topic-4-1.html">关于</a> • <a href="/feed">订阅</a> • <a href="http://www.sinosky.org">博客</a> • <a href="http://lixian.sinosky.org">离线下载</a>';
 
 if($is_mobie){
     echo ' • <a href="/viewat-desktop">桌面版</a>';
 }
 
-$year = date("Y");
 echo '</p>
-<p class="float-right">&copy; ',$yaer,' - <a href="/">',$options['name'],'</a></p>
+<p class="float-right">&copy; 2013 - <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a></p>
 <div class="c"></div>';
 
 echo '    </div>
     <!-- footer end -->
 </div>';
 
-if($options['ad_web_bot'] && isset($show_sider_ad)){
+if($show_sider_ad && $options['ad_sider_top']){
     echo $options['ad_web_bot'];
 }
 
@@ -171,17 +177,22 @@ echo '
 $_output = ob_get_contents();
 ob_end_clean();
 
-// 304
-$etag = md5($_output);
-if($_SERVER['HTTP_IF_NONE_MATCH'] == $etag){
-    header("HTTP/1.1 304 Not Modified");
-    header("Status: 304 Not Modified");
-    header("Etag: ".$etag);
-    exit;
-}else{
-    header("Etag: ".$etag);
+if ($error_code) {
+    header("HTTP/1.0 404 Not Found");
+    header("Status: 404 Not Found");
+} elseif (!$options['show_debug']) {
+    $etag = md5($_output);
+    if ($_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
+        header("HTTP/1.1 304 Not Modified");
+        header("Status: 304 Not Modified");
+        header("Etag: ".$etag);
+        exit;
+    } else {
+        header("Etag: ".$etag);
+    }
 }
 
+header("Content-Type: text/html; charset=UTF-8");
 echo $_output;
 
 ?>

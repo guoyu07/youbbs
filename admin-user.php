@@ -1,15 +1,21 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<99) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
-
-$tip1 = '';
-$tip2 = '';
-
+unset($tip1, $tip2);
 $act = trim($_GET['act']);
 $mid = intval(trim($_GET['mid']));
 
@@ -77,11 +83,11 @@ if(!$userdb2 && $userdb2 !== ''){
 }
 
 // 页面变量
-$title = '用户管理 - '.$options['name'];
+$title = '用户管理 - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-user.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

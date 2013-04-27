@@ -1,29 +1,37 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<99) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $mid = intval($_GET['mid']);
 if($mid==$cur_user['id']){
-    header('location: /setting');
+    header('Location: /setting');
     exit;
 }
 
 $query = "SELECT * FROM yunbbs_users WHERE id='$mid'";
 $m_obj = $DBS->fetch_one_array($query);
 if(!$m_obj){
-    exit(header('location: /static/error/404.html'));
+    $error_code = 4041;
+    $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    exit;
 }
 $m_obj['regtime'] = showtime($m_obj['regtime']);
 
-$tip1 = '';
-$tip2 = '';
-$tip3 = '';
-$tip4 = '';
-$av_time = '';
+unset($tip1, $tip2, $tip3, $tip4, $av_time);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
@@ -44,16 +52,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
         }
-    }else if($action == 'avatar'){
+    }elseif($action == 'avatar'){
         if($_FILES['avatar']['size'] && $_FILES['avatar']['size'] < 301000){
             $img_info = getimagesize($_FILES['avatar']['tmp_name']);
             if($img_info){
                 //创建源图片
                 if($img_info[2]==1){
                     $img_obj = imagecreatefromgif($_FILES['avatar']['tmp_name']);
-                }else if($img_info[2]==2){
+                }elseif($img_info[2]==2){
                     $img_obj = imagecreatefromjpeg($_FILES['avatar']['tmp_name']);
-                }else if($img_info[2]==3){
+                }elseif($img_info[2]==3){
                     $img_obj = imagecreatefrompng($_FILES['avatar']['tmp_name']);
                 }
                 //如果上传的文件是jpg/gif/png则处理
@@ -79,7 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
                     // 上传到云存储
-                    include(dirname(__FILE__) . '/libs/bcs.class.php');
+                    include_once(dirname(__FILE__) . '/libs/bcs.class.php');
                     $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                     $bcs_object = '/avatar/large/'.$mid.'.png';
@@ -178,7 +186,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip2 = '图片尚未上传或太大了';
         }
-    }else if($action == 'chpw'){
+    }elseif($action == 'chpw'){
         $password_new = addslashes(trim($_POST['password_new']));
         $password_again = addslashes(trim($_POST['password_again']));
         if($password_new && $password_again){
@@ -198,7 +206,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip3 = '请填写完整，新密码、重复新密码';
         }
-    }else if($action == 'setflag'){
+    }elseif($action == 'setflag'){
         $flag = intval(trim($_POST['flag']));
         if($flag>=0 && $flag<=99){
             if($DBS->unbuffered_query("UPDATE yunbbs_users SET flag='$flag' WHERE id='$mid'")){
@@ -206,7 +214,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $MMC->delete('u_'.$mid);
                 if($flag == 0){
                     $MMC->delete('flag0_users');
-                }else if($flag == 1){
+                }elseif($flag == 1){
                     $MMC->delete('flag1_users');
                 }
 
@@ -224,11 +232,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 // 页面变量
-$title = '修改用户资料  - '.$options['name'];
+$title = '修改用户资料  - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setuser.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

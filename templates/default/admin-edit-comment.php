@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 echo '
 <div class="title">
@@ -16,7 +22,7 @@ echo '
 <p><textarea id="id-content" name="content" class="comment-text mll">',$r_content,'</textarea></p>';
 
 if(!$options['close_upload']){
-    include(dirname(__FILE__) . '/upload.php');
+    include_once(dirname(__FILE__) . '/upload.php');
 }
 
 echo '

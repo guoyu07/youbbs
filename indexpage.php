@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 $page = intval($_GET['page']);
 
@@ -10,12 +10,15 @@ $page = intval($_GET['page']);
 $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_articles'");
 $taltol_article = $table_status['Auto_increment'] -1;
 $taltol_page = ceil($taltol_article/$options['list_shownum']);
-if($page<=0){
-    header('location: /page-1.html');
+if ($taltol_page == 0) $taltol_page = 1;
+if ($page<=0) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Status: 301 Moved Permanently");
+    header('Location: /page-1.html');
     exit;
 }
-if($page!=1 && $page>$taltol_page){
-    header('location: /page-'.$taltol_page.'.html');
+if ($page>$taltol_page) {
+    header('Location: /page-'.$taltol_page.'.html');
     exit;
 }
 
@@ -23,11 +26,11 @@ if($page!=1 && $page>$taltol_page){
 if($page == 0) $page = 1;
 
 $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
-    FROM `yunbbs_articles` a
-    LEFT JOIN `yunbbs_categories` c ON c.id=a.cid
-    LEFT JOIN `yunbbs_users` u ON a.uid=u.id
-    LEFT JOIN `yunbbs_users` ru ON a.ruid=ru.id
-    ORDER BY `edittime` DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
+    FROM yunbbs_articles a
+    LEFT JOIN yunbbs_categories c ON c.id=a.cid
+    LEFT JOIN yunbbs_users u ON a.uid=u.id
+    LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
+    ORDER BY edittime DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
 $query = $DBS->query($query_sql);
 $articledb=array();
 while ($article = $DBS->fetch_array($query)) {
@@ -41,7 +44,7 @@ $DBS->free_result($query);
 
 
 // 页面变量
-$title = $options['name'].' - 第 '.$page.' 页';
+$title = $options['name'].' 社区 - 第 '.$page.' 页';
 
 $site_infos = get_site_infos();
 $newest_nodes = get_newest_nodes();
@@ -61,6 +64,6 @@ if($options['site_des']){
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'indexpage.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

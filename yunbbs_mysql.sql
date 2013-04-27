@@ -29,7 +29,7 @@ CREATE TABLE yunbbs_categories (
   KEY articles (articles)
 ) ENGINE=MyISAM ;
 
-INSERT INTO yunbbs_categories VALUES(1, '默认分类', 0, '');
+INSERT INTO yunbbs_categories VALUES(1, '默认节点', 0, '');
 
 DROP TABLE IF EXISTS yunbbs_comments;
 CREATE TABLE yunbbs_comments (
@@ -50,7 +50,7 @@ CREATE TABLE yunbbs_links (
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM ;
 
-INSERT INTO yunbbs_links VALUES(null,'YouBBS', 'http://youbbs.sinaapp.com/');
+INSERT INTO yunbbs_links VALUES(null,'SinoSky', 'http://www.sinosky.org/');
 
 DROP TABLE IF EXISTS yunbbs_settings;
 CREATE TABLE yunbbs_settings (
@@ -81,7 +81,7 @@ INSERT INTO yunbbs_settings VALUES('comment_max_len', '1200');
 INSERT INTO yunbbs_settings VALUES('commentlist_num', '32');
 INSERT INTO yunbbs_settings VALUES('comment_post_space', '20');
 INSERT INTO yunbbs_settings VALUES('close', '0');
-INSERT INTO yunbbs_settings VALUES('close_note', '网站维护中……');
+INSERT INTO yunbbs_settings VALUES('close_note', '社区维护中……');
 INSERT INTO yunbbs_settings VALUES('authorized', '0');
 INSERT INTO yunbbs_settings VALUES('register_review', '0');
 INSERT INTO yunbbs_settings VALUES('close_register', '0');

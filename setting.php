@@ -4,21 +4,23 @@ define('IN_SAESPOT', 1);
 require(dirname(__FILE__) . '/config.php');
 require(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /static/error/401.html'));
-if ($cur_user['flag']==0){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 403: 该帐户已被禁用');
-}
-if ($cur_user['flag']==1){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 401: 该帐户还在审核中');
+if (!$cur_user) {
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+} else {
+    if ($cur_user['flag'] == 0){
+        $error_code = 4032;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
+    if ($cur_user['flag'] == 1){
+        $error_code = 4011;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
 }
 
-$tip1 = '';
-$tip2 = '';
-$tip3 = '';
-$av_time = '';
-
+unset($tip1, $tip2, $tip3, $av_time);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
     if($action == 'info'){
@@ -36,16 +38,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
         }
-    }else if($action == 'avatar'){
+    }elseif($action == 'avatar'){
        if($_FILES['avatar']['size'] && $_FILES['avatar']['size'] < 301000){
             $img_info = getimagesize($_FILES['avatar']['tmp_name']);
             if($img_info){
                 //创建源图片
                 if($img_info[2]==1){
                     $img_obj = imagecreatefromgif($_FILES['avatar']['tmp_name']);
-                }else if($img_info[2]==2){
+                }elseif($img_info[2]==2){
                     $img_obj = imagecreatefromjpeg($_FILES['avatar']['tmp_name']);
-                }else if($img_info[2]==3){
+                }elseif($img_info[2]==3){
                     $img_obj = imagecreatefrompng($_FILES['avatar']['tmp_name']);
                 }
                 //如果上传的文件是jpg/gif/png则处理
@@ -71,7 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
                     // 上传到云存储
-                    include(dirname(__FILE__) . '/libs/bcs.class.php');
+                    include_once(dirname(__FILE__) . '/libs/bcs.class.php');
                     $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                     $bcs_object = '/avatar/large/'.$cur_uid.'.png';
@@ -170,7 +172,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip2 = '图片尚未上传或太大了';
         }
-    }else if($action == 'chpw'){
+    }elseif($action == 'chpw'){
         $password_current = addslashes(trim($_POST['password_current']));
         $password_new = addslashes(trim($_POST['password_new']));
         $password_again = addslashes(trim($_POST['password_again']));
@@ -204,7 +206,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip3 = '请填写完整，当前密码、新密码、重复新密码';
         }
-    }else if($action == 'setpw'){
+    }elseif($action == 'setpw'){
         $password_new = addslashes(trim($_POST['password_new']));
         $password_again = addslashes(trim($_POST['password_again']));
         if($password_new && $password_again){
@@ -233,12 +235,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '设置 - '.$options['name'];
+$title = '设置 - '.$options['name'].' 社区';
 
 $newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setting.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');;
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');;
 
 ?>

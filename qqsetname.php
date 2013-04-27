@@ -1,16 +1,16 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 
 if($cur_user){
-    header('location: /');
+    header('Location: /');
     exit;
 }else{
     if($options['close_register']){
-        header('location: /login');
+        header('Location: /login');
         exit;
     }
 }
@@ -21,7 +21,7 @@ session_start();
 $name = $_SESSION["nick"];
 $openid = $_SESSION["openid"];
 
-if(!$openid) exit(header('location: /static/error/403.html'));
+if(!$openid) exit(header('Location: /static/error/403.html'));
 
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -73,11 +73,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             setcookie("cur_ucode", $db_ucode, $timestamp+86400 * 365, '/');
             $gotohome = "1";
             $getavatar = "1";
-            //header('location: /');
+            //header('Location: /');
             //exit;
 
         }
-    }else if($action == 'bind'){
+    }elseif($action == 'bind'){
         // 绑定
         $pw = addslashes(trim($_POST["pw"]));
         if($name && $pw){
@@ -108,7 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if($db_user['avatar'] != $db_user['id']){
                                     $getavatar = "1";
                                 }
-                                //header('location: /');
+                                //header('Location: /');
                                 //exit('logined');
                             }else{
                                 // 用户名和密码不匹配
@@ -166,7 +166,7 @@ if(isset($gotohome)){
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 100, 100);
 
             // 保存头像到云存储
-            include(dirname(__FILE__) . '/libs/bcs.class.php');
+            include_once(dirname(__FILE__) . '/libs/bcs.class.php');
             $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
             $bcs_object = '/avatar/large/'.$cur_uid.'.png';
@@ -241,18 +241,18 @@ if(isset($gotohome)){
         }
 
     }
-    header('location: /');
+    header('Location: /');
     exit;
 }
 
 
 /////
 // 页面变量
-$title = '设置名字 - '.$options['name'];
+$title = '设置名字 - '.$options['name'].' 社区';
 $logintype = "QQ";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

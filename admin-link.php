@@ -1,10 +1,19 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<99) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $act = trim($_GET['act']);
 $lid = intval($_GET['lid']);
@@ -12,13 +21,12 @@ if($lid){
     $query = "SELECT * FROM yunbbs_links WHERE id='$lid'";
     $l_obj = $DBS->fetch_one_array($query);
     if(!$l_obj){
-        header('location: /admin-link-list');
+        header('Location: /admin-link-list');
         exit;
     }
 }
 
-$tip1 = '';
-$tip2 = '';
+unset($tip1, $tip2);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = $_POST['action'];
     if($action=='add'){
@@ -35,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $tip1 = '链接名 和 网址 不能留空';
         }
-    }else if($action=='edit'){
+    }elseif($action=='edit'){
         $n_name = trim($_POST['name']);
         $n_url = trim($_POST['url']);
         if($n_name && $n_url){
@@ -71,11 +79,11 @@ while ($link = $DBS->fetch_array($query)) {
 
 
 // 页面变量
-$title = '链接管理 - '.$options['name'];
+$title = '链接管理 - '.$options['name'].' 社区';
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-link.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

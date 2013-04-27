@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 $tid = $_GET['tid'];
 $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
@@ -20,6 +20,6 @@ if($db_user['notic']){
     unset($n_arr);
     unset($new_notic);
 }
-header('location: /topic-'.$tid.'-1.html');
+header('Location: /topic-'.$tid.'-1.html');
 exit;
 ?>

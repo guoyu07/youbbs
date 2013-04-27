@@ -40,7 +40,7 @@ a:hover {color: #bd0a01;text-decoration: underline;}
 
 img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
 
-.header-wrap {width:100%;height:48px;color:#FFF;background: #000 url("bg_header.png") repeat-x bottom center;padding: 5px 0;}
+.header-wrap {width:100%;height:55px;color:#FFF;background: #000 url("bg_header.png") repeat-x bottom center;padding: 5px 0;}
     .header {width:100%;margin:0 auto;color:#666;vertical-align: middle;font-size: 15px;line-height:19px;font-weight: 500;}
     .header a {color:#CCC;text-decoration:none;}
     .header a:hover {color:#FFF;text-decoration:none;}
@@ -121,6 +121,10 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .member-detail p {color:#333;font-size:12px;line-height:16px;margin-bottom:5px;}
                 .user-list {margin:20px;}
                 .user-list li{margin-bottom:10px;}
+
+                .not-found p{font-size: 14px; line-height: 250%; margin: 0 15px 0 10px;}
+                .not-found ul{margin-bottom: 20px;}
+                .not-found li{font-size: 13px; line-height: 180%; margin: 0 20px;}
 
 .footer-wrap {width:100%;margin-bottom:0px;color:#999;background-color: #EDEDED;border-top:1px solid #E0E0E0;}
     .footer {margin:0 auto;padding:10px;}
