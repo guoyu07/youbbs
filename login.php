@@ -40,8 +40,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $pw = addslashes(trim($_POST["pw"]));
     if($name && $pw){
         if(strlen($name)<21 && strlen($pw)<32){
-            if(preg_match('/^[a-zA-Z0-9\x80-\xff]{4,20}$/i', $name)){
-                if(preg_match('/^[0-9]{4,20}$/', $name)){
+            if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{4,20}$/iu', $name)){
+                if(preg_match('/^\d{4,20}$/', $name)){
                     $errors[] = '名字不能全为数字';
                 }else{
                     // 检测输错超过5次即屏蔽该ip 1个小时

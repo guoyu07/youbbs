@@ -52,8 +52,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($pw === $pw2){
             if(strlen($name)<21 && strlen($pw)<32){
                 //检测字符
-                if(preg_match('/^[a-zA-Z0-9\x80-\xff]{4,20}$/i', $name)){
-                    if(preg_match('/^[0-9]{4,20}$/', $name)){
+                if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{4,20}$/iu', $name)){
+                    if(preg_match('/^\d{4,20}$/', $name)){
                         $errors[] = '名字不能全为数字';
                     }else{
                         error_reporting(0);
