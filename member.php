@@ -6,7 +6,7 @@ include_once(dirname(__FILE__) . '/common.php');
 
 $g_mid = $_GET['mid'];
 // mid 可能是 ID 或用户名，用户注册时要限制名字不能为全数字
-if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
+if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{1,20}$/iu', $g_mid)){
     $mid = intval($g_mid);
     if($mid){
         $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE id='$mid'";
@@ -22,7 +22,7 @@ if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
 }
 
 $m_obj = $DBS->fetch_one_array($query);
-if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || ($cur_user && $cur_user['flag']<99)))){
+if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || $cur_user && $cur_user['flag']<99))){
     if(!$mid){
         // 可以重定向到网址 /member-id.html 为了减少请求，下面用 $canonical 来让SEO感觉友好
         header("HTTP/1.1 301 Moved Permanently");

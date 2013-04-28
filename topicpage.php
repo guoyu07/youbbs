@@ -23,7 +23,7 @@ if(!$t_obj){
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         WHERE a.id='$tid'";
     $t_obj = $DBS->fetch_one_array($query);
-    if(!$t_obj || ($t_obj && !$t_obj['visible'] && (!$cur_user || ($cur_user && $cur_user['flag']<99)))){
+    if(!$t_obj || $t_obj && !$t_obj['visible'] && (!$cur_user || $cur_user && $cur_user['flag']<88)){
         $error_code = 4043;
         $title = $options['name'].' 社区 › 主题未找到';
         $pagefile = dirname(__FILE__) . '/templates/default/404.php';

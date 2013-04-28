@@ -92,12 +92,12 @@ echo '                <span class="commonet-count">',$count_n,'</span></div>
     </div>';
 }
 
-if($t_obj['comments'] > $options['commentlist_num']){
+if ($t_obj['comments'] > $options['commentlist_num']) {
 echo '<div class="pagination">';
-if($page>1){
+if ($page>1) {
 echo '<a href="/topic-',$tid,'-',$page-1,'" class="float-left">&laquo; 上一页</a>';
 }
-if($page<$taltol_page){
+if ($page<$taltol_page) {
 echo '<a href="/topic-',$tid,'-',$page+1,'" class="float-right">下一页 &raquo;</a>';
 }
 echo '<div class="c"></div>
@@ -117,15 +117,19 @@ function replyto(somebd){
 }
 </script>';
 
-}else{
+} else {
     echo '<div class="no-comment">目前尚无回复</div>';
 }
 
-if($t_obj['closecomment']){
-    echo '<div class="no-comment">该帖评论已关闭</div>';
-}else{
+if (!$t_obj['visible']) {
+    echo '<div class="no-comment">该帖已被隐藏</div>';
+}
 
-if($cur_user && $cur_user['flag']>4){
+if ($t_obj['closecomment']) {
+    echo '<div class="no-comment">该帖评论已关闭</div>';
+}
+
+if (!$t_obj['closecomment'] && $cur_user && $cur_user['flag']>4 || $cur_user && $cur_user['flag']>=88) {
 
 echo '<a name="new-comment"></a>
 <div class="title">
@@ -134,7 +138,7 @@ echo '<a name="new-comment"></a>
     <div class="c"></div>
 </div>
 <div class="main-box">';
-if($tip){
+if ($tip) {
     echo '<p class="red">',$tip,'</p>';
 }
 echo '    <form action="',$_SERVER["REQUEST_URI"],'#new-comment" method="post">
@@ -146,11 +150,8 @@ echo '    <form action="',$_SERVER["REQUEST_URI"],'#new-comment" method="post">
 </div>
 <!-- new comment end -->';
 
-}else{
+} elseif (!$t_obj['closecomment']) {
     echo '<div class="no-comment">请 <a href="/login" rel="nofollow">登录</a> 后发表评论</div>';
 }
-
-}
-
 
 ?>
