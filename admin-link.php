@@ -79,7 +79,7 @@ while ($link = $DBS->fetch_array($query)) {
 
 
 // 页面变量
-$title = '链接管理 - '.$options['name'].' 社区';
+$title = '链接管理 - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-link.php';

@@ -131,14 +131,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
         $error_code = 4042;
-        $title = $options['name'].' 社区 › 节点未找到';
+        $title = $options['name'].' › 节点未找到';
         $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
     }
 }
 // 页面变量
-$title = '发新帖子 - '.$options['name'].' 社区';
+$title = '发新帖子 - '.$options['name'];
 // 设置处理图片的最大宽度
 $img_max_w = 650;
 $newpost_page = '1';

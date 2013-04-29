@@ -36,7 +36,7 @@ $base_url = 'http://'.$_SERVER['HTTP_HOST'];
 ob_start();
 echo '<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>',htmlspecialchars($options['name']),' 社区</title>
+  <title>',htmlspecialchars($options['name']),'</title>
 ';
 if ($options['description']) {
   echo '  <description>', $options['description'], '</description>

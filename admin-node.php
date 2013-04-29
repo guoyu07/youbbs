@@ -21,7 +21,7 @@ if($nid){
     $c_obj = $DBS->fetch_one_array($query);
     if(!$c_obj){
         $error_code = 4046;
-        $title = $options['name'].' 社区 › 节点未找到';
+        $title = $options['name'].' › 节点未找到';
         $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
@@ -86,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '节点管理 - '.$options['name'].' 社区';
+$title = '节点管理 - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-node.php';

@@ -81,7 +81,7 @@ INSERT INTO yunbbs_settings VALUES('comment_max_len', '1200');
 INSERT INTO yunbbs_settings VALUES('commentlist_num', '32');
 INSERT INTO yunbbs_settings VALUES('comment_post_space', '20');
 INSERT INTO yunbbs_settings VALUES('close', '0');
-INSERT INTO yunbbs_settings VALUES('close_note', '社区维护中……');
+INSERT INTO yunbbs_settings VALUES('close_note', '论坛维护中……');
 INSERT INTO yunbbs_settings VALUES('authorized', '0');
 INSERT INTO yunbbs_settings VALUES('register_review', '0');
 INSERT INTO yunbbs_settings VALUES('close_register', '0');

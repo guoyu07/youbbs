@@ -20,7 +20,7 @@ $query = "SELECT id,articleid,content FROM yunbbs_comments WHERE id='$rid'";
 $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
     $error_code = 4044;
-    $title = $options['name'].' 社区 › 评论未找到';
+    $title = $options['name'].' › 评论未找到';
     $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '修改评论 - '.$options['name'].' 社区';
+$title = '修改评论 - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 590;
 

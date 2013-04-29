@@ -20,7 +20,7 @@ $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles 
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
     $error_code = 4047;
-    $title = $options['name'].' 社区 › 主题未找到';
+    $title = $options['name'].' › 主题未找到';
     $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
@@ -87,7 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $tip = '';
 }
 // 页面变量
-$title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'].' 社区';
+$title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 650;
 

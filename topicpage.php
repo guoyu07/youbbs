@@ -25,7 +25,7 @@ if(!$t_obj){
     $t_obj = $DBS->fetch_one_array($query);
     if(!$t_obj || $t_obj && !$t_obj['visible'] && (!$cur_user || $cur_user && $cur_user['flag']<88)){
         $error_code = 4043;
-        $title = $options['name'].' 社区 › 主题未找到';
+        $title = $options['name'].' › 主题未找到';
         $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
@@ -224,9 +224,9 @@ if ($cur_user){
 
 // 页面变量
 if ($page>=2) {
-    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'].' 社区';
+    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'];
 } else {
-    $title = $t_obj['title'].' - '.$options['name'].' 社区';
+    $title = $t_obj['title'].' - '.$options['name'];
 }
 $newest_nodes = get_newest_nodes();
 $links = get_links();

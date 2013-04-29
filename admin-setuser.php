@@ -25,7 +25,7 @@ $query = "SELECT * FROM yunbbs_users WHERE id='$mid'";
 $m_obj = $DBS->fetch_one_array($query);
 if(!$m_obj){
     $error_code = 4041;
-    $title = $options['name'].' 社区 › 用户未找到';
+    $title = $options['name'].' › 用户未找到';
     $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
@@ -233,7 +233,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 // 页面变量
-$title = '修改用户资料  - '.$options['name'].' 社区';
+$title = '修改用户资料  - '.$options['name'];
 
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setuser.php';

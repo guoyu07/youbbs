@@ -235,7 +235,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // 页面变量
-$title = '设置 - '.$options['name'].' 社区';
+$title = '设置 - '.$options['name'];
 
 $newest_nodes = get_newest_nodes();
 

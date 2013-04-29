@@ -46,7 +46,7 @@ echo '
 if ($options['description']) {
     echo ' - ',$options['description'];
 }
-echo '"><img border="0" width="153" height="56" src="/static/logo.png" alt="',htmlspecialchars($options['name']),'"></a></div>
+echo '">',htmlspecialchars($options['name']),'</a></div>
         <div class="scbox">
             <script type="text/javascript">
                 var dispatch = function() {
@@ -83,9 +83,9 @@ if($cur_user){
     }elseif($cur_user['flag'] == 1){
         echo '<span style="color:yellow;">在等待审核</span>&nbsp;&nbsp;&nbsp;';
     }
-    echo '<a href="/" title="社区首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member-',$cur_user['id'],'.html" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
+    echo '<a href="/" title="论坛首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member-',$cur_user['id'],'.html" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
 }else{
-    echo '<a href="/" title="社区首页">首页</a>&nbsp;&nbsp;&nbsp;';
+    echo '<a href="/" title="论坛首页">首页</a>&nbsp;&nbsp;&nbsp;';
 //  if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
     if(!$options['close_register']){
         echo '<a href="/sigin" title="注册">注册</a>&nbsp;&nbsp;&nbsp;';
@@ -127,20 +127,18 @@ echo '       </div>
 echo '
 <div class="footer-wrap">
     <div class="footer">
-    <div class="left">
-        <a href="/topic-4-1.html">关于</a> • <a href="/feed">订阅</a> • <a href="http://www.sinosky.org">博客</a> • <a href="http://lixian.sinosky.org">离线下载</a>';
+    <div class="left"><a href="/feed">订阅</a>';
 if($is_mobie){
     echo ' • <a href="/viewat-mobile">手机版</a>';
 }
 
-echo '
-    </div>
-    <div class="right">';
-
+$year = date("Y");
+echo '</div>
+    <div class="right">&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
 if($options['icp']){
-    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
+    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
 }
-echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a>, All Rights Reserved. Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>.';
+echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());

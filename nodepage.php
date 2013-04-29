@@ -12,7 +12,7 @@ if(!$c_obj){
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
         $error_code = 4042;
-        $title = $options['name'].' 社区 › 节点未找到';
+        $title = $options['name'].' › 节点未找到';
         $pagefile = dirname(__FILE__) . '/templates/default/404.php';
         include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
@@ -59,9 +59,9 @@ if(!$articledb){
 
 // 页面变量
 if ($page>=2) {
-    $title = $options['name'].' 社区 › '.$c_obj['name'].' - 第 '.$page.' 页';
+    $title = $options['name'].' › '.$c_obj['name'].' - 第 '.$page.' 页';
 } else {
-    $title = $options['name'].' 社区 › '.$c_obj['name'];
+    $title = $options['name'].' › '.$c_obj['name'];
 }
 $newest_nodes = get_newest_nodes();
 $show_sider_ad = "1";
