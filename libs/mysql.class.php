@@ -8,7 +8,7 @@ class DB_MySQL  {
     var $link;
 
     function connect($servername, $dbport, $dbusername, $dbpassword, $dbname) {
-        
+
         if(!$this->link = @mysql_connect($servername.':'.$dbport, $dbusername, $dbpassword, true)) {
             $this->halt('Can not connect to MySQL server');
         }
@@ -124,7 +124,7 @@ class DB_MySQL  {
         $message .= "<b>Script</b>: http://".$_SERVER['HTTP_HOST'].getenv("REQUEST_URI")."\n<br />";
 
         $message .= "</body>\n</html>";
-        @header("content-Type: text/html; charset=UTF-8");
+        @header("Content-Type: text/html; charset=UTF-8");
         echo $message;
         exit;
     }

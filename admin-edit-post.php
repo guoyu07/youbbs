@@ -1,16 +1,29 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<88) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<88) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $tid = intval($_GET['tid']);
 $query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
-    exit(header('location: /static/error/404.html'));
+    $error_code = 4047;
+    $title = $options['name'].' › 主题未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    exit;
 }
 
 if($t_obj['closecomment']){
@@ -25,10 +38,10 @@ if($t_obj['visible']){
     $t_obj['visible'] = '';
 }
 
-// 获取热点分类
+// 获取热点节点
 $all_nodes = $MMC->get('all_nodes');
 if(!$all_nodes){
-    $query = $DBS->query("SELECT `id`, `name` FROM `yunbbs_categories` ORDER BY  `articles` DESC LIMIT 1000");
+    $query = $DBS->query("SELECT id, name FROM yunbbs_categories ORDER BY  articles DESC LIMIT 1000");
     $all_nodes = array();
     while($node = $DBS->fetch_array($query)) {
         $all_nodes[$node['id']] = $node['name'];
@@ -63,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles-1 WHERE id='$old_cid'");
         }
 
-        header('location: /topic-'.$tid.'-1.html');
+        header('Location: /topic-'.$tid.'-1.html');
         exit;
     }else{
         $tip = '标题 不能留空';
@@ -80,6 +93,6 @@ $img_max_w = 650;
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-edit-post.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

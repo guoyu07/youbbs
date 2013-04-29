@@ -1,5 +1,12 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
+
 ob_start();
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,11 +24,11 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 if($options['head_meta']){
     echo $options['head_meta'];
 }
-if(isset($meta_keywords) && $meta_keywords){
+if($meta_keywords){
     echo '
 <meta name="keywords" content="',$meta_keywords,'" />';
 }
-if(isset($meta_des) && $meta_des){
+if($meta_des){
     echo '
 <meta name="description" content="',$meta_des,'" />';
 }
@@ -73,24 +80,24 @@ if($cur_user){
     }
     if($cur_user['flag'] == 0){
         echo '<span style="color:yellow;">已被禁用</span>&nbsp;&nbsp;&nbsp;';
-    }else if($cur_user['flag'] == 1){
+    }elseif($cur_user['flag'] == 1){
         echo '<span style="color:yellow;">在等待审核</span>&nbsp;&nbsp;&nbsp;';
     }
-    echo '<a href="/" title="社区首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member-',$cur_user['id'],'.html" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
+    echo '<a href="/" title="论坛首页">首页</a>&nbsp;&nbsp;&nbsp;<a href="/member-',$cur_user['id'],'.html" title="个人主页">',$cur_user['name'],'</a>&nbsp;&nbsp;&nbsp;<a href="/favorites" title="收藏的帖子">收藏</a>&nbsp;&nbsp;&nbsp;<a href="/setting" title="账户设置">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" title="登出">退出</a>';
 }else{
-    if($options['wb_key'] && $options['wb_secret']){
-        echo '<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用新浪微博登录"/></a>&nbsp;&nbsp;&nbsp;';
-    }
-    if($options['qq_appid'] && $options['qq_appkey']){
-        echo '<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>&nbsp;&nbsp;&nbsp;';
-    }
-    echo '<a href="/" title="网站首页">首页</a>&nbsp;&nbsp;&nbsp;';
+    echo '<a href="/" title="论坛首页">首页</a>&nbsp;&nbsp;&nbsp;';
 //  if(!($options['wb_key'] && $options['wb_secret']) && !($options['qq_appid'] && $options['qq_appkey'])){
-        if(!$options['close_register']){
-            echo '<a href="/sigin" title="注册">注册</a>&nbsp;&nbsp;&nbsp;';
-        }
+    if(!$options['close_register']){
+        echo '<a href="/sigin" title="注册">注册</a>&nbsp;&nbsp;&nbsp;';
+    }
 //  }
     echo '<a href="/login" rel="nofollow" title="登录">登录</a>';
+    if($options['wb_key'] && $options['wb_secret']){
+        echo '&nbsp;&nbsp;&nbsp;<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用新浪微博登录"/></a>';
+    }
+    if($options['qq_appid'] && $options['qq_appkey']){
+        echo '&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>';
+    }
 }
 echo '       </div>
         <div class="c"></div>
@@ -102,13 +109,13 @@ echo '       </div>
     <div class="main">
         <div class="main-content">';
 
-include($pagefile);
+include_once($pagefile);
 
 echo '       </div>
         <!-- main-content end -->
         <div class="main-sider">';
 
-include(dirname(__FILE__) . '/sider.php');
+include_once(dirname(__FILE__) . '/sider.php');
 echo '       </div>
         <!-- main-sider end -->
         <div class="c"></div>
@@ -169,19 +176,22 @@ echo '
 $_output = ob_get_contents();
 ob_end_clean();
 
-// 304
-if(!$options['show_debug']){
+if ($error_code) {
+    header("HTTP/1.0 404 Not Found");
+    header("Status: 404 Not Found");
+} elseif (!$options['show_debug']) {
     $etag = md5($_output);
-    if($_SERVER['HTTP_IF_NONE_MATCH'] == $etag){
+    if ($_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
         header("HTTP/1.1 304 Not Modified");
         header("Status: 304 Not Modified");
         header("Etag: ".$etag);
         exit;
-    }else{
+    } else {
         header("Etag: ".$etag);
     }
 }
 
+header("Content-Type: text/html; charset=UTF-8");
 echo $_output;
 
 ?>

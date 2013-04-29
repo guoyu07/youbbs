@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 if($cur_user && $cur_user['flag']>=99){
 echo '
@@ -7,7 +13,7 @@ echo '
     <div class="sider-box-title">管理员面板</div>
     <div class="sider-box-content">
     <div class="btn">
-    <a href="/admin-node">分类管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>';
+    <a href="/admin-node">节点管理</a><a href="/admin-setting">网站设置</a><a href="/admin-user-list">用户管理</a><a href="/admin-link-list">链接管理</a>';
 echo '
     </div>
     <div class="c"></div>
@@ -16,7 +22,7 @@ echo '
 }
 
 
-if($options['ad_sider_top'] && isset($show_sider_ad)){
+if($show_sider_ad && $options['ad_sider_top']){
 echo '
 <div class="sider-box">
     <div class="sider-box-title">公告</div>
@@ -30,13 +36,13 @@ echo '
 if($options['close']){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">网站暂时关闭公告</div>
+    <div class="sider-box-title">论坛暂时关闭公告</div>
     <div class="sider-box-content">
     <h2>';
 if($options['close_note']){
     echo $options['close_note'];
 }else{
-    echo '网站维护中……';
+    echo '论坛维护中……';
 }
 echo '</h2>
     <div class="c"></div>
@@ -46,7 +52,7 @@ echo '</h2>
 }
 
 
-if(isset($newpost_page)){
+if($newpost_page){
 echo '
 <div class="sider-box">
     <div class="sider-box-title">发帖指南</div>
@@ -65,7 +71,7 @@ echo '
 }
 
 
-if(isset($bot_nodes)){
+if($bot_nodes){
 echo '
 <div class="sider-box">
     <div class="sider-box-title">最热主题</div>
@@ -80,10 +86,10 @@ echo '    </div>
 </div>';
 }
 
-if(isset($newest_nodes) && $newest_nodes){
+if($newest_nodes){
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">最近添加的分类</div>
+    <div class="sider-box-title">最近新增节点</div>
     <div class="sider-box-content">
     <div class="btn">';
 foreach( $newest_nodes as $k=>$v ){
@@ -95,7 +101,7 @@ echo '    </div>
 </div>';
 }
 
-if(isset($links) && $links){
+if($links){
 echo '
 <div class="sider-box">
     <div class="sider-box-title">链接</div>

@@ -1,11 +1,12 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 if($options['authorized'] || $options['close']){
-    exit(header('location: /static/error/403.html'));
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
 }
 
 // 获取最近文章列表
@@ -75,7 +76,7 @@ echo '
 $_output = ob_get_contents();
 ob_end_clean();
 
-header("content-Type: application/atom+xml");
+header("Content-Type: application/atom+xml; charset=UTF-8");
 
 echo $_output;
 

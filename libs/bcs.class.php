@@ -1,8 +1,8 @@
 <?php
-$dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
-array_pop($dir_arr);
-$root = implode(DIRECTORY_SEPARATOR, $dir_arr);
 if (! defined ( 'BCS_API_PATH' )) {
+	$dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+	array_pop($dir_arr);
+	$root = implode(DIRECTORY_SEPARATOR, $dir_arr);
 	define ( 'BCS_API_PATH', $root );
 }
 require_once (BCS_API_PATH . '/conf.inc.php');

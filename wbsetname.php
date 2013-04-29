@@ -1,16 +1,16 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 
 if($cur_user){
-    header('location: /');
+    header('Location: /');
     exit;
 }else{
     if($options['close_register']){
-        header('location: /login');
+        header('Location: /login');
         exit;
     }
 }
@@ -33,12 +33,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($name){
             if(strlen($name)<21){
                 //检测字符
-                if(preg_match('/^[a-zA-Z0-9\x80-\xff]{4,20}$/i', $name)){
-                    if(preg_match('/^[0-9]{4,20}$/', $name)){
+                if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{4,20}$/iu', $name)){
+                    if(preg_match('/^\d{4,20}$/', $name)){
                         $errors[] = '名字不能全为数字';
                     }else{
                         // 检测重名
-                        $db_user = $DBS->fetch_one_array("SELECT `id` FROM `yunbbs_users` WHERE `name`='".$name."'");
+                        $db_user = $DBS->fetch_one_array("SELECT id FROM yunbbs_users WHERE name='".$name."'");
                         if($db_user){
                             $errors[] = '这名字太火了，已经被抢注了，换一个吧！';
                         }
@@ -59,11 +59,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $flag = 5;
             }
-            $DBS->query("INSERT INTO `yunbbs_users` (`id`,`name`,`flag`,`password`,`regtime`) VALUES (null,'$name', $flag, '', $timestamp)");
+            $DBS->query("INSERT INTO yunbbs_users (id,name,flag,password,regtime) VALUES (null,'$name', $flag, '', $timestamp)");
             $new_uid = $DBS->insert_id();
             $MMC->delete('site_infos');
             // update qqweibo
-            $DBS->unbuffered_query("UPDATE `yunbbs_weibo` SET `uid` = '$new_uid' WHERE `openid`='$openid'");
+            $DBS->unbuffered_query("UPDATE yunbbs_weibo SET uid = '$new_uid' WHERE openid='$openid'");
 
             //设置cookie
             $db_ucode = md5($new_uid.''.$timestamp.'00');
@@ -73,27 +73,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             setcookie("cur_ucode", $db_ucode, $timestamp+86400 * 365, '/');
             $gotohome = "1";
             $getavatar = "1";
-            //header('location: /');
+            //header('Location: /');
             //exit;
 
         }
-    }else if($action == 'bind'){
+    }elseif($action == 'bind'){
         // 绑定
         $pw = addslashes(trim($_POST["pw"]));
         if($name && $pw){
             if(strlen($name)<21 && strlen($pw)<32){
                 //检测字符
-                if(preg_match('/^[a-zA-Z0-9\x80-\xff]{4,20}$/i', $name)){
-                    if(preg_match('/^[0-9]{4,20}$/', $name)){
+                if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{4,20}$/iu', $name)){
+                    if(preg_match('/^\d{4,20}$/', $name)){
                         $errors[] = '名字不能全为数字';
                     }else{
-                        $db_user = $DBS->fetch_one_array("SELECT * FROM `yunbbs_users` WHERE `name`='".$name."'");
+                        $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE name='".$name."'");
                         if($db_user){
                             $pwmd5 = md5($pw);
                             if($pwmd5 == $db_user['password']){
                                 // update qqweibo
                                 $userid = $db_user['id'];
-                                $DBS->unbuffered_query("UPDATE `yunbbs_weibo` SET `uid` = '$userid' WHERE `openid`='$openid'");
+                                $DBS->unbuffered_query("UPDATE yunbbs_weibo SET uid = '$userid' WHERE openid='$openid'");
 
                                 //设置缓存和cookie
                                 $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
@@ -108,7 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if($db_user['avatar'] != $db_user['id']){
                                     $getavatar = "1";
                                 }
-                                //header('location: /');
+                                //header('Location: /');
                                 //exit('logined');
                             }else{
                                 // 用户名和密码不匹配
@@ -165,7 +165,7 @@ if(isset($gotohome)){
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 180, 180);
 
             // 保存头像到云存储
-            include(dirname(__FILE__) . '/libs/bcs.class.php');
+            include_once(dirname(__FILE__) . '/libs/bcs.class.php');
             $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
             $bcs_object = '/avatar/large/'.$cur_uid.'.png';
@@ -241,7 +241,7 @@ if(isset($gotohome)){
         }
 
     }
-    header('location: /');
+    header('Location: /');
     exit;
 }
 
@@ -253,6 +253,6 @@ $logintype = "新浪微博";
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

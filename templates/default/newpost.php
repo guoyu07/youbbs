@@ -1,5 +1,11 @@
 <?php
-if (!defined('IN_SAESPOT')) exit(header('location: /static/error/403.html'));
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop(array_pop($dir_arr));
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">
@@ -35,7 +41,7 @@ echo '
 </p>
 <p><textarea id="id-content" name="content" class="mll tall">',htmlspecialchars($p_content),'</textarea></p>';
 if(!$options['close_upload']){
-    include(dirname(__FILE__) . '/upload.php');
+    include_once(dirname(__FILE__) . '/upload.php');
 }
 echo '
 <p><div class="float-left"><input type="submit" value=" 发 表 " name="submit" class="textbtn" /></div><div class="c"></div></p>

@@ -1,11 +1,10 @@
 <?php
 define('IN_SAESPOT', 1);
-define('ROOT' , pathinfo(__FILE__, PATHINFO_DIRNAME));
 
-include(ROOT . '/config.php');
-include(ROOT . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-header("content-Type: text/plain");
+header("Content-Type: text/plain");
 echo 'User-agent: *
 Disallow: /login
 Disallow: /logout

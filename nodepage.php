@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 $cid = intval($_GET['cid']);
 $page = intval($_GET['page']);
@@ -11,9 +11,10 @@ $c_obj = $MMC->get('n-'.$cid);
 if(!$c_obj){
     $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
     if(!$c_obj){
-        header("HTTP/1.0 404 Not Found");
-        header("Status: 404 Not Found");
-        include(dirname(__FILE__) . '/404.html');
+        $error_code = 4042;
+        $title = $options['name'].' › 节点未找到';
+        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
         exit;
     }
     $MMC->set('n-'.$cid, $c_obj, 0, 3600);
@@ -21,17 +22,20 @@ if(!$c_obj){
 
 // 处理正确的页数
 $taltol_page = ceil($c_obj['articles']/$options['list_shownum']);
-if($page<=0){
-    header('location: /node-'.$cid.'-1.html');
+if ($taltol_page == 0) $taltol_page = 1;
+if ($page<=0) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Status: 301 Moved Permanently");
+    header('Location: /node-'.$cid.'-1.html');
     exit;
 }
-if($page!=1 && $page>$taltol_page){
-    header('location: /node-'.$cid.'-'.$taltol_page.'.html');
+if ($page>$taltol_page) {
+    header('Location: /node-'.$cid.'-'.$taltol_page.'.html');
     exit;
 }
 
 // 获取最近文章列表
-if($page == 0) $page = 1;
+if ($page == 0) $page = 1;
 $mc_key = 'cat-page-article-list-'.$cid.'-'.$page;
 $articledb = $MMC->get($mc_key);
 if(!$articledb){
@@ -69,6 +73,6 @@ if ($c_obj['about']) {
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'node.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

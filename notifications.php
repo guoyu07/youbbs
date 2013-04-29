@@ -1,17 +1,23 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /static/error/401.html'));
-if ($cur_user['flag']==0){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 403: 该帐户已被禁用');
-}
-if ($cur_user['flag']==1){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 401: 该帐户还在审核中');
+if (!$cur_user) {
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+} else {
+    if ($cur_user['flag'] == 0){
+        $error_code = 4032;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
+    if ($cur_user['flag'] == 1){
+        $error_code = 4011;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
 }
 
 // 获取提醒文章列表
@@ -44,6 +50,6 @@ $newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'notifications.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

@@ -1,19 +1,24 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user) exit(header('location: /static/error/401.html'));
-if ($cur_user['flag']==0){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 403: 该帐户已被禁用');
+if (!$cur_user) {
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+} else {
+    if ($cur_user['flag'] == 0){
+        $error_code = 4032;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
+    if ($cur_user['flag'] == 1){
+        $error_code = 4011;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
+    }
 }
-if ($cur_user['flag']==1){
-    header("content-Type: text/html; charset=UTF-8");
-    exit('Error 401: 该帐户还在审核中');
-}
-
 
 $act = $_GET['act'];
 $tid = $_GET['id'];
@@ -67,7 +72,7 @@ if($act && $tid){
             $MMC->delete('t-'.$tid.'_ios');
         }
 
-    }else if($act == 'del'){
+    }elseif($act == 'del'){
         // 删除
         if($user_fav){
             if($user_fav['content']){
@@ -101,15 +106,15 @@ if($act && $tid){
 if($user_fav && $user_fav['articles']){
     $taltol_page = ceil($user_fav['articles']/$options['list_shownum']);
     if($page<=0){
-        header('location: /favorites?page=1');
+        header('Location: /favorites?page=1');
         exit;
     }
     if($page!=1 && $page>$taltol_page){
-        header('location: /favorites?page='.$taltol_page);
+        header('Location: /favorites?page='.$taltol_page);
         exit;
     }
-}else if($page) {
-    header('location: /favorites');
+}elseif($page) {
+    header('Location: /favorites');
     exit;
 }
 
@@ -155,6 +160,6 @@ $newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'favorites.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

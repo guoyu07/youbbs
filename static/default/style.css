@@ -1,6 +1,6 @@
 /* reset */
 body, h1, h2, h3, h4, h5, h6, p, blockquote,dl, dt, dd, ul, ol, li,pre,fieldset, lengend, button, input, textarea,th, td {margin: 0;padding: 0;}
-body, button, input, select, textarea {font: 14px/1 'MicroSoft YaHei UI', 'Microsoft YaHei', 'Segoe UI', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;}
+body, button, input, select, textarea {font: 14px/1 'Microsoft YaHei UI', 'Microsoft YaHei', 'Segoe UI', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;}
 button, input, select, textarea { padding:3px; line-height:1em; margin:0;}
 textarea {line-height:150%;resize: none;}
 input { line-height:normal; }
@@ -122,6 +122,11 @@ img.avatar {-moz-border-radius: 4px;border-radius: 4px;}
                 .member-detail p {color:#333;font-size:12px;line-height:16px;margin-bottom:5px;}
                 .user-list {margin:20px;}
                 .user-list li{margin-bottom:10px;}
+
+                .not-found p{font-size: 14px; line-height: 250%; margin: 0 15px 0 10px;}
+                .not-found ul{margin-bottom: 20px;}
+                .not-found li{font-size: 13px; line-height: 180%; margin: 0 20px;}
+
         .main-sider {float:right;width:270px;font-size:12px;}
             .sider-box {border-bottom:1px solid #E2E2E2;margin-bottom:20px;border-radius:5px;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);border-bottom: 2px solid #E2E2E9;background: #F3F4F6 url("bg_item.png") repeat-x bottom center;}
                 .sider-box-title {border-bottom:1px solid #E2E2E2;margin-bottom:10px;padding:10px;color:#666;font-size:12px;background-color:#FFF;border-top-left-radius:5px;border-top-right-radius:5px;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);color:#465567;background-image: linear-gradient(top, #F9F9FA, #E0E2E8);background-color: #EFF0F3;background-image: -moz-linear-gradient(top, #F9F9FA, #E0E2E8);background-image: -ms-linear-gradient(top, #F9F9FA, #E0E2E8);background-image: -webkit-linear-gradient(top, #F9F9FA, #E0E2E8);background-image: -o-linear-gradient(top, #F9F9FA, #E0E2E8);background-image: linear-gradient(top, #F9F9FA, #E0E2E8);background-repeat: repeat-x;-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0px 3px rgba(0, 0, 0, 0.25);box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0px 3px rgba(0, 0, 0, 0.25);}

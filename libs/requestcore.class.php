@@ -319,12 +319,12 @@ class BCS_RequestCore {
 	/**
 	 * Sets the file to read from while streaming up.
 	 *
-	 * @param string $location (Required) The readable location to read from.
+	 * @param string $Location (Required) The readable Location to read from.
 	 * @return $this A reference to the current instance.
 	 */
-	public function set_read_file($location) {
-		$this->read_file = $location;
-		$read_file_handle = fopen ( $location, 'r' );
+	public function set_read_file($Location) {
+		$this->read_file = $Location;
+		$read_file_handle = fopen ( $Location, 'r' );
 		return $this->set_read_stream ( $read_file_handle );
 	}
 
@@ -342,12 +342,12 @@ class BCS_RequestCore {
 	/**
 	 * Sets the file to write to while streaming down.
 	 *
-	 * @param string $location (Required) The writeable location to write to.
+	 * @param string $Location (Required) The writeable Location to write to.
 	 * @return $this A reference to the current instance.
 	 */
-	public function set_write_file($location) {
-		$this->write_file = $location;
-		$write_file_handle = fopen ( $location, 'w' );
+	public function set_write_file($Location) {
+		$this->write_file = $Location;
+		$write_file_handle = fopen ( $Location, 'w' );
 		return $this->set_write_stream ( $write_file_handle );
 	}
 
@@ -503,14 +503,14 @@ class BCS_RequestCore {
 		curl_setopt ( $curl_handle, CURLOPT_REFERER, $this->request_url );
 		curl_setopt ( $curl_handle, CURLOPT_USERAGENT, $this->useragent );
 		curl_setopt ( $curl_handle, CURLOPT_READFUNCTION, array (
-				$this, 
+				$this,
 				'streaming_read_callback' ) );
 		if ($this->debug_mode) {
 			curl_setopt ( $curl_handle, CURLOPT_VERBOSE, true );
 		}
 		//if (! ini_get ( 'safe_mode' )) {
 		//modify by zhengkan
-		//curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, true);
+		//curl_setopt($curl_handle, CURLOPT_FOLLOWLocation, true);
 		//}
 		// Enable a proxy connection if requested.
 		if ($this->proxy) {
@@ -564,7 +564,7 @@ class BCS_RequestCore {
 				curl_setopt ( $curl_handle, CURLOPT_CUSTOMREQUEST, $this->method );
 				if (isset ( $this->write_stream )) {
 					curl_setopt ( $curl_handle, CURLOPT_WRITEFUNCTION, array (
-							$this, 
+							$this,
 							'streaming_write_callback' ) );
 					curl_setopt ( $curl_handle, CURLOPT_HEADER, false );
 				} else {
@@ -599,7 +599,7 @@ class BCS_RequestCore {
 		if (isset ( $_SERVER ["HTTP_BAE_LOGID"] )) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -691,7 +691,7 @@ class BCS_RequestCore {
 			return array ();
 		if (! $opt)
 			$opt = array ();
-		
+
 		// Initialize any missing options
 		$limit = isset ( $opt ['limit'] ) ? $opt ['limit'] : - 1;
 		// Initialize

@@ -1,13 +1,13 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
+// 屏蔽下面几行可以通过 用户名 和 密码 登录
 /*
-//  屏蔽下面几行可以通过 用户名和密码 登录
 if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $options['wb_secret'])){
-    header("content-Type: text/html; charset=UTF-8");
+    header("Content-Type: text/html; charset=UTF-8");
     echo '请用 ';
     if($options['wb_key'] && $options['wb_secret']){
         echo '&nbsp;<a href="/wblogin">微博登录</a>';
@@ -33,15 +33,15 @@ if($cur_user){
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('403: unknown referer.');
+    	exit('Error 403: unknown referer.');
     }
 
     $name = addslashes(strtolower(trim($_POST["name"])));
     $pw = addslashes(trim($_POST["pw"]));
     if($name && $pw){
         if(strlen($name)<21 && strlen($pw)<32){
-            if(preg_match('/^[a-zA-Z0-9\x80-\xff]{4,20}$/i', $name)){
-                if(preg_match('/^[0-9]{4,20}$/', $name)){
+            if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{4,20}$/iu', $name)){
+                if(preg_match('/^\d{4,20}$/', $name)){
                     $errors[] = '名字不能全为数字';
                 }else{
                     // 检测输错超过5次即屏蔽该ip 1个小时
@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             if($ck_obj){
                                 $MMC->delete($ck_key);
                             }
-                            header('location: /');
+                            header('Location: /');
                             exit('logined');
                         }else{
                             // 用户名和密码不匹配
@@ -103,6 +103,6 @@ $title = '登录 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

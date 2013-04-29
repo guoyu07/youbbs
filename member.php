@@ -1,12 +1,12 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 $g_mid = $_GET['mid'];
-// mid 可能id或用户名，用户注册时要限制名字不能为全数字
-if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
+// mid 可能是 ID 或用户名，用户注册时要限制名字不能为全数字
+if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{1,20}$/iu', $g_mid)){
     $mid = intval($g_mid);
     if($mid){
         $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE id='$mid'";
@@ -14,31 +14,31 @@ if(preg_match('/^[a-zA-Z0-9\x80-\xff]{1,20}$/i', $g_mid)){
         $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE name='$g_mid'";
     }
 }else{
-    header("HTTP/1.0 404 Not Found");
-    header("Status: 404 Not Found");
-    include(dirname(__FILE__) . '/404.html');
+    $error_code = 4041;
+    $title = $options['name'].' › 用户未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
-
 }
 
 $m_obj = $DBS->fetch_one_array($query);
-if($m_obj){
+if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || $cur_user && $cur_user['flag']<99))){
     if(!$mid){
         // 可以重定向到网址 /member-id.html 为了减少请求，下面用 $canonical 来让SEO感觉友好
-        header('location: /member-'.$m_obj['id'].'.html');
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Status: 301 Moved Permanently");
+        header('Location: /member-'.$m_obj['id'].'.html');
         exit;
         $mid = $m_obj['id'];
     }
-    if($m_obj['flag'] == 0){
-        if(!$cur_user || ($cur_user && $cur_user['flag']<99)){
-            //header("content-Type: text/html; charset=UTF-8");
-            //exit('该用户已被禁用');
-        }
-    }
     $openid_user = $DBS->fetch_one_array("SELECT name FROM yunbbs_qqweibo WHERE uid='".$mid."'");
-    $weibo_user = $DBS->fetch_one_array("SELECT `openid` FROM `yunbbs_weibo` WHERE `uid`='".$mid."'");
+    $weibo_user = $DBS->fetch_one_array("SELECT openid FROM yunbbs_weibo WHERE uid='".$mid."'");
 }else{
-    exit(header('location: /static/error/404.html'));
+    $error_code = 4041;
+    $title = $options['name'].' › 用户未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    exit;
 }
 
 $m_obj['regtime'] = showtime($m_obj['regtime']);
@@ -83,6 +83,6 @@ if ($m_obj['about']) {
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'member.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

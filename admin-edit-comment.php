@@ -1,16 +1,29 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<88) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $rid = intval($_GET['rid']);
 $query = "SELECT id,articleid,content FROM yunbbs_comments WHERE id='$rid'";
 $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
-    exit(header('location: /static/error/404.html'));
+    $error_code = 4044;
+    $title = $options['name'].' › 评论未找到';
+    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
+    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    exit;
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -41,6 +54,6 @@ $img_max_w = 590;
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-edit-comment.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

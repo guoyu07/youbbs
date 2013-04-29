@@ -1,7 +1,7 @@
 <?php
-
 define('IN_SAESPOT', 1);
-@header("content-Type: text/html; charset=UTF-8");
+
+header("Content-Type: text/html; charset=UTF-8");
 
 $sqlfile = dirname(__FILE__) . '/yunbbs_mysql.sql';
 if(!is_readable($sqlfile)) {
@@ -11,8 +11,8 @@ $fp = fopen($sqlfile, 'rb');
 $sql = fread($fp, 2048000);
 fclose($fp);
 
-include (dirname(__FILE__) . '/config.php');
-include (dirname(__FILE__) . '/libs/mysql.class.php');
+include_once (dirname(__FILE__) . '/config.php');
+include_once (dirname(__FILE__) . '/libs/mysql.class.php');
 
 $DBS = new DB_MySQL;
 $DBS->connect($servername, $dbport, $dbusername, $dbpassword, $dbname);
@@ -38,7 +38,7 @@ $DBS->query("SELECT COUNT(*) FROM yunbbs_settings", 'SILENT');
 if(!$DBS->geterrdesc()) {
 	// BAE目前不支持清空缓存
 	// $MMC->flush();
-	header('location: /');
+	header('Location: /');
 	exit('数据已经装好了， 不能重复安装， 若要重装，先删除mysql 里全部数据。 <a href="/">现在直接进入首页</a><br />');
 }
 
@@ -54,7 +54,7 @@ $DBS->close();
 
 // 拷贝三种格式默认头像
 // 上传到云存储
-include(dirname(__FILE__) . '/libs/bcs.class.php');
+include_once(dirname(__FILE__) . '/libs/bcs.class.php');
 
 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
@@ -111,6 +111,6 @@ function createtable($sql, $dbcharset) {
 	return preg_replace("/^\s*(CREATE TABLE\s+.+\s+\(.+?\)).*$/isU", "\\1", $sql).(mysql_get_server_info() > '4.1' ? " ENGINE=$type DEFAULT CHARSET=$dbcharset" : " TYPE=$type");
 }
 
-header('location: /');
+header('Location: /');
 
 ?>

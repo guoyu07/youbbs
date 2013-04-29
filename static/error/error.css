@@ -1,0 +1,85 @@
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+*,html,body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F3F1E5;
+    color: #4D505D;
+    font-family: "Microsoft YaHei UI","Microsoft YaHei",arial,sans-serif;
+    font-size: small;
+    height: 100%;
+}
+
+.clear {
+    background-color: transparent;
+    border: 0px;
+    clear: both;
+    display: block;
+    font-size: 0px;
+    height: 0px;
+    line-height: 0px;
+    overflow: hidden;
+}
+
+.icon {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width:16px;
+    height:16px;
+}
+
+.logo {
+    float: left;
+    padding: 162px 12px 0;
+    width: 153px;
+}
+
+.wrapper {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+}
+
+.content {
+    background: url("/static/error/zz.jpg") repeat-x scroll center bottom white;
+    border-color: #E6E5D9;
+    border-style: solid solid none;
+    border-width: 1px;
+    margin: 0 auto;
+    position: relative;
+    width: 700px;
+    top: 60px;
+}
+
+.main {
+    font-size: 15px;
+    margin: 24px 0;
+    padding: 12px 24px;
+    height: 400px;
+    text-align: center;
+}
+
+.main h2 {
+    text-align: left;
+    margin: 0 30px;
+}
+
+.main img {
+    padding: 50px 0 30px 0;
+}
+
+.main p {
+    margin: 12px 0;
+}
+
+.main a {
+    text-decoration: none;
+    color: red;
+}

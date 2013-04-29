@@ -1,8 +1,8 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
 // 获取最近文章列表
 $articledb = $MMC->get('home-article-list');
@@ -51,6 +51,6 @@ if($options['site_des']){
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'home.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>

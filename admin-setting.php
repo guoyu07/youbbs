@@ -1,14 +1,21 @@
 <?php
 define('IN_SAESPOT', 1);
 
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/common.php');
+include_once(dirname(__FILE__) . '/config.php');
+include_once(dirname(__FILE__) . '/common.php');
 
-if (!$cur_user || $cur_user['flag']<99) exit(header('location: /static/error/403.html'));
+if (!$cur_user) {
+    $error_code = 4012;
+    include_once(dirname(__FILE__) . '/401.php');
+    exit;
+}
+if ($cur_user['flag']<99) {
+    $error_code = 4031;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
-$tip1 = '';
-$tip2 = '';
-$tip3 = '';
+unset($tip1, $tip2, $tip3);
 $tips = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $action = trim($_POST['action']);
@@ -190,24 +197,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $MMC->delete('regip_'.$onlineip);
             $tip1 = '已成功更改了 '.$changed.' 个设置';
         }
-    }else if($action =='flushmc'){
+    }elseif($action =='flushmc'){
         // $MMC->flush();
         $tip2 = 'BAE目前不支持清空缓存';
-    }else if($action =='flushdata'){
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_articles`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_categories`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_comments`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_links`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_settings`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_users`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_favorites`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_qqweibo`");
-        $DBS->query("DROP TABLE IF EXISTS `yunbbs_weibo`");
+    }elseif($action =='flushdata'){
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_articles");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_categories");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_comments");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_links");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_settings");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_users");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_favorites");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_qqweibo");
+        $DBS->query("DROP TABLE IF EXISTS yunbbs_weibo");
 
         //$MMC->flush();
 
         $tip3 = '所有数据已删除';
-        header('location: /install');
+        header('Location: /install');
         exit;
     }
 }
@@ -216,6 +223,6 @@ $title = '网站设置 - '.$options['name'];
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setting.php';
 
-include(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
 
 ?>
