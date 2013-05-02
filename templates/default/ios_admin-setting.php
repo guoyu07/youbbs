@@ -252,7 +252,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">调用jquery库地址</td>
-        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/default/jquery-1.9.1.min.js</td>
+        <td width="auto" align="left"><input type="text" class="sl wb60" name="jquery_lib" value="',$options['jquery_lib'],'" /> <br/>默认/static/default/jquery-2.0.0.min.js</td>
     </tr>
     <tr>
         <td width="120" align="right"></td>
