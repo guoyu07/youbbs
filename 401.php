@@ -3,15 +3,15 @@ header("HTTP/1.1 401 Unauthorized");
 header("Status: 401 Unauthorized");
 header("Content-Type: text/html; charset=UTF-8");
 
-if ($error_code) {
-    if ($error_code == 4011) {
-        $tips = '该账户还在审核中，请耐心等待。 <a href="/">返回主页</a>';
-    }
-    if ($error_code == 4012) {
-        $tips = '这个页面需要登录后才能访问，请使用管理员账户 <a href="/login">登录</a> 或 <a href="/">返回主页</a> 。';
-    }
-} else {
-    $tips = '嗯~&nbsp;这个页面需要登录后才能访问哦，请 <a href="/login">登录</a> 或 <a href="/">返回主页</a> 。';
+switch ($error_code) {
+    case 4011:
+        $tips = '该账户还在审核中，请耐心等待。 <a href="/"">返回主页</a>';
+        break;
+    case 4012:
+        $tips = '这个页面需要登录后才能访问，请使用管理员账户 <a href="/login"">登录</a> 或 <a href="/"">返回主页</a> 。';
+        break;
+    default:
+        $tips = '嗯~&nbsp;这个页面需要登录后才能访问哦，请 <a href="/login"">登录</a> 或 <a href="/"">返回主页</a> 。';
 }
 
 echo '<!DOCTYPE html>
@@ -30,9 +30,7 @@ echo '<!DOCTYPE html>
                     <div class="main">
                         <h2>401 Unauthorized!</h2>
                         <img src="/static/error/error.png" alt="401: Unauthorized" title="401: Unauthorized" />
-                            <p>
-                                ', $tips, '
-                            </p>
+                            <p>', $tips, '</p>
                     </div>
                     <span class="clear"></span>
                 </div>
