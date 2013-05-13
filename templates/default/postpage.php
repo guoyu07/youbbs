@@ -86,7 +86,7 @@ if($cur_user && $cur_user['flag']>=88){
 }
                 echo '</div>
                 <div class="float-right">';
-if(!$t_obj['closecomment'] && $cur_user && $cur_user['flag']>4 && $cur_user['name'] != $comment['author']){
+if ($cur_user['name'] != $comment['author'] && (!$t_obj['closecomment'] && $cur_user && $cur_user['flag']>4 || $cur_user && $cur_user['flag']>=88)) {
     echo '&laquo; <a href="#new-comment" onclick="replyto(\'',$comment['author'],'\');">回复</a>';
 }
 echo '                <span class="commonet-count">',$count_n,'</span></div>
