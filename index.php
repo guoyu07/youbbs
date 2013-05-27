@@ -12,6 +12,7 @@ if(!$articledb){
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
+        WHERE visible = 1
         ORDER BY edittime DESC LIMIT ".$options['home_shownum'];
     $query = $DBS->query($query_sql);
     $articledb=array();
