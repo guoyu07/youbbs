@@ -9,7 +9,7 @@ $page = intval($_GET['page']);
 
 $c_obj = $MMC->get('n-'.$cid);
 if(!$c_obj){
-    $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id='".$cid."'");
+    $c_obj = $DBS->fetch_one_array("SELECT * FROM yunbbs_categories WHERE id=$cid");
     if(!$c_obj){
         $error_code = 4042;
         $title = $options['name'].' › 节点未找到';
@@ -39,8 +39,8 @@ if ($page == 0) $page = 1;
 $mc_key = 'cat-page-article-list-'.$cid.'-'.$page;
 $articledb = $MMC->get($mc_key);
 if(!$articledb){
-    if ($cur_user && $cur_user['flag'] >= 88) $visible_str = " AND visible = 1";
-    else $visible_str = "";
+    if ($cur_user && $cur_user['flag'] >= 88) $visible_str = "";
+    else $visible_str = " AND visible = 1";
     $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
             FROM yunbbs_articles a
             LEFT JOIN yunbbs_users u ON a.uid=u.id
