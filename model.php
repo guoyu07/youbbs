@@ -29,7 +29,7 @@ if(!$options){
     $options = stripslashes_array($options);
 
     if(!$options['safe_imgdomain']){
-        $options['safe_imgdomain'] = $_SERVER['HTTP_HOST'];
+        $options['safe_imgdomain'] = $_SERVER['HTTP_HOST']."\nbcs.duapp.com";
     }
     $MMC->set('options', $options);
 
