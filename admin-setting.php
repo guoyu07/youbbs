@@ -92,7 +92,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         // 安全图床域名白名单 格式 www.xxx.com
         $safe_imgdomain = trim($_POST['safe_imgdomain']);
-        if($safe_imgdomain){
+        if ($safe_imgdomain) {
             $safe_imgdomain = str_replace("\n\r", "\n", $safe_imgdomain);
             $safe_imgdomain = str_replace("\r", "\n", $safe_imgdomain);
             $safe_imgdomain = str_replace("http://", "", $safe_imgdomain);
@@ -100,18 +100,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $safe_imgdomain = str_replace("/", "", $safe_imgdomain);
             $safe_arr = explode("\n",$safe_imgdomain);
             // 加入网站域名
-            if($_SERVER['HTTP_HOST']){
+            if ($_SERVER['HTTP_HOST'] && !in_array($_SERVER['HTTP_HOST'], $safe_arr)) {
                 $safe_arr[] = $_SERVER['HTTP_HOST'];
             }
             // 加入百度云存储
-            if(!$safe_arr[] = 'bcs.duapp.com'){
-                $safe_arr[] = 'bcs.duapp.com';
+            if (!in_array("bcs.duapp.com", $safe_arr)) {
+                $safe_arr[] = "bcs.duapp.com";
             }
             $safe_arr = array_filter(array_unique($safe_arr));
             $_POST['safe_imgdomain'] = implode("|", $safe_arr);
         }
 
-        // 确保main_nodes正确
+        // 确保 main_nodes 正确
         $_POST['main_nodes'] = filter_chr($_POST['main_nodes']);
         if($_POST['main_nodes'] && ($options['main_nodes'] != $_POST['main_nodes'] ) ){
             $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
@@ -135,6 +135,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST['main_nodes'] = implode(",", $new_main_nodes_arr);
             }else{
                 $_POST['main_nodes'] = '';
+            }
+        }
+
+        // 确保 hide_nodes 正确
+        $_POST['hide_nodes'] = filter_chr($_POST['hide_nodes']);
+        if($_POST['hide_nodes'] && ($options['hide_nodes'] != $_POST['hide_nodes'] ) ){
+            $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
+            $nodes_num = $table_status['Auto_increment'];
+            $hide_nodes = str_replace(" ", ",", $_POST['hide_nodes']);
+            $hide_nodes = str_replace("/", ",", $hide_nodes);
+            $hide_nodes = str_replace("、", ",", $hide_nodes);
+            $hide_nodes = str_replace("。", ",", $hide_nodes);
+            $hide_nodes = str_replace("n-", ",", $hide_nodes);
+            $hide_nodes = str_replace("，", ",", $hide_nodes);
+            $hide_nodes_arr = explode(",", $hide_nodes);
+            $hide_nodes_arr = array_filter(array_unique($hide_nodes_arr));
+            $new_hide_nodes_arr = array();
+            foreach($hide_nodes_arr as $node_id){
+                $node_id = intval($node_id);
+                if($node_id && ($node_id < $nodes_num)){
+                    $new_hide_nodes_arr[] = $node_id;
+                }
+            }
+            if($new_hide_nodes_arr){
+                $_POST['hide_nodes'] = implode(",", $new_hide_nodes_arr);
+            }else{
+                $_POST['hide_nodes'] = '';
             }
         }
 

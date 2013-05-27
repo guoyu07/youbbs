@@ -121,6 +121,10 @@ echo '
         <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主节点id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>
     <tr>
+        <td width="120" align="right">隐藏节点id</td>
+        <td width="auto" align="left"><input type="text" class="sl wb50" name="hide_nodes" value="',$options['hide_nodes'],'" /> <br/>默认留空，用逗号分隔，隐藏节点中的帖子不在首页显示</td>
+    </tr>
+    <tr>
         <td width="120" align="right">放在页面头部<br/>head标签里面的<br/>meta或其它信息<br/>(默认留空)</td>
         <td width="auto" align="left"><textarea class="ml wb80" name="head_meta">',str_replace('\\', '', $options['head_meta']),'</textarea>
         示例:<br/>
