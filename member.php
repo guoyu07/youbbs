@@ -52,7 +52,8 @@ if($m_obj['articles']){
             LEFT JOIN yunbbs_categories c ON c.id=a.cid
             LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
             WHERE a.uid=$mid
-            ORDER BY id DESC LIMIT 10";
+            ORDER BY id DESC
+            LIMIT 10";
         $query = $DBS->query($query_sql);
         $articledb=array();
         while ($article = $DBS->fetch_array($query)) {
