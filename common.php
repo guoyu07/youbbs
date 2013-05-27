@@ -1,5 +1,5 @@
 <?php
-define('SAESPOT_VER', '1.5');
+define('SAESPOT_VER', '1.5.2');
 
 if (!defined('IN_SAESPOT')) {
     include_once(dirname(__FILE__) . '/403.php');
@@ -108,7 +108,7 @@ $formhash = formhash();
 if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
     if( !in_array($url_path, array('login','logout','sigin','forgot','qqlogin','qqcallback','qqsetname','wblogin','wbcallback','wbsetname'))){
         header('Location: /login');
-        exit('authorized only');
+        exit;
     }
 }
 
@@ -116,29 +116,31 @@ if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
 if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
     if( !in_array($url_path, array('login','forgot'))){
         header('Location: /login');
-        exit('site close');
+        exit;
     }
 }
 
 
 $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-if($user_agent){
+if ($user_agent) {
     $is_spider = preg_match('/(bot|crawl|spider|slurp|sohu-search|lycos|robozilla|google)/i', $user_agent);
     $is_mobie = preg_match('/(iPod|iPhone|Android|Nokia|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP)/i', $user_agent);
 
-    if($is_mobie){
+    if ($is_mobie) {
         // 设置模板前缀
         $viewat = $_COOKIE['vtpl'];
-        if($viewat=='desktop'){
+        if ($viewat=='desktop') {
             $tpl = '';
-        }else{
+        } else {
             $tpl = 'ios_';
         }
-    }else{
+    } else {
         $tpl = '';
     }
-}else{
-    //exit('error: 400 no agent');
+} else {
+    $error_code = 4001;
+    include_once(dirname(__FILE__) . '/400.php');
+    exit;
 }
 
 //设置基本环境变量
