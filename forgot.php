@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             if($db_user['flag'] != 0 || $db_user['flag'] != 1){
                                 if($email == $db_user['email']){
                                     header("Content-Type: text/html; charset=UTF-8");
-                                    exit('请用该邮箱: '.$db_user['email'].' 给管理员（管理员信箱'.$options['admin_email'].'）发送一封密码重设请求，内容只需包含您的用户名“'.$name.'”');
+                                    exit('请用该邮箱：'.$db_user['email'].' 给管理员（管理员信箱：'.$options['admin_email'].'）发送一封密码重设请求，内容只需包含您的用户名“'.$name.'”');
                                 }else{
                                     $errors[] = '填写的邮箱 与 个人设置里的邮箱 不一致';
                                 }

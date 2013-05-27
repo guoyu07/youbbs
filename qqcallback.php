@@ -37,6 +37,7 @@ function qq_callback()
             {
                 echo "<h3>error:</h3>" . $msg->error;
                 echo "<h3>msg  :</h3>" . $msg->error_description;
+                echo '<h3>尝试再<a href="/qqlogin">登录</a></h3>';
                 exit;
             }
         }
@@ -75,7 +76,7 @@ function get_openid()
     {
         echo "<h3>error:</h3>" . $user->error;
         echo "<h3>msg  :</h3>" . $user->error_description;
-        echo '<h3><a href="/qqlogin">尝试再登录</a></h3>';
+        echo '<h3>尝试再<a href="/qqlogin">登录</a></h3>';
         exit;
     }
 
@@ -159,8 +160,8 @@ if(strpos(' '.$_SESSION["scope"], 'get_info')){
 //      echo '<h3>抱歉，您还没开通腾讯微博，或者开通未达到3个月，请先去<a href="http://reg.t.qq.com/" target="_blank">开通</a></h3>';
     if(!$regtime){
         echo '<h3>抱歉，您还没开通腾讯微博，请先去<a href="http://reg.t.qq.com/" target="_blank">开通</a></h3>';
-        echo '<h3><a href="/qqlogin">尝试再登录</a></h3>';
-        echo '<h3><a href="/">返回首页</a></h3>';
+        echo '<h3>尝试再<a href="/qqlogin">登录</a></h3>';
+        echo '<h3>返回<a href="/">首页</a></h3>';
         exit;
     }
 

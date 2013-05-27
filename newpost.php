@@ -46,15 +46,13 @@ if($options['main_nodes']){
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('Error 403: unknown referer.');
+        $error_code = 4033;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
     }
 
     $p_title = addslashes(trim($_POST['title']));
     $p_content = addslashes(trim($_POST['content']));
-
-    if($p_title =='test' || $p_title=='测试'){
-        exit('Error 403: no test anymore.');
-    }
 
     // spam_words
     if($options['spam_words'] && $cur_user['flag']<99){
@@ -65,7 +63,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // has spam word
                 $DBS->unbuffered_query("UPDATE yunbbs_users SET flag='0' WHERE id='$cur_uid'");
                 $MMC->delete('u_'.$cur_uid);
-                exit('Error 403: do not post any spam.');
+                $error_code = 4034;
+                include_once(dirname(__FILE__) . '/403.php');
+                exit;
             }
         }
     }

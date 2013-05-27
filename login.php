@@ -33,7 +33,9 @@ if($cur_user){
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('Error 403: unknown referer.');
+        $error_code = 4033;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
     }
 
     $name = addslashes(strtolower(trim($_POST["name"])));
@@ -48,7 +50,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $ck_key = 'login_'.$onlineip;
                     $ck_obj = $MMC->get($ck_key);
                     if($ck_obj && $ck_obj > 5){
-                        exit('error: 403');
+                        $error_code = 4037;
+                        include_once(dirname(__FILE__) . '/403.php');
+                        exit;
                     }
                     $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE name='".$name."' LIMIT 1");
                     if($db_user){

@@ -1,6 +1,12 @@
 <?php
 
-if(!defined('IN_SAESPOT')) exit('Access Denied');
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop($dir_arr);
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(ROOT . '/403.php');
+    exit;
+};
 
 class DB_MySQL  {
 

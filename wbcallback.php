@@ -104,7 +104,8 @@ if ($token) {
     }
 
 } else {
-    echo '获取 token 失败，返回<a href="/">首页</a>';
+    $error_code = 4039;
+    include_once(dirname(__FILE__) . '/403.php');
     exit;
 }
 

@@ -5,7 +5,7 @@ header("Content-Type: text/html; charset=UTF-8");
 
 $sqlfile = dirname(__FILE__) . '/yunbbs_mysql.sql';
 if(!is_readable($sqlfile)) {
-	exit('数据库文件不存在或者读取失败');
+	exit('数据库文件不存在 或 读取失败');
 }
 $fp = fopen($sqlfile, 'rb');
 $sql = fread($fp, 2048000);
@@ -27,7 +27,7 @@ if($DBS->geterrdesc()) {
 	}
 
 	if($DBS->geterrdesc()) {
-		exit('指定的数据库不存在, 系统也无法自动建立, 无法安装.<br />');
+		exit('指定的数据库不存在, 系统也无法自动建立, 无法安装');
 	} else {
 		$DBS->select_db($dbname);
 		//成功建立指定数据库
@@ -39,7 +39,7 @@ if(!$DBS->geterrdesc()) {
 	// BAE目前不支持清空缓存
 	// $MMC->flush();
 	header('Location: /');
-	exit('数据已经装好了， 不能重复安装， 若要重装，先删除mysql 里全部数据。 <a href="/">现在直接进入首页</a><br />');
+	exit('程序已经装好了，不能重复安装，若要重装，先删除 MySQL 里全部数据。 直接进入<a href="/">首页</a>');
 }
 
 runquery($sql);
@@ -61,20 +61,19 @@ $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 try{
     $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/large/0.png', 'static/avatar/0-large.png', array('acl'=>'public-read'));
 }catch (Exception $e){
-    exit('百度云存储创建large对象失败，请稍后再试！' );
+    exit('百度云存储创建 large 对象失败，请稍后再试！' );
 }
 try{
     $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/normal/0.png', 'static/avatar/0-normal.png', array('acl'=>'public-read'));
 }catch (Exception $e){
-    exit('百度云存储创建normal对象失败，请稍后再试！' );
+    exit('百度云存储创建 normal 对象失败，请稍后再试！' );
 }
 try{
     $response = (array)$baidu_bcs->create_object(BUCKET, '/avatar/mini/0.png', 'static/avatar/0-mini.png', array('acl'=>'public-read'));
 }catch (Exception $e){
-    exit('百度云存储创建normal对象失败，请稍后再试！' );
+    exit('百度云存储创建 normal 对象失败，请稍后再试！' );
 }
 
-// '<br /> 顺利安装完成！<br /><a href="/">点击进入首页</a>';
 
 function runquery($sql) {
 	global $dbcharset, $DBS;
@@ -111,6 +110,7 @@ function createtable($sql, $dbcharset) {
 	return preg_replace("/^\s*(CREATE TABLE\s+.+\s+\(.+?\)).*$/isU", "\\1", $sql).(mysql_get_server_info() > '4.1' ? " ENGINE=$type DEFAULT CHARSET=$dbcharset" : " TYPE=$type");
 }
 
+// echo '安装完成！ 进入<a href="/">首页</a>';
 header('Location: /');
 
 ?>

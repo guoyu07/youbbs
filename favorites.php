@@ -130,7 +130,7 @@ if($user_fav['articles']){
         $id_arr = array($user_fav['content']);
     }
     $ids = implode(',', $id_arr);
-    //exit($ids);
+
     $query_sql = "SELECT a.id,a.uid,a.cid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid

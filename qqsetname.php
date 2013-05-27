@@ -4,7 +4,6 @@ define('IN_SAESPOT', 1);
 include_once(dirname(__FILE__) . '/config.php');
 include_once(dirname(__FILE__) . '/common.php');
 
-
 if($cur_user){
     header('Location: /');
     exit;
@@ -21,7 +20,11 @@ session_start();
 $name = $_SESSION["nick"];
 $openid = $_SESSION["openid"];
 
-if(!$openid) exit(header('Location: /static/error/403.html'));
+if (!$openid) {
+    $error_code = 4038;
+    include_once(dirname(__FILE__) . '/403.php');
+    exit;
+}
 
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -52,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }else{
             $errors[] = '用户名 必填';
         }
-        //
+
         if(!$errors){
             if($options['register_review']){
                 $flag = 1;
@@ -73,11 +76,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             setcookie("cur_ucode", $db_ucode, $timestamp+86400 * 365, '/');
             $gotohome = "1";
             $getavatar = "1";
-            //header('Location: /');
-            //exit;
-
         }
-    }elseif($action == 'bind'){
+    }
+    if($action == 'bind'){
         // 绑定
         $pw = addslashes(trim($_POST["pw"]));
         if($name && $pw){
@@ -108,8 +109,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if($db_user['avatar'] != $db_user['id']){
                                     $getavatar = "1";
                                 }
-                                //header('Location: /');
-                                //exit('logined');
                             }else{
                                 // 用户名和密码不匹配
                                 $errors[] = '用户名 或 密码 错误';
@@ -132,8 +131,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 
-
-/////
 if(isset($gotohome)){
     // 获取用户微博头像
     if($_SESSION["avatar"] && isset($getavatar)){
@@ -141,7 +138,7 @@ if(isset($gotohome)){
         $opts = array(
           'http'=>array(
             'method'=>"GET",
-            'header'=>"Accept-language: en\r\n" .
+            'header'=>"Accept-language: en\r\n".
                       "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6\r\n".
                       "Referer: ".$imgurl."\r\n"
           )
@@ -236,7 +233,6 @@ if(isset($gotohome)){
             imagedestroy($img_obj);
             imagedestroy($new_image);
 
-            //
             $DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'");
         }
 
@@ -246,7 +242,6 @@ if(isset($gotohome)){
 }
 
 
-/////
 // 页面变量
 $title = '设置名字 - '.$options['name'];
 $logintype = "QQ";

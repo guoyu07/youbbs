@@ -36,12 +36,15 @@ $regip = $MMC->get('regip_'.$onlineip);
 $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
-    	exit('403: unknown referer.');
+        $error_code = 4033;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
     }
 
     if($regip){
-        header("Content-Type: text/html; charset=UTF-8");
-        exit('一个ip最小注册间隔时间是 '.$options['reg_ip_space'].' 秒，请稍后再来注册 或 让管理员把这个时间改小点。');
+        $error_code = 4030;
+        include_once(dirname(__FILE__) . '/403.php');
+        exit;
     }
 
     $name = addslashes(strtolower(trim($_POST["name"])));

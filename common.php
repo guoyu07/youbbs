@@ -108,7 +108,7 @@ $formhash = formhash();
 if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
     if( !in_array($url_path, array('login','logout','sigin','forgot','qqlogin','qqcallback','qqsetname','wblogin','wbcallback','wbsetname'))){
         header('Location: /login');
-        exit;
+        exit('authorized only');
     }
 }
 
@@ -116,7 +116,7 @@ if($options['authorized'] && (!$cur_user || $cur_user['flag']<5)){
 if($options['close'] && (!$cur_user || $cur_user['flag']<99)){
     if( !in_array($url_path, array('login','forgot'))){
         header('Location: /login');
-        exit;
+        exit('site close');
     }
 }
 
