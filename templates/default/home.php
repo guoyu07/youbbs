@@ -50,6 +50,7 @@ echo '    <div class="c"></div>
 
 }
 
+// 如果总帖数 = $options['home_shownum']，这里有 bug
 if(count($articledb) == $options['home_shownum']){
 echo '<div class="pagination">';
 echo '<a href="/page-2.html" class="float-right">下一页 &raquo;</a>';

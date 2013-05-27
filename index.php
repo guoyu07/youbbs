@@ -7,8 +7,7 @@ include_once(dirname(__FILE__) . '/common.php');
 // 获取最近文章列表
 $articledb = $MMC->get('home-article-list');
 if(!$articledb){
-    if ($options['hide_nodes']) $hide_nodes_str = " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']);
-    else $hide_nodes_str = "";
+    $hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid

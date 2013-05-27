@@ -21,6 +21,7 @@ if(!$c_obj){
 }
 
 // 处理正确的页数
+// 因为有隐藏帖的存在，这里有 bug
 $taltol_page = ceil($c_obj['articles']/$options['list_shownum']);
 if ($taltol_page == 0) $taltol_page = 1;
 if ($page<=0) {
@@ -39,8 +40,7 @@ if ($page == 0) $page = 1;
 $mc_key = 'cat-page-article-list-'.$cid.'-'.$page;
 $articledb = $MMC->get($mc_key);
 if(!$articledb){
-    if ($cur_user && $cur_user['flag'] >= 88) $visible_str = "";
-    else $visible_str = " AND visible = 1";
+    $visible_str = $cur_user && $cur_user['flag'] >= 88 ? "" : " AND visible = 1";
     $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
             FROM yunbbs_articles a
             LEFT JOIN yunbbs_users u ON a.uid=u.id
