@@ -12,10 +12,13 @@ if($options['authorized'] || $options['close']){
 // 获取最近文章列表
 $articledb = $MMC->get('feed-article-list');
 if(!$articledb){
+    $hide_nodes_arr = explode(",", $options['hide_nodes']);
+    $hide_nodes_str = "AND cid <> ".implode(" AND cid <> ", $hide_nodes_arr);
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.comments,c.name as cname,u.name as author
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
+        WHERE visible = 1 ".$hide_nodes_str."
         ORDER BY id DESC LIMIT 10";
     $query = $DBS->query($query_sql);
     $articledb=array();
@@ -56,7 +59,7 @@ echo '
   <entry>
     <title>',htmlspecialchars($article['title']),'</title>
     <id>',$article['id'],'</id>
-	<link rel="alternate" type="text/html" href="',$base_url,'/topic-',$article['id'],'-1.html" />
+  <link rel="alternate" type="text/html" href="',$base_url,'/topic-',$article['id'],'-1.html" />
     <published>',$article['addtime'],'</published>
     <updated>',$article['edittime'],'</updated>
     <content type="html">
