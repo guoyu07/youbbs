@@ -39,21 +39,15 @@ if ($page == 0) $page = 1;
 $mc_key = 'cat-page-article-list-'.$cid.'-'.$page;
 $articledb = $MMC->get($mc_key);
 if(!$articledb){
-    if ($cur_user && $cur_user['flag']>=88) {
-        $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
+    if ($cur_user && $cur_user['flag'] >= 88) $visible_str = " AND visible = 1";
+    else $visible_str = "";
+    $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
             FROM yunbbs_articles a
             LEFT JOIN yunbbs_users u ON a.uid=u.id
             LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-            WHERE a.cid=".$cid."
-            ORDER BY edittime DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
-    } else {
-        $query_sql = "SELECT a.id,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,u.avatar as uavatar,u.name as author,ru.name as rauthor
-            FROM yunbbs_articles a
-            LEFT JOIN yunbbs_users u ON a.uid=u.id
-            LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-            WHERE a.cid=".$cid." AND visible = 1
-            ORDER BY edittime DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
-    }
+            WHERE a.cid=$cid$visible_str
+            ORDER BY top DESC, edittime DESC
+            LIMIT ".($page-1)*$options['list_shownum'].", ".$options['list_shownum'];
     $query = $DBS->query($query_sql);
     $articledb=array();
     while ($article = $DBS->fetch_array($query)) {

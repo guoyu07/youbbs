@@ -9,13 +9,13 @@ $g_mid = $_GET['mid'];
 if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{1,20}$/iu', $g_mid)){
     $mid = intval($g_mid);
     if($mid){
-        $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE id='$mid'";
+        $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE id=$mid";
     }else{
         $query = "SELECT id,name,flag,avatar,url,articles,replies,regtime,about FROM yunbbs_users WHERE name='$g_mid'";
     }
 }else{
     $error_code = 4041;
-    $title = $options['name'].' › 用户未找到';
+    $title = $options['name'].' 社区 › 用户未找到';
     $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
@@ -29,13 +29,12 @@ if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || $cur_user && $cur_user['fla
         header("Status: 301 Moved Permanently");
         header('Location: /member-'.$m_obj['id'].'.html');
         exit;
-        $mid = $m_obj['id'];
     }
-    $openid_user = $DBS->fetch_one_array("SELECT name FROM yunbbs_qqweibo WHERE uid='".$mid."'");
-    $weibo_user = $DBS->fetch_one_array("SELECT openid FROM yunbbs_weibo WHERE uid='".$mid."'");
+    $openid_user = $DBS->fetch_one_array("SELECT name FROM yunbbs_qqweibo WHERE uid=$mid");
+    $weibo_user = $DBS->fetch_one_array("SELECT openid FROM yunbbs_weibo WHERE uid=$mid");
 }else{
     $error_code = 4041;
-    $title = $options['name'].' › 用户未找到';
+    $title = $options['name'].' 社区 › 用户未找到';
     $pagefile = dirname(__FILE__) . '/templates/default/404.php';
     include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
     exit;
@@ -52,7 +51,8 @@ if($m_obj['articles']){
             FROM yunbbs_articles a
             LEFT JOIN yunbbs_categories c ON c.id=a.cid
             LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-            WHERE a.uid='".$mid."' ORDER BY id DESC LIMIT 10";
+            WHERE a.uid=$mid
+            ORDER BY id DESC LIMIT 10";
         $query = $DBS->query($query_sql);
         $articledb=array();
         while ($article = $DBS->fetch_array($query)) {
@@ -72,7 +72,7 @@ if($m_obj['articles']){
 
 
 // 页面变量
-$title =  $options['name'].' › '.$m_obj['name'];
+$title =  $options['name'].' 社区 › '.$m_obj['name'];
 $newest_nodes = get_newest_nodes();
 $canonical = '/member-'.$m_obj['id'].'.html';
 $show_sider_ad = "1";

@@ -38,7 +38,7 @@ if($cur_user && $cur_user['flag']>4){
     }
 
     if($cur_user['flag']>=88){
-        echo ' &nbsp;&nbsp;• <a href="/admin-edit-post-',$t_obj['id'],'">编辑</a>';
+        echo ' • <a href="/admin-edit-post-',$t_obj['id'],'">编辑</a>';
     }
 }
 echo '        </div>

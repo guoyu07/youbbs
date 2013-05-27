@@ -31,8 +31,9 @@ $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comm
     LEFT JOIN yunbbs_categories c ON c.id=a.cid
     LEFT JOIN yunbbs_users u ON a.uid=u.id
     LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-    WHERE visible = 1".$hide_nodes_str."
-    ORDER BY edittime DESC LIMIT ".($page-1)*$options['list_shownum'].",".$options['list_shownum'];
+    WHERE visible = 1$hide_nodes_str
+    ORDER BY top,edittime DESC
+    LIMIT ".($page-1)*$options['list_shownum'].", ".$options['list_shownum'];
 $query = $DBS->query($query_sql);
 $articledb=array();
 while ($article = $DBS->fetch_array($query)) {

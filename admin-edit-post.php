@@ -16,7 +16,7 @@ if ($cur_user['flag']<88) {
 }
 
 $tid = intval($_GET['tid']);
-$query = "SELECT id,cid,title,content,closecomment,visible FROM yunbbs_articles WHERE id='$tid'";
+$query = "SELECT id,cid,title,content,closecomment,visible,top FROM yunbbs_articles WHERE id=$tid";
 $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
     $error_code = 4047;
@@ -38,6 +38,12 @@ if($t_obj['visible']){
     $t_obj['visible'] = '';
 }
 
+if($t_obj['top']){
+    $t_obj['top'] = 'checked';
+}else{
+    $t_obj['top'] = '';
+}
+
 // 获取热点节点
 $all_nodes = $MMC->get('all_nodes');
 if(!$all_nodes){
@@ -48,7 +54,7 @@ if(!$all_nodes){
     }
     if( !array_key_exists($t_obj['cid'], $all_nodes) ){
         $cid = $t_obj['cid'];
-        $c_obj = $DBS->fetch_one_array("SELECT id,name FROM yunbbs_categories WHERE id='".$cid."'");
+        $c_obj = $DBS->fetch_one_array("SELECT id,name FROM yunbbs_categories WHERE id=$cid");
         $all_nodes[$c_obj['id']] = $c_obj['name'];
     }
     $MMC->set('all_nodes', $all_nodes, 0 ,600);
@@ -64,11 +70,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $p_content = addslashes(trim($_POST['content']));
     $p_closecomment = intval($_POST['closecomment']);
     $p_visible = intval($_POST['visible']);
+    $p_top = intval($_POST['top']);
 
     if($p_title){
         $p_title = htmlspecialchars($p_title);
         $p_content = htmlspecialchars($p_content);
-        $DBS->unbuffered_query("UPDATE yunbbs_articles SET cid='$p_cid',title='$p_title',content='$p_content',closecomment='$p_closecomment',visible='$p_visible' WHERE id='$tid'");
+        $DBS->unbuffered_query("UPDATE yunbbs_articles SET cid=$p_cid,title='$p_title',content='$p_content',closecomment=$p_closecomment,visible=$p_visible,top=$p_top WHERE id=$tid");
         $MMC->delete('t-'.$tid);
         $MMC->delete('t-'.$tid.'_ios');
         if($p_cid != $old_cid){

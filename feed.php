@@ -18,8 +18,9 @@ if(!$articledb){
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
-        WHERE visible = 1".$hide_nodes_str."
-        ORDER BY id DESC LIMIT 10";
+        WHERE visible = 1$hide_nodes_str
+        ORDER BY id
+        DESC LIMIT 10";
     $query = $DBS->query($query_sql);
     $articledb=array();
     while ($article = $DBS->fetch_array($query)) {
