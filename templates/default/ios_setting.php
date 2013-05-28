@@ -90,7 +90,7 @@ if($tip3){
 }
 echo '
 <form method="post" action="',$_SERVER["REQUEST_URI"],'#3">
-<input type="hidden" name="action" value="chpw" />
+<input type="hidden" name="action" value="setpw" />
 <table cellpadding="5" cellspacing="8" border="0" width="100%" class="fs12">
     <tbody>
     <tr>
