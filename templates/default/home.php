@@ -58,12 +58,12 @@ echo '<div class="c"></div>
 
 echo '</div>';
 
-if(isset($bot_nodes)){
+if ($bot_nodes) {
 echo '
 <div class="title">节点导航</div>
 <div class="main-box main-box-node">
 <span class="btn">';
-foreach( $bot_nodes as $k=>$v ){
+foreach ($bot_nodes as $k=>$v) {
     echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '

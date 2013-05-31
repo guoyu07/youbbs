@@ -46,7 +46,6 @@ if($cur_user['notic']){
 
 // 页面变量
 $title = '站内提醒 - '.$options['name'];
-$newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'notifications.php';
 

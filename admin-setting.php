@@ -38,9 +38,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_POST['hot_node_num'] = intval($_POST['hot_node_num']);
         if(!$_POST['hot_node_num']) $_POST['hot_node_num'] = 20;
 
-        $_POST['bot_node_num'] = intval($_POST['bot_node_num']);
-        if(!$_POST['bot_node_num']) $_POST['bot_node_num'] = 100;
-
         $_POST['article_title_max_len'] = intval($_POST['article_title_max_len']);
         if(!$_POST['article_title_max_len']) $_POST['article_title_max_len'] = 60;
 

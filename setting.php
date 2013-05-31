@@ -237,8 +237,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 // 页面变量
 $title = '设置 - '.$options['name'];
 
-$newest_nodes = get_newest_nodes();
-
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setting.php';
 
 include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');;

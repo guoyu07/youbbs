@@ -21,7 +21,6 @@ echo '
 </div>';
 }
 
-
 if($show_sider_ad && $options['ad_sider_top']){
 echo '
 <div class="sider-box">
@@ -52,7 +51,7 @@ echo '</h2>
 }
 
 
-if($newpost_page){
+if ($newpost_page) {
 echo '
 <div class="sider-box">
     <div class="sider-box-title">发帖指南</div>
@@ -71,13 +70,13 @@ echo '
 }
 
 
-if($bot_nodes){
+if ($hot_nodes) {
 echo '
 <div class="sider-box">
-    <div class="sider-box-title">最热主题</div>
+    <div class="sider-box-title">最热节点</div>
     <div class="sider-box-content">
     <div class="btn">';
-foreach(array_slice($bot_nodes, 0, intval($options['hot_node_num']), true) as $k=>$v ){
+foreach (array_slice($hot_nodes, 0, intval($options['hot_node_num']), true) as $k=>$v) {
     echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '    </div>
@@ -86,13 +85,13 @@ echo '    </div>
 </div>';
 }
 
-if($newest_nodes){
+if ($newest_nodes) {
 echo '
 <div class="sider-box">
     <div class="sider-box-title">最近新增节点</div>
     <div class="sider-box-content">
     <div class="btn">';
-foreach( $newest_nodes as $k=>$v ){
+foreach ($newest_nodes as $k=>$v) {
     echo '<a href="/',$k,'-1.html">',$v,'</a>';
 }
 echo '    </div>
@@ -101,13 +100,13 @@ echo '    </div>
 </div>';
 }
 
-if($links){
+if ($links) {
 echo '
 <div class="sider-box">
     <div class="sider-box-title">链接</div>
     <div class="sider-box-content">
     <div class="btn">';
-foreach( $links as $k=>$v ){
+foreach ($links as $k=>$v) {
     echo '<a href="',$v,'" target="_blank">',$k,'</a>';
 }
 echo '    </div>
@@ -116,13 +115,13 @@ echo '    </div>
 </div>';
 }
 
-if(isset($site_infos)){
+if ($site_infos) {
 echo '
 <div class="sider-box">
     <div class="sider-box-title">站点运行信息（',round(($timestamp - $options['site_create'])/86400)+1,'天）</div>
     <div class="sider-box-content">
     <ul>';
-foreach($site_infos as $k=>$v){
+foreach ($site_infos as $k=>$v) {
     echo '<li>',$k,': ',$v,'</li>';
 }
 echo '    </ul>

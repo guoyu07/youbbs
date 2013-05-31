@@ -228,8 +228,6 @@ if ($page>=2) {
 } else {
     $title = $t_obj['title'].' - '.$options['name'];
 }
-$newest_nodes = get_newest_nodes();
-$links = get_links();
 //$meta_keywords = htmlspecialchars();
 if ($t_obj['content']) {
     $meta_des = htmlspecialchars(mb_substr($t_obj['content'], 0, 150, 'utf-8'));

@@ -12,13 +12,13 @@ if($options['authorized'] || $options['close']){
 // 获取最近文章列表
 $articledb = $MMC->get('feed-article-list');
 if(!$articledb){
-    if ($options['hide_nodes']) $hide_nodes_str = " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']);
+    if ($options['hide_nodes']) $hide_nodes_str = "AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']);
     else $hide_nodes_str = "";
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.content,a.addtime,a.edittime,a.comments,c.name as cname,u.name as author
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
-        WHERE visible = 1$hide_nodes_str
+        WHERE visible = 1 $hide_nodes_str
         ORDER BY id
         DESC LIMIT 10";
     $query = $DBS->query($query_sql);

@@ -192,11 +192,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">热门节点数</td>
-        <td width="auto" align="left"><input type="text" class="sl w100" name="hot_node_num" value="',$options['hot_node_num'],'" /> 默认20（要小于',$options['bot_node_num'],'）</td>
-    </tr>
-    <tr>
-        <td width="120" align="right">首页底部节点导航数</td>
-        <td width="auto" align="left"><input type="text" class="sl w100" name="bot_node_num" value="',$options['bot_node_num'],'" /> 默认100（要大于',$options['hot_node_num'],'，总节点数大于',$options['newest_node_num'],'底部才会显示）</td>
+        <td width="auto" align="left"><input type="text" class="sl w100" name="hot_node_num" value="',$options['hot_node_num'],'" /> 默认20</td>
     </tr>
     <tr>
         <td width="120" align="right">帖子标题最多字数</td>
@@ -224,7 +220,7 @@ echo '
     </tr>
     <tr>
         <td width="120" align="right">发表回复最小间隔时间</td>
-        <td width="auto" align="left"><input type="text" class="sl w100" name="comment_post_space" value="',$options['comment_post_space'],'" /> 默认20</td>
+        <td width="auto" align="left"><input type="text" class="sl w100" name="comment_post_space" value="',$options['comment_post_space'],'" />秒 默认20</td>
     </tr>
     <tr>
         <td width="120" align="right">注册最小间隔时间</td>

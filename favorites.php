@@ -156,7 +156,6 @@ if($user_fav['articles']){
 
 // 页面变量
 $title = '收藏的帖子 - '.$options['name'];
-$newest_nodes = get_newest_nodes();
 
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'favorites.php';
 

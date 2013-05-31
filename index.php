@@ -5,8 +5,8 @@ include_once(dirname(__FILE__) . '/config.php');
 include_once(dirname(__FILE__) . '/common.php');
 
 // 获取总帖数
-$hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
-$table_status = $DBS->fetch_one_array("SELECT COUNT(*) FROM yunbbs_articles WHERE visible = 1$hide_nodes_str");
+$hide_nodes_str = $options['hide_nodes'] ? "AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
+$table_status = $DBS->fetch_one_array("SELECT COUNT(*) FROM yunbbs_articles WHERE visible = 1 $hide_nodes_str");
 $all_visible_article = $table_status['COUNT(*)'];
 
 // 获取帖子列表
@@ -17,7 +17,7 @@ if(!$articledb){
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
         LEFT JOIN yunbbs_users u ON a.uid=u.id
         LEFT JOIN yunbbs_users ru ON a.ruid=ru.id
-        WHERE visible = 1$hide_nodes_str
+        WHERE visible = 1 $hide_nodes_str
         ORDER BY top DESC, edittime DESC
         LIMIT ".$options['home_shownum'];
     $query = $DBS->query($query_sql);
@@ -41,10 +41,10 @@ if ($options['description']) {
 }
 
 $site_infos = get_site_infos();
+$bot_nodes = get_bot_nodes();
 $newest_nodes = get_newest_nodes();
-if(count($newest_nodes)==$options['newest_node_num']){
-    $bot_nodes = get_bot_nodes();
-}
+if (count($bot_nodes) > $options['newest_node_num']) $hot_nodes = get_hot_nodes();
+if (count($bot_nodes) < $options['newest_node_num'] + $options['hot_node_num']) unset($bot_nodes);
 
 $show_sider_ad = "1";
 $links = get_links();

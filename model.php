@@ -59,20 +59,28 @@ function get_links() {
     }
 }
 
-// 获取最新添加的节点
+// 隐藏节点
+function hide_nodes_str() {
+    global $options;
+    $hide_nodes_str = $options['hide_nodes'] ? "WHERE id <> ".str_replace(",", " AND id <> ", $options['hide_nodes']) : "";
+    return $hide_nodes_str;
+}
+
+// 获取最近新增节点
 function get_newest_nodes() {
     global $MMC;
     $newest_nodes = $MMC->get('newest_nodes');
-    if($newest_nodes){
+    if ($newest_nodes) {
         return $newest_nodes;
-    }else{
+    } else {
         global $DBS, $options;
-        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY  id DESC LIMIT ".$options['newest_node_num']);
+        $hide_nodes_str = hide_nodes_str();
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id DESC LIMIT ".$options['newest_node_num']);
         $node_arr = array();
-        while($node = $DBS->fetch_array($query)) {
+        while ($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
         }
-        if($node_arr){
+        if ($node_arr) {
             $MMC->set('newest_nodes', $node_arr, 0 ,3600);
         }
         unset($node);
@@ -82,20 +90,44 @@ function get_newest_nodes() {
 }
 
 // 获取热门节点
+function get_hot_nodes() {
+    global $MMC;
+    $hot_nodes = $MMC->get('hot_nodes');
+    if ($hot_nodes) {
+        return $hot_nodes;
+    } else {
+        global $DBS, $options;
+        $hide_nodes_str = hide_nodes_str();
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY articles DESC LIMIT ".$options['hot_node_num']);
+        $node_arr = array();
+        while ($node = $DBS->fetch_array($query)) {
+            $node_arr['node-'.$node['id']] = $node['name'];
+        }
+        if ($node_arr) {
+            $MMC->set('hot_nodes', $node_arr, 0 ,3600);
+        }
+        unset($node);
+        $DBS->free_result($query);
+        return $node_arr;
+    }
+}
+
+// 获取所有节点
 function get_bot_nodes() {
     global $MMC;
-    $newest_nodes = $MMC->get('bot_nodes');
-    if($newest_nodes){
-        return $newest_nodes;
-    }else{
+    $bot_nodes = $MMC->get('bot_nodes');
+    if ($bot_nodes) {
+        return $bot_nodes;
+    } else {
         global $DBS, $options;
-        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY  articles DESC LIMIT ".$options['bot_node_num']);
+        $hide_nodes_str = hide_nodes_str();
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id");
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
         }
         if($node_arr){
-            $MMC->set('bot_nodes', $node_arr, 0 ,3600);
+            $MMC->set('bot_nodes', $node_arr, 0, 3600);
         }
         unset($node);
         $DBS->free_result($query);

@@ -143,8 +143,6 @@ $title = '发新帖子 - '.$options['name'];
 $img_max_w = 650;
 $newpost_page = '1';
 
-//$newest_nodes = get_newest_nodes();
-
 $pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'newpost.php';
 
 include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
