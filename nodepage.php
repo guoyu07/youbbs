@@ -21,7 +21,10 @@ if(!$c_obj){
 }
 
 // 处理正确的页数
-// 因为有隐藏帖的存在，这里有 bug
+if (!$cur_user || $cur_user && $cur_user['flag'] < 88) {
+    $table_status = $DBS->fetch_one_array("SELECT COUNT(*) FROM yunbbs_articles WHERE cid=$cid AND visible = 1");
+    $c_obj['articles'] = $table_status['COUNT(*)'];
+}
 $taltol_page = ceil($c_obj['articles']/$options['list_shownum']);
 if ($taltol_page == 0) $taltol_page = 1;
 if ($page<=0) {

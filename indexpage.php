@@ -6,26 +6,26 @@ include_once(dirname(__FILE__) . '/common.php');
 
 $page = intval($_GET['page']);
 
+$hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
+
 // 处理正确的页数
-// 因为有隐藏帖的存在，这里有 bug
-$table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_articles'");
-$taltol_article = $table_status['Auto_increment'] - 1;
+$table_status = $DBS->fetch_one_array("SELECT COUNT(*) FROM yunbbs_articles WHERE visible = 1$hide_nodes_str");
+$taltol_article = $table_status['COUNT(*)'];
 $taltol_page = ceil($taltol_article/$options['list_shownum']);
 if ($taltol_page == 0) $taltol_page = 1;
-if ($page<=0) {
+if ($page <= 0) {
     header("HTTP/1.1 301 Moved Permanently");
     header("Status: 301 Moved Permanently");
     header('Location: /page-1.html');
     exit;
 }
-if ($page>$taltol_page) {
+if ($page > $taltol_page) {
     header('Location: /page-'.$taltol_page.'.html');
     exit;
 }
 
 // 获取最近文章列表
 if($page == 0) $page = 1;
-$hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
 $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
     FROM yunbbs_articles a
     LEFT JOIN yunbbs_categories c ON c.id=a.cid

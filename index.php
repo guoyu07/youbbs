@@ -4,10 +4,14 @@ define('IN_SAESPOT', 1);
 include_once(dirname(__FILE__) . '/config.php');
 include_once(dirname(__FILE__) . '/common.php');
 
-// 获取最近文章列表
+// 获取总帖数
+$hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
+$table_status = $DBS->fetch_one_array("SELECT COUNT(*) FROM yunbbs_articles WHERE visible = 1$hide_nodes_str");
+$all_visible_article = $table_status['COUNT(*)'];
+
+// 获取帖子列表
 $articledb = $MMC->get('home-article-list');
 if(!$articledb){
-    $hide_nodes_str = $options['hide_nodes'] ? " AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
     $query_sql = "SELECT a.id,a.cid,a.uid,a.ruid,a.title,a.addtime,a.edittime,a.comments,c.name as cname,u.avatar as uavatar,u.name as author,ru.name as rauthor
         FROM yunbbs_articles a
         LEFT JOIN yunbbs_categories c ON c.id=a.cid
