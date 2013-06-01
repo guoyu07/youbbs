@@ -21,7 +21,7 @@ if(($options['qq_appid'] && $options['qq_appkey']) || ($options['wb_key'] && $op
 */
 
 if($cur_user){
-    // 如果已经登录用户无聊打开这网址就让他重新登录吧
+    // 如果已登录用户无聊打开这网址就让他重新登录吧
     $MMC->delete('u_'.$cur_uid);
     setcookie("cur_uid", '', $timestamp-86400 * 365, '/');
     setcookie("cur_uname", '', $timestamp-86400 * 365, '/');
