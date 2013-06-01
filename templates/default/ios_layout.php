@@ -107,25 +107,9 @@ echo '
 
 include_once($pagefile);
 
-if($newest_nodes){
-echo '
-<div class="title">最近新增节点</div>
-<div class="main-box main-box-node">
-<div class="btn">';
-foreach( $newest_nodes as $k=>$v ){
-    echo '<a href="/',$k,'-1.html">',$v,'</a>';
-}
-echo '
-<div class="c"></div>
-</div>
-
-</div>';
-}
-
-
 if($bot_nodes){
 echo '
-<div class="title">热门节点</div>
+<div class="title">节点导航</div>
 <div class="main-box main-box-node">
 <div class="btn">';
 foreach( $bot_nodes as $k=>$v ){

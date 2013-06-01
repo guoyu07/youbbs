@@ -14,7 +14,7 @@ echo '
     </div>';
 if($cur_user && $cur_user['flag']>4 && $newest_nodes){
   //echo '<div class="float-right grey">请先选择相关节点再发帖</div>';
-    echo '<div class="float-right"><a href="/newpost-4" class="newpostbtn">+发新帖</a></div>';
+    echo '<div class="float-right"><a href="/newpost-1" class="newpostbtn">+发新帖</a></div>';
 }
 echo '    <div class="c"></div>
 </div>
@@ -28,8 +28,8 @@ echo '
     <img src="',TUCHUANG_URL,'/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" />
     </a></div>
     <div class="item-content count',$article['comments'],'">
-        <h1><a href="/topic-',$article['id'],'.html">',$article['title'],'</a></h1>
-        <span class="item-date"><a href="/node-',$article['cid'],'.html">',$article['cname'],'</a>';
+        <h1><a href="/topic-',$article['id'],'-1.html">',$article['title'],'</a></h1>
+        <span class="item-date"><a href="/node-',$article['cid'],'-1.html">',$article['cname'],'</a>';
 if($article['comments']){
     echo ' • <a href="/member-',$article['ruid'],'.html">',$article['rauthor'],'</a> ',$article['edittime'],'回复';
 }else{

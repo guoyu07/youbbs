@@ -44,7 +44,7 @@ $site_infos = get_site_infos();
 $bot_nodes = get_bot_nodes();
 $newest_nodes = get_newest_nodes();
 if (count($bot_nodes) > $options['newest_node_num']) $hot_nodes = get_hot_nodes();
-if (count($bot_nodes) < $options['newest_node_num'] + $options['hot_node_num']) unset($bot_nodes);
+if (!$is_mobie && count($bot_nodes) < $options['newest_node_num'] + $options['hot_node_num']) unset($bot_nodes);
 
 $show_sider_ad = "1";
 $links = get_links();

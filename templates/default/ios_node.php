@@ -33,7 +33,7 @@ echo '
     <div class="item-avatar"><a href="/member-',$article['uid'],'.html">
     <img src="',TUCHUANG_URL,'/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a></div>
     <div class="item-content count',$article['comments'],'">
-        <h1><a href="/topic-',$article['id'],'.html">',$article['title'],'</a></h1>
+        <h1><a href="/topic-',$article['id'],'-1.html">',$article['title'],'</a></h1>
         <span class="item-date">';
 if($article['comments']){
     echo $article['edittime'],' <a href="/member-',$article['ruid'],'.html">',$article['rauthor'],'</a> 回复';

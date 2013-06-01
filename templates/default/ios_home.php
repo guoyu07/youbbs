@@ -29,7 +29,7 @@ echo '
     </a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/topic-',$article['id'],'-1.html">',$article['title'],'</a></h1>
-        <span class="item-date"><a href="/node-',$article['cid'],'.html">',$article['cname'],'</a>';
+        <span class="item-date"><a href="/node-',$article['cid'],'-1.html">',$article['cname'],'</a>';
 if($article['comments']){
     echo ' • <a href="/member-',$article['ruid'],'.html">',$article['rauthor'],'</a> ',$article['edittime'],'回复';
 }else{
@@ -46,7 +46,7 @@ echo '    <div class="c"></div>
 
 }
 
-if(count($articledb) == $options['home_shownum']){
+if ($all_visible_article > $options['home_shownum']) {
 echo '<div class="pagination">';
 echo '<a href="/page-2.html" class="float-right">下一页 &raquo;</a>';
 echo '<div class="c"></div>

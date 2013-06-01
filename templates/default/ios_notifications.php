@@ -22,7 +22,7 @@ echo '
     <div class="item-avatar"><a href="/member-',$article['uid'],'.html"><img src="',TUCHUANG_URL,'/avatar/mini/',$article['uavatar'],'.png" alt="',$article['author'],'" /></a></div>
     <div class="item-content count',$article['comments'],'">
         <h1><a href="/goto-topic-',$article['id'],'">',$article['title'],'</a></h1>
-        <span class="item-date"><a href="/node-',$article['cid'],'.html">',$article['cname'],'</a>';
+        <span class="item-date"><a href="/node-',$article['cid'],'-1.html">',$article['cname'],'</a>';
 if($article['comments']){
     echo ' • <a href="/member-',$article['ruid'],'.html">',$article['rauthor'],'</a> ',$article['edittime'],'回复';
 }else{
