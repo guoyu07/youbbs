@@ -46,23 +46,16 @@ echo '    <div class="c"></div>
 
 }
 
-
 if($taltol_article > $options['list_shownum']){
 echo '<div class="pagination">';
 if($page>1){
-    if ($page==2) {
-        echo '<a href="/" class="float-left">&laquo; 上一页</a>';
-    } else {
-        echo '<a href="/page-',$page-1,'.html" class="float-left">&laquo; 上一页</a>';
-    }
+    if ($page==2) echo '<a href="/" class="page float-left">&laquo; 上一页</a>';
+    else echo '<a href="/page-',$page-1,'.html" class="page float-left">&laquo; 上一页</a>';
 }
-if($page<$taltol_page){
-echo '<a href="/page-',$page+1,'.html" class="float-right">下一页 &raquo;</a>';
-}
+if ($page<$taltol_page) echo '<a href="/page-',$page+1,'.html" class="page float-right">下一页 &raquo;</a>';
 echo '<div class="c"></div>
 </div>';
 }
-
 
 echo '</div>';
 

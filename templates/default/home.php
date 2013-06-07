@@ -49,14 +49,16 @@ echo '    <div class="c"></div>
 </div>';
 }
 
-if ($all_visible_article > $options['home_shownum']) {
-echo '<div class="pagination">';
-echo '<a href="/page-2.html" class="float-right">下一页 &raquo;</a>';
-echo '<div class="c"></div>
-</div>';
-}
+echo '<div class="pagination">
+    <a href="/feed" class="feed float-left">订阅</a>
+    ';
 
-echo '</div>';
+if ($all_visible_article > $options['home_shownum']) echo '<a href="/page-2.html" class="page float-right">下一页 &raquo;</a>';
+
+echo '
+    <div class="c"></div>
+</div>
+</div>';
 
 if ($bot_nodes) {
 echo '

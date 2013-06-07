@@ -17,23 +17,21 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <meta content="True" name="HandheldFriendly" />
 <meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<link href="/static/default/style_ios.css" rel="stylesheet" type="text/css" />
+';
+if($meta_keywords){
+    echo '<meta name="keywords" content="',$meta_keywords,'" />
+';
+}
+if($meta_des){
+    echo '<meta name="description" content="',$meta_des,'" />
+';
+}
+echo '<link href="/static/default/style_ios.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="alternate" href="/feed" title="',htmlspecialchars($options['name']),' - 订阅" type="application/atom+xml"/>
 ';
 if($options['head_meta']){
     echo $options['head_meta'];
-}
-if($meta_keywords){
-    echo '
-<meta name="keywords" content="',$meta_keywords,'" />';
-}
-if($meta_des){
-    echo '
-<meta name="description" content="',$meta_des,'" />';
-}
-if(isset($canonical)){
-    echo '
-<link rel="canonical" href="http://',$_SERVER['HTTP_HOST'],$canonical,'" />';
 }
 
 echo '
@@ -132,10 +130,10 @@ echo '       </div>
 
 <div class="footer-wrap">
     <div class="footer">
-    <p class="float-left"><a href="/feed">订阅</a>';
+    <p class="float-left">';
 
 if($is_mobie){
-    echo ' • <a href="/viewat-desktop">桌面版</a>';
+    echo '<a href="/viewat-desktop">桌面版</a>';
 }
 
 $year = date("Y");

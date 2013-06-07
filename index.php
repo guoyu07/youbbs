@@ -34,11 +34,8 @@ if(!$articledb){
 }
 
 // 页面变量
-if ($options['description']) {
-    $title = $options['name'].' - '.$options['description'];
-} else {
-    $title = $options['name'];
-}
+$title = $options['name'];
+if ($options['description']) $title .= ' - '.$options['description'];
 
 $site_infos = get_site_infos();
 $bot_nodes = get_bot_nodes();

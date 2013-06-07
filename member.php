@@ -24,7 +24,6 @@ if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{1,20}$/iu', $g_mid)){
 $m_obj = $DBS->fetch_one_array($query);
 if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || $cur_user && $cur_user['flag']<99))){
     if(!$mid){
-        // 可以重定向到网址 /member-id.html 为了减少请求，下面用 $canonical 来让SEO感觉友好
         header("HTTP/1.1 301 Moved Permanently");
         header("Status: 301 Moved Permanently");
         header('Location: /member-'.$m_obj['id'].'.html');
@@ -72,7 +71,6 @@ if($m_obj['articles']){
 
 // 页面变量
 $title =  $options['name'].' › '.$m_obj['name'];
-$canonical = '/member-'.$m_obj['id'].'.html';
 $show_sider_ad = "1";
 //$meta_keywords = htmlspecialchars();
 if ($m_obj['about']) {

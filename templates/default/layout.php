@@ -16,25 +16,22 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <title>',$title,'</title>
 <meta content="True" name="HandheldFriendly" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-<link href="/static/default/style.css" rel="stylesheet" type="text/css" />
+';
+if($meta_keywords){
+    echo '<meta name="keywords" content="',$meta_keywords,'" />
+';
+}
+if($meta_des){
+    echo '<meta name="description" content="',$meta_des,'" />
+';
+}
+echo '<link href="/static/default/style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link href="/feed" rel="alternate" title="',htmlspecialchars($options['name']),' - 订阅" type="application/atom+xml"/>
+<link rel="alternate" href="/feed" title="',htmlspecialchars($options['name']),' - 订阅" type="application/atom+xml"/>
 <script src="',$options['jquery_lib'],'" type="text/javascript"></script>
 ';
 if($options['head_meta']){
     echo $options['head_meta'];
-}
-if($meta_keywords){
-    echo '
-<meta name="keywords" content="',$meta_keywords,'" />';
-}
-if($meta_des){
-    echo '
-<meta name="description" content="',$meta_des,'" />';
-}
-if(isset($canonical)){
-    echo '
-<link rel="canonical" href="http://',$_SERVER['HTTP_HOST'],$canonical,'" />';
 }
 
 echo '
@@ -127,9 +124,9 @@ echo '       </div>
 echo '
 <div class="footer-wrap">
     <div class="footer">
-    <div class="left"><a href="/feed">订阅</a>';
+    <div class="left">';
 if($is_mobie){
-    echo ' • <a href="/viewat-mobile">手机版</a>';
+    echo '<a href="/viewat-mobile">手机版</a>';
 }
 
 $year = date("Y");
@@ -145,7 +142,8 @@ if($options['show_debug']){
     $totaltime = number_format(($mtime[1] + $mtime[0] - $starttime), 6);
     echo '<p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
 }
-echo '</div>
+echo '
+    </div>
     </div>
     <!-- footer end -->
 </div>
