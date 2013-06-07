@@ -128,22 +128,23 @@ echo '       </div>
     <div class="c"></div>
 </div>
 
+<!-- footer begin -->
 <div class="footer-wrap">
     <div class="footer">
-    <p class="float-left">';
+    <div class="footer-content float-left">';
 
 if($is_mobie){
     echo '<a href="/viewat-desktop">桌面版</a>';
 }
 
 $year = date("Y");
-echo '</p>
-<p class="float-right">&copy; ',$yaer,' - <a href="/">',$options['name'],'</a></p>
-<div class="c"></div>';
-
-echo '    </div>
-    <!-- footer end -->
-</div>';
+echo '</div>
+    <div class="footer-content float-right">&copy; ',$yaer,' - <a href="/">',$options['name'],'</a></div>
+    <div class="c"></div>
+    </div>
+</div>
+<!-- footer end -->
+';
 
 if($show_sider_ad && $options['ad_sider_top']){
     echo $options['ad_web_bot'];

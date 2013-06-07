@@ -122,31 +122,39 @@ echo '       </div>
 </div>';
 
 echo '
+<!-- footer-begin -->
 <div class="footer-wrap">
-    <div class="footer">
-    <div class="left">';
+    <div class="footer center-align">
+    <div class="footer-content float-left">
+        ';
 if($is_mobie){
     echo '<a href="/viewat-mobile">手机版</a>';
 }
 
+echo '
+    </div>
+    <div class="footer-content float-right">
+        ';
+
 $year = date("Y");
-echo '</div>
-    <div class="right">&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
-if($options['icp']){
-    echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
-}
+echo '&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
+
+if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
+
+// 尊重作者，请不要删除
 echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
     $totaltime = number_format(($mtime[1] + $mtime[0] - $starttime), 6);
-    echo '<p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
+    echo '
+        <p>Processed in ',$totaltime,' second(s), ',$DBS->querycount,' queries.</p>';
 }
 echo '
     </div>
     </div>
-    <!-- footer end -->
 </div>
+<!-- footer end -->
 <script type="text/javascript" src="/static/default/go-top.js"></script>
 <script>
 /* <![CDATA[ */
