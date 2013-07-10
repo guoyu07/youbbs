@@ -122,7 +122,7 @@ echo '       </div>
 </div>';
 
 echo '
-<!-- footer-begin -->
+<!-- footer begin -->
 <div class="footer-wrap">
     <div class="footer center-align">
     <div class="footer-content float-left">
