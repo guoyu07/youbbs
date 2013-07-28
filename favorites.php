@@ -33,71 +33,77 @@ if(!$user_fav){
 
 // 处理收藏操作
 if($act && $tid){
-    if($act == 'add'){
-        // 添加
-        if($user_fav){
-            if($user_fav['content']){
-                $ids_arr = explode(",", $user_fav['content']);
-                if(!in_array($tid, $ids_arr)){
-                    array_unshift($ids_arr, $tid);
-                    $articles = count($ids_arr);
-                    $content = implode(',', $ids_arr);
-                    $user_fav['content'] = $content;
-                    $user_fav['articles'] = $articles;
+    switch ($act) {
+        case 'add':
+            // 添加
+            if($user_fav){
+                if($user_fav['content']){
+                    $ids_arr = explode(",", $user_fav['content']);
+                    if(!in_array($tid, $ids_arr)){
+                        array_unshift($ids_arr, $tid);
+                        $articles = count($ids_arr);
+                        $content = implode(',', $ids_arr);
+                        $user_fav['content'] = $content;
+                        $user_fav['articles'] = $articles;
 
-                    $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
+                        $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
+                        $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
+                        $MMC->delete('favorites_'.$cur_uid);
+                        $MMC->delete('t-'.$tid);
+                        $MMC->delete('t-'.$tid.'_ios');
+                    }
+                    unset($ids_arr);
+                }else{
+                    $user_fav['content'] = $tid;
+                    $user_fav['articles'] = 1;
+
+                    $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='1',content='$tid' WHERE uid='$cur_uid'");
                     $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
                     $MMC->delete('favorites_'.$cur_uid);
                     $MMC->delete('t-'.$tid);
                     $MMC->delete('t-'.$tid.'_ios');
                 }
-                unset($ids_arr);
             }else{
-                $user_fav['content'] = $tid;
-                $user_fav['articles'] = 1;
 
-                $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='1',content='$tid' WHERE uid='$cur_uid'");
+                $user_fav= array('id'=>'','uid'=>$cur_uid, 'articles'=>1, 'content' => $tid);
+                $DBS->query("INSERT INTO yunbbs_favorites (id,uid,articles,content) VALUES (null,'$cur_uid','1','$tid')");
                 $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
                 $MMC->delete('favorites_'.$cur_uid);
                 $MMC->delete('t-'.$tid);
                 $MMC->delete('t-'.$tid.'_ios');
             }
-        }else{
+            break;
 
-            $user_fav= array('id'=>'','uid'=>$cur_uid, 'articles'=>1, 'content' => $tid);
-            $DBS->query("INSERT INTO yunbbs_favorites (id,uid,articles,content) VALUES (null,'$cur_uid','1','$tid')");
-            $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
-            $MMC->delete('favorites_'.$cur_uid);
-            $MMC->delete('t-'.$tid);
-            $MMC->delete('t-'.$tid.'_ios');
-        }
-
-    }elseif($act == 'del'){
-        // 删除
-        if($user_fav){
-            if($user_fav['content']){
-                $ids_arr = explode(",", $user_fav['content']);
-                if(in_array($tid, $ids_arr)){
-                    foreach($ids_arr as $k=>$v){
-                        if($v == $tid){
-                            unset($ids_arr[$k]);
-                            break;
+        case 'del':
+            // 删除
+            if($user_fav){
+                if($user_fav['content']){
+                    $ids_arr = explode(",", $user_fav['content']);
+                    if(in_array($tid, $ids_arr)){
+                        foreach($ids_arr as $k=>$v){
+                            if($v == $tid){
+                                unset($ids_arr[$k]);
+                                break;
+                            }
                         }
-                    }
-                    $articles = count($ids_arr);
-                    $content = implode(',', $ids_arr);
-                    $user_fav['content'] = $content;
-                    $user_fav['articles'] = $articles;
+                        $articles = count($ids_arr);
+                        $content = implode(',', $ids_arr);
+                        $user_fav['content'] = $content;
+                        $user_fav['articles'] = $articles;
 
-                    $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
-                    $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites-1 WHERE id='$tid'");
-                    $MMC->delete('favorites_'.$cur_uid);
-                    $MMC->delete('t-'.$tid);
-                    $MMC->delete('t-'.$tid.'_ios');
+                        $DBS->unbuffered_query("UPDATE yunbbs_favorites SET articles='$articles',content='$content' WHERE uid='$cur_uid'");
+                        $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites-1 WHERE id='$tid'");
+                        $MMC->delete('favorites_'.$cur_uid);
+                        $MMC->delete('t-'.$tid);
+                        $MMC->delete('t-'.$tid.'_ios');
+                    }
+                    unset($ids_arr);
                 }
-                unset($ids_arr);
             }
-        }
+            break;
+
+        default:
+            break;
     }
 }
 

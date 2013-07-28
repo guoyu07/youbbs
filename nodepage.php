@@ -64,11 +64,9 @@ if(!$articledb){
 }
 
 // 页面变量
-if ($page>=2) {
-    $title = $options['name'].' › '.$c_obj['name'].' - 第 '.$page.' 页';
-} else {
-    $title = $options['name'].' › '.$c_obj['name'];
-}
+$title = $options['name'].' › '.$c_obj['name'];
+if ($page>=2) $title .= ' - 第 '.$page.' 页';
+
 $show_sider_ad = "1";
 //$meta_keywords = htmlspecialchars();
 if ($c_obj['about']) {

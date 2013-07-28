@@ -32,7 +32,7 @@ foreach($errors as $error){
 echo '</p>
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">
 <input type="hidden" name="formhash" value="',$formhash,'" />
-<p><label>登录名： <input type="text" name="name" class="sl w200" value="',htmlspecialchars($name),'" /></label>  <span class="fs12">允许字母、数字、中文，不能全为数字，4~12个字节</span></p>
+<p><label>登录名： <input type="text" name="name" class="sl w200" value="',htmlspecialchars($name),'" /></label>  <span class="fs12">允许字母、数字、中文，不能全为数字，4~12个字符</span></p>
 <p><label>密　码： <input type="password" name="pw" class="sl w200" value="" /></label></p>';
 
 if($url_path == 'sigin'){

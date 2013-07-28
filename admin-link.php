@@ -26,40 +26,48 @@ if($lid){
     }
 }
 
-unset($tip1, $tip2);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $action = $_POST['action'];
-    if($action=='add'){
-        $n_name = trim($_POST['name']);
-        $n_url = trim($_POST['url']);
-        if($n_name && $n_url){
-            if($DBS->query("INSERT INTO yunbbs_links (id,name,url) VALUES (null,'$n_name','$n_url')")){
-                //更新缓存
-                $MMC->delete('site_links');
-                $tip1 = '已成功添加';
-            }else{
-                $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
-            }
-        }else{
-            $tip1 = '链接名 和 网址 不能留空';
-        }
-    }elseif($action=='edit'){
-        $n_name = trim($_POST['name']);
-        $n_url = trim($_POST['url']);
-        if($n_name && $n_url){
-            if($DBS->unbuffered_query("UPDATE yunbbs_links SET name='$n_name',url='$n_url' WHERE id='$lid'")){
-                //更新缓存
-                $MMC->delete('site_links');
-                $l_obj['name'] = $n_name;
-                $l_obj['url'] = $n_url;
-                $tip2 = '已成功保存';
-            }else{
-                $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
-            }
+    $action = trim($_POST['action']);
+    switch ($action) {
+        case 'add':
+            $n_name = htmlspecialchars(trim($_POST['name']));
+                    $n_url = trim($_POST['url']);
+                    if($n_name && $n_url){
+                        if($DBS->query("INSERT INTO yunbbs_links (id,name,url) VALUES (null,'$n_name','$n_url')")){
+                            //更新缓存
+                            $MMC->delete('site_links');
+                            $tip1 = '已成功添加';
+                        }else{
+                            $tip1 = '数据库更新失败，修改尚未保存，请稍后再试';
+                        }
+                    }else{
+                        $tip1 = '链接名 和 网址 不能留空';
+                    }
+            break;
 
-        }else{
-            $tip2 = '链接名 和 网址 不能留空';
-        }
+
+        case 'edit':
+            $n_name = htmlspecialchars(trim($_POST['name']));
+            $n_url = trim($_POST['url']);
+            if($n_name && $n_url){
+                if($DBS->unbuffered_query("UPDATE yunbbs_links SET name='$n_name',url='$n_url' WHERE id='$lid'")){
+                    //更新缓存
+                    $MMC->delete('site_links');
+                    $l_obj['name'] = $n_name;
+                    $l_obj['url'] = $n_url;
+                    $tip2 = '已成功保存';
+                }else{
+                    $tip2 = '数据库更新失败，修改尚未保存，请稍后再试';
+                }
+
+            }else{
+                $tip2 = '链接名 和 网址 不能留空';
+            }
+            break;
+
+
+        default:
+            break;
     }
 }else{
     if($act == 'del'){
