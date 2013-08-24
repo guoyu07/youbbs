@@ -5,7 +5,7 @@ if (! defined ( 'BCS_API_PATH' )) {
 	$root = implode(DIRECTORY_SEPARATOR, $dir_arr);
 	define ( 'BCS_API_PATH', $root );
 }
-require_once (BCS_API_PATH . '/conf.inc.php');
+
 require_once (BCS_API_PATH . '/libs/requestcore.class.php');
 require_once (BCS_API_PATH . '/libs/mimetypes.class.php');
 /**

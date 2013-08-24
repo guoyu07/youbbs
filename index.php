@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 // 获取总帖数
 $hide_nodes_str = $options['hide_nodes'] ? "AND cid <> ".str_replace(",", " AND cid <> ", $options['hide_nodes']) : "";
@@ -53,8 +54,8 @@ if($options['site_des']){
     $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8'));
 }
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'home.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'home.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

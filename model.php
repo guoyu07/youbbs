@@ -15,17 +15,6 @@ if(!$options){
         $options[$setting['title']] = $setting['value'];
     }
 
-    // 检测新增的 site_create
-    if( !$options['site_create']){
-        $query = "SELECT regtime FROM yunbbs_users WHERE id='1'";
-        $m_obj = $DBS->fetch_one_array($query);
-        if($m_obj){
-            $site_create = $m_obj['regtime'];
-            $DBS->query("INSERT INTO yunbbs_settings VALUES('site_create', '$site_create')");
-            $options['site_create'] = $site_create;
-        }
-    }
-
     $options = stripslashes_array($options);
 
     if(!$options['safe_imgdomain']){
@@ -74,8 +63,9 @@ function get_newest_nodes() {
         return $newest_nodes;
     } else {
         global $DBS, $options;
-        $hide_nodes_str = hide_nodes_str();
-        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id DESC LIMIT ".$options['newest_node_num']);
+        //$hide_nodes_str = hide_nodes_str();
+        //$query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id DESC LIMIT ".$options['newest_node_num']);
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY id DESC LIMIT ".$options['newest_node_num']);
         $node_arr = array();
         while ($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
@@ -97,8 +87,9 @@ function get_hot_nodes() {
         return $hot_nodes;
     } else {
         global $DBS, $options;
-        $hide_nodes_str = hide_nodes_str();
-        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY articles DESC LIMIT ".$options['hot_node_num']);
+        //$hide_nodes_str = hide_nodes_str();
+        //$query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY articles DESC LIMIT ".$options['hot_node_num']);
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY articles DESC LIMIT ".$options['hot_node_num']);
         $node_arr = array();
         while ($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];
@@ -120,8 +111,9 @@ function get_bot_nodes() {
         return $bot_nodes;
     } else {
         global $DBS, $options;
-        $hide_nodes_str = hide_nodes_str();
-        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id");
+        //$hide_nodes_str = hide_nodes_str();
+        //$query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories $hide_nodes_str ORDER BY id");
+        $query = $DBS->query("SELECT id, name, articles FROM yunbbs_categories ORDER BY id");
         $node_arr = array();
         while($node = $DBS->fetch_array($query)) {
             $node_arr['node-'.$node['id']] = $node['name'];

@@ -142,9 +142,11 @@ if(isset($gotohome)){
           )
         );
 
-        $context = stream_context_create($opts);
+        //$context = stream_context_create($opts);
 
-        $avatardata = file_get_contents($imgurl, false, $context);
+        //$avatardata = file_get_contents($imgurl, false, $context);
+
+        $avatardata = curl_file_get_contents($imgurl);
 
         $img_obj = imagecreatefromstring($avatardata);
 

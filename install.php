@@ -1,22 +1,28 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
 header("Content-Type: text/html; charset=UTF-8");
 
-$sqlfile = dirname(__FILE__) . '/yunbbs_mysql.sql';
-if(!is_readable($sqlfile)) {
+$configFile = ROOT . '/config.php';
+if(!is_readable($configFile)) {
+	exit('配置文件不存在，请按照说明编辑 config.sample.php 并保存为 config.php 后再安装');
+}
+
+$sqlFile = ROOT . '/yunbbs_mysql.sql';
+if(!is_readable($sqlFile)) {
 	exit('数据库文件不存在 或 读取失败');
 }
-$fp = fopen($sqlfile, 'rb');
+
+$fp = fopen($sqlFile, 'rb');
 $sql = fread($fp, 2048000);
 fclose($fp);
 
-include_once (dirname(__FILE__) . '/config.php');
-include_once (dirname(__FILE__) . '/libs/mysql.class.php');
+include_once (ROOT . '/config.php');
+include_once (ROOT . '/libs/mysql.class.php');
 
 $DBS = new DB_MySQL;
-$DBS->connect($servername, $dbport, $dbusername, $dbpassword, $dbname);
-unset($servername, $dbusername, $dbpassword);
+$DBS->connect($servername, $dbport, BCS_AK, BCS_SK, $dbname);
 
 $DBS->select_db($dbname);
 if($DBS->geterrdesc()) {
@@ -54,7 +60,7 @@ $DBS->close();
 
 // 拷贝三种格式默认头像
 // 上传到云存储
-include_once(dirname(__FILE__) . '/libs/bcs.class.php');
+include_once(ROOT . '/libs/bcs.class.php');
 
 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
