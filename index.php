@@ -2,6 +2,11 @@
 define('IN_SAESPOT', 1);
 define('ROOT', dirname(__FILE__));
 
+$configFile = ROOT . '/config.php';
+if(!file_exists($configFile)) {
+    exit('配置文件不存在，请按照说明编辑 config.sample.php 并保存为 config.php，然后访问 /install 安装。');
+}
+
 include_once(ROOT . '/config.php');
 include_once(ROOT . '/common.php');
 

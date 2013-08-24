@@ -5,13 +5,13 @@ define('ROOT', dirname(__FILE__));
 header("Content-Type: text/html; charset=UTF-8");
 
 $configFile = ROOT . '/config.php';
-if(!is_readable($configFile)) {
+if(!file_exists($configFile)) {
 	exit('配置文件不存在，请按照说明编辑 config.sample.php 并保存为 config.php 后再安装');
 }
 
 $sqlFile = ROOT . '/yunbbs_mysql.sql';
-if(!is_readable($sqlFile)) {
-	exit('数据库文件不存在 或 读取失败');
+if(!file_exists($sqlFile)) {
+	exit('数据库文件不存在');
 }
 
 $fp = fopen($sqlFile, 'rb');
