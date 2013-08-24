@@ -140,9 +140,13 @@ echo '
     <div class="footer-content float-right">
         ';
 
+$year = date("Y");
+echo '&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
+
+if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
+
 // 尊重作者，请不要修改或删除
-if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
-echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a>, All Rights Reserved. Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>.';
+echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
