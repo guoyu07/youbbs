@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 error_reporting(0);
 session_start();
@@ -12,7 +13,7 @@ $_SESSION["appkey"]   = $options['qq_appkey'];
 
 $_SESSION["callback"] = 'http://'.$_SERVER['HTTP_HOST'].'/qqcallback';
 
-include_once(dirname(__FILE__) . "/libs/qq_utils.php");
+include_once(ROOT . "/libs/qq_utils.php");
 
 function qq_callback()
 {

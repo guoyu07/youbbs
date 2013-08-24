@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 //
 $via = $_GET['via'];

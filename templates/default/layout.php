@@ -3,7 +3,7 @@ if (!defined('IN_SAESPOT')) {
     $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
     array_pop(array_pop($dir_arr));
     define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
-    include_once(ROOT . '/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 };
 
@@ -122,7 +122,7 @@ echo '       </div>
 </div>';
 
 echo '
-<!-- footer begin -->
+<!-- footer-begin -->
 <div class="footer-wrap">
     <div class="footer center-align">
     <div class="footer-content float-left">
@@ -141,7 +141,7 @@ echo '&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
 
 if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
 
-// 尊重作者，请不要删除
+// 尊重作者，请不要修改或删除
 echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
 
 if($options['show_debug']){

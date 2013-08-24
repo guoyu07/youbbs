@@ -1,21 +1,22 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-require(dirname(__FILE__) . '/config.php');
-require(dirname(__FILE__) . '/common.php');
+require(ROOT . '/config.php');
+require(ROOT . '/common.php');
 
 if (!$cur_user) {
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 } else {
     if ($cur_user['flag'] == 0){
         $error_code = 4032;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
     if ($cur_user['flag'] == 1){
         $error_code = 4011;
-        include_once(dirname(__FILE__) . '/401.php');
+        include_once(ROOT . '/error/401.php');
         exit;
     }
 }
@@ -78,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                          imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
                          // 上传到云存储
-                         include_once(dirname(__FILE__) . '/libs/bcs.class.php');
+                         include_once(ROOT . '/libs/bcs.class.php');
                          $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                          $bcs_object = '/avatar/large/'.$cur_uid.'.png';
@@ -254,8 +255,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 // 页面变量
 $title = '设置 - '.$options['name'];
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setting.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'setting.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');;
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');;
 
 ?>

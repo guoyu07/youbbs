@@ -1,10 +1,11 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
-include_once(dirname(__FILE__) . "/libs/saetv2.ex.class.php");
+include_once(ROOT . "/libs/saetv2.ex.class.php");
 
 error_reporting(0);
 session_start();
@@ -105,7 +106,7 @@ if ($token) {
 
 } else {
     $error_code = 4039;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 

@@ -1,6 +1,8 @@
 <?php
+define('ROOT', dirname(__FILE__));
+
 if (!defined('IN_SAESPOT')) {
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 };
 

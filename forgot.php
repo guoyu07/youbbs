@@ -1,12 +1,13 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if ($cur_user && $cur_user['flag'] == 0) {
     $error_code = 4032;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -55,8 +56,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 $title = '找回密码  - '.$options['name'];
 
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'forgot.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'forgot.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

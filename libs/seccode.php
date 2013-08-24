@@ -1,4 +1,5 @@
 <?php
+define('IN_SAESPOT', 1);
 
 error_reporting(0);
 session_start();

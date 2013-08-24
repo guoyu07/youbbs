@@ -1,4 +1,12 @@
 <?php
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop($dir_arr);
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(dirname(__FILE__) . '/error/403.php');
+    exit;
+};
+
 /**
  * PHP SDK for QQ登录 OpenAPI
  *
@@ -8,15 +16,15 @@
  */
 
 /**
- * @brief 本文件包含了OAuth认证过程中会用到的公用方法 
+ * @brief 本文件包含了OAuth认证过程中会用到的公用方法
  */
 
 function do_post($url, $data)
 {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
-    curl_setopt($ch, CURLOPT_POST, TRUE); 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_URL, $url);
     $ret = curl_exec($ch);
 

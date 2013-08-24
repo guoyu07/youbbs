@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if($cur_user){
     header('Location: /');
@@ -22,7 +23,7 @@ $openid = $_SESSION["openid"];
 
 if (!$openid) {
     $error_code = 4039;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -163,7 +164,7 @@ if(isset($gotohome)){
             imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, 180, 180);
 
             // 保存头像到云存储
-            include_once(dirname(__FILE__) . '/libs/bcs.class.php');
+            include_once(ROOT . '/libs/bcs.class.php');
             $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
             $bcs_object = '/avatar/large/'.$cur_uid.'.png';
@@ -247,8 +248,8 @@ if(isset($gotohome)){
 $title = '设置名字 - '.$options['name'];
 $logintype = "新浪微博";
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'setname.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'setname.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

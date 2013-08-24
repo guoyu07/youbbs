@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 // 屏蔽下面几行可以通过 用户名 和 密码 登录
 /*
@@ -34,7 +35,7 @@ $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
         $error_code = 4033;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
 
@@ -51,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $ck_obj = $MMC->get($ck_key);
                     if($ck_obj && $ck_obj > 5){
                         $error_code = 4037;
-                        include_once(dirname(__FILE__) . '/403.php');
+                        include_once(dirname(__FILE__) . '/error/403.php');
                         exit;
                     }
                     $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE name='".$name."' LIMIT 1");
@@ -105,8 +106,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 // 页面变量
 $title = '登录 - '.$options['name'];
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'sigin_login.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'sigin_login.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

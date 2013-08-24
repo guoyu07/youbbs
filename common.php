@@ -1,8 +1,9 @@
 <?php
-define('SAESPOT_VER', '1.5.2');
+define('SAESPOT_VER', '1.6');
+define('ROOT', dirname(__FILE__));
 
 if (!defined('IN_SAESPOT')) {
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 };
 
@@ -23,7 +24,7 @@ if (getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'),
         $onlineip = $matches[0];
     } else {
         $error_code = 4036;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 }
@@ -34,7 +35,7 @@ $timestamp = time();
 $php_self = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
 $url_path = substr($php_self, 1,-4);
 
-include_once (dirname(__FILE__) . '/libs/mysql.class.php');
+include_once (ROOT . '/libs/mysql.class.php');
 // 初始化从数据类，若要写、删除数据则需要定义主数据类
 $DBS = new DB_MySQL;
 $DBS->connect($servername, $dbport, BCS_AK, BCS_SK, $dbname);
@@ -94,7 +95,7 @@ if($cur_uname && $cur_uid && $cur_ucode){
     }
 }
 
-include_once (dirname(__FILE__) . '/model.php');
+include_once (ROOT . '/model.php');
 
 // 获得散列
 function formhash() {
@@ -139,7 +140,7 @@ if ($user_agent) {
     }
 } else {
     $error_code = 4001;
-    include_once(dirname(__FILE__) . '/400.php');
+    include_once(ROOT . '/error/400.php');
     exit;
 }
 

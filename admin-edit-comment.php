@@ -1,17 +1,18 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if (!$cur_user) {
     $error_code = 4012;
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 }
 if ($cur_user['flag']<88) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -21,8 +22,8 @@ $r_obj = $DBS->fetch_one_array($query);
 if(!$r_obj){
     $error_code = 4044;
     $title = $options['name'].' › 评论未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    $pagefile = ROOT . '/templates/default/404.php';
+    include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 
@@ -52,8 +53,8 @@ $title = '修改评论 - '.$options['name'];
 $img_max_w = 590;
 
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-edit-comment.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'admin-edit-comment.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

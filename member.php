@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 $g_mid = $_GET['mid'];
 // mid 可能是 ID 或用户名，用户注册时要限制名字不能为全数字
@@ -16,8 +17,8 @@ if(preg_match('/^[\w\d\x{4e00}-\x{9fa5}]{1,20}$/iu', $g_mid)){
 }else{
     $error_code = 4041;
     $title = $options['name'].' › 用户未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    $pagefile = ROOT . '/templates/default/404.php';
+    include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 
@@ -34,8 +35,8 @@ if($m_obj && !($m_obj['flag'] == 0 && (!$cur_user || $cur_user && $cur_user['fla
 }else{
     $error_code = 4041;
     $title = $options['name'].' › 用户未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    $pagefile = ROOT . '/templates/default/404.php';
+    include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 
@@ -77,8 +78,8 @@ if ($m_obj['about']) {
     $meta_des = htmlspecialchars(mb_substr($m_obj['about'], 0, 150, 'utf-8'));
 }
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'member.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'member.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

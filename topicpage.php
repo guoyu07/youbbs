@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 
 $tid = intval($_GET['tid']);
@@ -26,8 +27,8 @@ if(!$t_obj){
     if(!$t_obj || $t_obj && !$t_obj['visible'] && (!$cur_user || $cur_user && $cur_user['flag']<88)){
         $error_code = 4043;
         $title = $options['name'].' › 主题未找到';
-        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+        $pagefile = ROOT . '/templates/default/404.php';
+        include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
         exit;
     }
 
@@ -60,7 +61,7 @@ unset($tip);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
         $error_code = 4033;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
 
@@ -82,7 +83,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             $DBS->unbuffered_query("UPDATE yunbbs_users SET flag='0' WHERE id='$cur_uid'");
                             $MMC->delete('u_'.$cur_uid);
                             $error_code = 4034;
-                            include_once(dirname(__FILE__) . '/403.php');
+                            include_once(dirname(__FILE__) . '/error/403.php');
                             exit;
                         }
                     }
@@ -237,8 +238,8 @@ if ($t_obj['content']) {
 $img_max_w = 590;
 $show_sider_ad = "1";
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'postpage.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'postpage.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

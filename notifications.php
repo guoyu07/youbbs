@@ -1,21 +1,22 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if (!$cur_user) {
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 } else {
     if ($cur_user['flag'] == 0){
         $error_code = 4032;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
     if ($cur_user['flag'] == 1){
         $error_code = 4011;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
 }
@@ -47,8 +48,8 @@ if($cur_user['notic']){
 // 页面变量
 $title = '站内提醒 - '.$options['name'];
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'notifications.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'notifications.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

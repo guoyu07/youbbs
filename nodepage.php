@@ -1,8 +1,9 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 $cid = intval($_GET['cid']);
 $page = intval($_GET['page']);
@@ -13,8 +14,8 @@ if(!$c_obj){
     if(!$c_obj){
         $error_code = 4042;
         $title = $options['name'].' › 节点未找到';
-        $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-        include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+        $pagefile = ROOT . '/templates/default/404.php';
+        include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
         exit;
     }
     $MMC->set('n-'.$cid, $c_obj, 0, 3600);
@@ -73,8 +74,8 @@ if ($c_obj['about']) {
     $meta_des = htmlspecialchars(mb_substr($c_obj['about'], 0, 150, 'utf-8'));
 }
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'node.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'node.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

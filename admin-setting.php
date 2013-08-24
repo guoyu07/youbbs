@@ -1,17 +1,18 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if (!$cur_user) {
     $error_code = 4012;
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 }
 if ($cur_user['flag']<99) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -256,8 +257,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 // 页面变量
 $title = '网站设置 - '.$options['name'];
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-setting.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'admin-setting.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>

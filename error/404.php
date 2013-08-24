@@ -1,4 +1,6 @@
 <?
+define('IN_SAESPOT', 1);
+
 header("HTTP/1.1 404 Not Found");
 header("Status: 404 Not Found");
 header("Content-Type: text/html; charset=UTF-8");

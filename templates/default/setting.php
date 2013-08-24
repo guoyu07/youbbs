@@ -3,7 +3,7 @@ if (!defined('IN_SAESPOT')) {
     $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
     array_pop(array_pop($dir_arr));
     define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
-    include_once(ROOT . '/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 };
 echo '

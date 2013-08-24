@@ -1,4 +1,12 @@
 <?php
+if (!defined('IN_SAESPOT')) {
+    $dir_arr = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+    array_pop($dir_arr);
+    define('ROOT', implode(DIRECTORY_SEPARATOR, $dir_arr));
+    include_once(dirname(__FILE__) . '/error/403.php');
+    exit;
+};
+
 /**
  * Handles all HTTP requests using cURL and manages the responses.
  *

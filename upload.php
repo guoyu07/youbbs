@@ -1,28 +1,29 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if (!$cur_user) {
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 } else {
     if ($cur_user['flag'] == 0){
         $error_code = 4032;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
     if ($cur_user['flag'] == 1){
         $error_code = 4011;
-        include_once(dirname(__FILE__) . '/403.php');
+        include_once(dirname(__FILE__) . '/error/403.php');
         exit;
     }
 }
 
 if ($options['close_upload']) {
     $error_code = 4035;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -137,7 +138,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 imagedestroy($img_obj);
 
                 // 上传到云存储
-                include_once(dirname(__FILE__) . '/libs/bcs.class.php');
+                include_once(ROOT . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;
@@ -167,7 +168,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 // 其它文件
                 // 上传到云存储
-                include_once(dirname(__FILE__) . '/libs/bcs.class.php');
+                include_once(ROOT . '/libs/bcs.class.php');
                 $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
                 $bcs_object = '/'.$upload_filename;

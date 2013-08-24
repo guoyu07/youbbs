@@ -1,17 +1,18 @@
 <?php
 define('IN_SAESPOT', 1);
+define('ROOT', dirname(__FILE__));
 
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/common.php');
+include_once(ROOT . '/config.php');
+include_once(ROOT . '/common.php');
 
 if (!$cur_user) {
     $error_code = 4012;
-    include_once(dirname(__FILE__) . '/401.php');
+    include_once(ROOT . '/error/401.php');
     exit;
 }
 if ($cur_user['flag']<88) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/403.php');
+    include_once(dirname(__FILE__) . '/error/403.php');
     exit;
 }
 
@@ -21,8 +22,8 @@ $t_obj = $DBS->fetch_one_array($query);
 if(!$t_obj){
     $error_code = 4047;
     $title = $options['name'].' › 主题未找到';
-    $pagefile = dirname(__FILE__) . '/templates/default/404.php';
-    include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+    $pagefile = ROOT . '/templates/default/404.php';
+    include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
     exit;
 }
 
@@ -98,8 +99,8 @@ $title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 650;
 
-$pagefile = dirname(__FILE__) . '/templates/default/'.$tpl.'admin-edit-post.php';
+$pagefile = ROOT . '/templates/default/'.$tpl.'admin-edit-post.php';
 
-include_once(dirname(__FILE__) . '/templates/default/'.$tpl.'layout.php');
+include_once(ROOT . '/templates/default/'.$tpl.'layout.php');
 
 ?>
