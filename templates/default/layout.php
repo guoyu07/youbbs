@@ -67,9 +67,11 @@ echo '">',htmlspecialchars($options['name']),'</a></div>
 if($cur_user){
     echo '<img src="',TUCHUANG_URL,'/avatar/mini/',$cur_user['avatar'],'.png" alt="',$cur_user['name'],'"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 
+/*
     if(!$cur_user['password']){
-        //echo '<a href="/setting#3" style="color:yellow;">设置登录密码</a>&nbsp;&nbsp;&nbsp;';
+        echo '<a href="/setting#3" style="color:yellow;">设置登录密码</a>&nbsp;&nbsp;&nbsp;';
     }
+*/
 
     if($cur_user['notic']){
         $notic_n = count(array_unique(explode(',', $cur_user['notic'])))-1;
@@ -89,11 +91,13 @@ if($cur_user){
     }
 //  }
     echo '<a href="/login" rel="nofollow" title="登录">登录</a>';
-    if($options['wb_key'] && $options['wb_secret']){
-        echo '&nbsp;&nbsp;&nbsp;<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用新浪微博登录"/></a>';
-    }
-    if($options['qq_appid'] && $options['qq_appkey']){
-        echo '&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>';
+    if (!$options['close_register']) {
+        if($options['wb_key'] && $options['wb_secret']){
+            echo '&nbsp;&nbsp;&nbsp;<a href="/wblogin" rel="nofollow"><img src="/static/weibo_login_55_24.png" alt="微博登录" title="用新浪微博登录"/></a>';
+        }
+        if($options['qq_appid'] && $options['qq_appkey']){
+            echo '&nbsp;&nbsp;&nbsp;<a href="/qqlogin" rel="nofollow"><img src="/static/qq_login_55_24.png" alt="QQ登录" title="用QQ登录"/></a>';
+        }
     }
 }
 echo '       </div>
@@ -136,13 +140,9 @@ echo '
     <div class="footer-content float-right">
         ';
 
-$year = date("Y");
-echo '&copy; ',$year,' - <a href="/">',$options['name'],'</a> • ';
-
-if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> • ';
-
 // 尊重作者，请不要修改或删除
-echo 'Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>';
+if ($options['icp']) echo '<a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">',$options['icp'],'</a> | ';
+echo 'Copyright &copy; 2012-2013 <a href="http://www.sinosky.org" target="_blank">',$options['name'],'</a>, All Rights Reserved. Powered by <a href="http://youbbs.sinaapp.com" target="_blank">YouBBS</a>.';
 
 if($options['show_debug']){
     $mtime = explode(' ', microtime());
