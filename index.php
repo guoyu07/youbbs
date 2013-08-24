@@ -4,7 +4,9 @@ define('ROOT', dirname(__FILE__));
 
 $configFile = ROOT . '/config.php';
 if(!file_exists($configFile)) {
-    exit('配置文件不存在，请按照说明编辑 config.sample.php 并保存为 config.php，然后访问 /install 安装。');
+    header("Content-Type: text/html; charset=UTF-8");
+    echo "配置文件不存在，请按照说明编辑 config.sample.php 并保存为 config.php，然后访问 /install 安装。";
+    exit;
 }
 
 include_once(ROOT . '/config.php');
