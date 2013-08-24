@@ -47,10 +47,6 @@ $MMC = new BaeMemcache();
  *********************************/
 
 define ( 'BCS_HOST', 'bcs.duapp.com' );
-//AK 公钥
-define ( 'BCS_AK', $bae_ak );
-//SK 私钥
-define ( 'BCS_SK', $bae_sk );
 //superfile 每个object分片后缀
 define ( 'BCS_SUPERFILE_POSTFIX', '_bcs_superfile_' );
 //sdk superfile分片大小 ，单位 B（字节）
