@@ -188,7 +188,9 @@ if($t_obj['comments']){
 }
 
 // 增加浏览数
-$DBS->unbuffered_query("UPDATE yunbbs_articles SET views=views+1 WHERE id='$tid'");
+if (!$is_spider) {
+    $DBS->unbuffered_query("UPDATE yunbbs_articles SET views=views+1 WHERE id='$tid'");
+}
 
 // 如果id在提醒里则清除
 if ($cur_user && $cur_user['notic'] && strpos(' '.$cur_user['notic'], $tid.',')){
