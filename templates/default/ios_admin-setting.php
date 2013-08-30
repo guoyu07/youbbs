@@ -117,6 +117,10 @@ echo '
         <td width="auto" align="left">扩展设置</td>
     </tr>
     <tr>
+        <td width="120" align="right">默认发帖节点id</td>
+        <td width="auto" align="left"><input type="text" class="sl w50" name="newpost_node" value="',$options['newpost_node'],'" /> <br/>默认1，在首页点击发新帖时的节点id</td>
+    </tr>
+    <tr>
         <td width="120" align="right">主节点id</td>
         <td width="auto" align="left"><input type="text" class="sl wb50" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主节点id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>

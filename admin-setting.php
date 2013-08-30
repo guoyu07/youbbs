@@ -110,11 +110,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_POST['safe_imgdomain'] = implode("|", $safe_arr);
             }
 
+            // 获取节点数供下面使用
+            $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
+            $nodes_num = $table_status['Auto_increment'];
+
+            // 默认发帖节点
+            $_POST['newpost_node'] = intval($_POST['newpost_node']);
+            if (!($_POST['newpost_node'] && $options['newpost_node'] != $_POST['newpost_node'] && $_POST['newpost_node'] < $nodes_num)) $_POST['newpost_node'] = 1;
+
             // 确保 main_nodes 正确
             $_POST['main_nodes'] = filter_chr($_POST['main_nodes']);
-            if($_POST['main_nodes'] && ($options['main_nodes'] != $_POST['main_nodes'] ) ){
-                $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
-                $nodes_num = $table_status['Auto_increment'];
+            if ($_POST['main_nodes'] && $options['main_nodes'] != $_POST['main_nodes']) {
                 $main_nodes = str_replace(" ", ",", $_POST['main_nodes']);
                 $main_nodes = str_replace("/", ",", $main_nodes);
                 $main_nodes = str_replace("、", ",", $main_nodes);
@@ -124,24 +130,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $main_nodes_arr = explode(",", $main_nodes);
                 $main_nodes_arr = array_filter(array_unique($main_nodes_arr));
                 $new_main_nodes_arr = array();
-                foreach($main_nodes_arr as $node_id){
+                foreach ($main_nodes_arr as $node_id) {
                     $node_id = intval($node_id);
-                    if($node_id && ($node_id < $nodes_num)){
+                    if ($node_id && $node_id < $nodes_num) {
                         $new_main_nodes_arr[] = $node_id;
                     }
                 }
-                if($new_main_nodes_arr){
+                if ($new_main_nodes_arr) {
                     $_POST['main_nodes'] = implode(",", $new_main_nodes_arr);
-                }else{
+                } else {
                     $_POST['main_nodes'] = '';
                 }
             }
 
             // 确保 hide_nodes 正确
             $_POST['hide_nodes'] = filter_chr($_POST['hide_nodes']);
-            if($_POST['hide_nodes'] && ($options['hide_nodes'] != $_POST['hide_nodes'] ) ){
-                $table_status = $DBS->fetch_one_array("SHOW TABLE STATUS LIKE 'yunbbs_categories'");
-                $nodes_num = $table_status['Auto_increment'];
+            if ($_POST['hide_nodes'] && $options['hide_nodes'] != $_POST['hide_nodes']) {
                 $hide_nodes = str_replace(" ", ",", $_POST['hide_nodes']);
                 $hide_nodes = str_replace("/", ",", $hide_nodes);
                 $hide_nodes = str_replace("、", ",", $hide_nodes);
@@ -151,15 +155,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $hide_nodes_arr = explode(",", $hide_nodes);
                 $hide_nodes_arr = array_filter(array_unique($hide_nodes_arr));
                 $new_hide_nodes_arr = array();
-                foreach($hide_nodes_arr as $node_id){
+                foreach ($hide_nodes_arr as $node_id) {
                     $node_id = intval($node_id);
-                    if($node_id && ($node_id < $nodes_num)){
+                    if ($node_id && $node_id < $nodes_num) {
                         $new_hide_nodes_arr[] = $node_id;
                     }
                 }
-                if($new_hide_nodes_arr){
+                if ($new_hide_nodes_arr) {
                     $_POST['hide_nodes'] = implode(",", $new_hide_nodes_arr);
-                }else{
+                } else {
                     $_POST['hide_nodes'] = '';
                 }
             }

@@ -97,6 +97,7 @@ INSERT INTO yunbbs_settings VALUES('ad_post_top', '');
 INSERT INTO yunbbs_settings VALUES('ad_post_bot', '');
 INSERT INTO yunbbs_settings VALUES('ad_sider_top', '');
 INSERT INTO yunbbs_settings VALUES('ad_web_bot', '');
+INSERT INTO yunbbs_settings VALUES('newpost_node', '1');
 INSERT INTO yunbbs_settings VALUES('main_nodes', '');
 INSERT INTO yunbbs_settings VALUES('hide_nodes', '');
 INSERT INTO yunbbs_settings VALUES('spam_words', '');

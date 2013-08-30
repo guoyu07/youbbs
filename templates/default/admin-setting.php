@@ -118,6 +118,10 @@ echo '
         <td width="auto" align="left"></td>
     </tr>
     <tr>
+        <td width="120" align="right">默认发帖节点id</td>
+        <td width="auto" align="left"><input type="text" class="sl w50" name="newpost_node" value="',$options['newpost_node'],'" /> 默认1，在首页点击发新帖时的节点id</td>
+    </tr>
+    <tr>
         <td width="120" align="right">主节点id</td>
         <td width="auto" align="left"><input type="text" class="sl" name="main_nodes" value="',$options['main_nodes'],'" /> <br/>默认留空，发新帖时可选的主节点id，用逗号分隔 <a href="http://youbbs.sinaapp.com/t-427" target="_blank">查看帮助</a></td>
     </tr>
