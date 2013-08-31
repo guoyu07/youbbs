@@ -1,11 +1,14 @@
-YouBBS 百度BAE云存储(BCS)版
-===========================
-Modified by [Jat](http://www.sinosky.org)
+[YouBBS for BAE](http://bbs.sinosky.org/)
+=========================================
 
-[YouBBS](http://youbbs.sinaapp.com) 是一款超轻量级的论坛程序，基于标准的php+mysql环境。
+[YouBBS](http://youbbs.sinaapp.com) 是一个基于 PHP + MySQL的轻型的论坛程序，界面优美，性能高效，代码简洁、安全，适合于对传统论坛视觉疲劳、对传统论坛功能感觉臃肿等小众群体。
 
-YouBBS 是开源项目，可自由修改，但要保留 Powered by 链接信息
+Modified by [Jat](http://www.sinosky.org/)
 
-详细安装说明参见[官方论坛](http://youbbs.sinaapp.com/t-101)
+Based on [YouBBS](https://github.com/ego008/youbbs)
 
-推荐：数据主从读写分离、memcached 提高性能、自动获取相关帖子的[一键安装版](http://t.cn/zjbv7FM)
+#### 安装说明
+1. 在 BAE [管理中心](http://developer.baidu.com/dev) [创建应用](http://developer.baidu.com/dev#/create) 并托管
+2. 在 [云存储](http://developer.baidu.com/bae/bcs/bucket/) 创建 bucket
+3. 按照说明修改 `config.sample.php` 并保存为 `config.php`
+4. 使用 [SVN](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/manage/svn) 或 [Git](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/manage/git) 上传代码
