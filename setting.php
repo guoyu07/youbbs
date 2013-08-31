@@ -46,138 +46,137 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         case 'avatar':
             if($_FILES['avatar']['size'] && $_FILES['avatar']['size'] < 301000){
-                 $img_info = getimagesize($_FILES['avatar']['tmp_name']);
-                 if($img_info){
-                     //创建源图片
-                     if($img_info[2]==1){
-                         $img_obj = imagecreatefromgif($_FILES['avatar']['tmp_name']);
-                     }elseif($img_info[2]==2){
-                         $img_obj = imagecreatefromjpeg($_FILES['avatar']['tmp_name']);
-                     }elseif($img_info[2]==3){
-                         $img_obj = imagecreatefrompng($_FILES['avatar']['tmp_name']);
-                     }
-                     //如果上传的文件是jpg/gif/png则处理
-                     if(isset($img_obj)){
-                         //--处理缩略图并保存到云储存
-                         // 缩略图比例
-                         $max_px = max($img_info[0], $img_info[1]);
-                         //large
-                         if($max_px>73){
-                             $percent = 73/$max_px;
-                             $new_w = round($img_info[0]*$percent);
-                             $new_h = round($img_info[1]*$percent);
-                         }else{
-                             $new_w = $img_info[0];
-                             $new_h = $img_info[1];
-                         }
+                $img_info = getimagesize($_FILES['avatar']['tmp_name']);
+                if($img_info){
+                    //创建源图片
+                    if($img_info[2]==1){
+                        $img_obj = imagecreatefromgif($_FILES['avatar']['tmp_name']);
+                    }elseif($img_info[2]==2){
+                        $img_obj = imagecreatefromjpeg($_FILES['avatar']['tmp_name']);
+                    }elseif($img_info[2]==3){
+                        $img_obj = imagecreatefrompng($_FILES['avatar']['tmp_name']);
+                    }
+                    //如果上传的文件是jpg/gif/png则处理
+                    if(isset($img_obj)){
+                        //--处理缩略图并保存到云储存
+                        // 缩略图比例
+                        $max_px = max($img_info[0], $img_info[1]);
+                        //large
+                        if($max_px>73){
+                            $percent = 73/$max_px;
+                            $new_w = round($img_info[0]*$percent);
+                            $new_h = round($img_info[1]*$percent);
+                        }else{
+                            $new_w = $img_info[0];
+                            $new_h = $img_info[1];
+                        }
 
-                         $new_image = imagecreatetruecolor($new_w, $new_h);
-                         $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                         imagefill ( $new_image, 0, 0, $bg );
+                        $new_image = imagecreatetruecolor($new_w, $new_h);
+                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                        imagefill ( $new_image, 0, 0, $bg );
 
-                         ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
-                         imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                        ////目标文件，源文件，目标文件坐标，源文件坐标，目标文件宽高，源宽高
+                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
-                         // 上传到云存储
-                         include_once(ROOT . '/libs/bcs.class.php');
-                         $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
+                        // 上传到云存储
+                        include_once(ROOT . '/libs/bcs.class.php');
+                        $baidu_bcs = new BaiduBCS ( BCS_AK, BCS_SK, BCS_HOST );
 
-                         $bcs_object = '/avatar/large/'.$cur_uid.'.png';
+                        $bcs_object = '/avatar/large/'.$cur_uid.'.png';
 
-                         ob_start();
-                         imagejpeg($new_image, NULL, 95);
-                         $out_img = ob_get_contents();
-                         ob_end_clean();
+                        ob_start();
+                        imagejpeg($new_image, NULL, 95);
+                        $out_img = ob_get_contents();
+                        ob_end_clean();
 
-                         try{
-                             $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
-                         }catch (Exception $e){
-                             $tip2 = '百度云存储创建large对象失败，请稍后再试！';
-                         }
+                        try{
+                            $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
+                        }catch (Exception $e){
+                            $tip2 = '百度云存储创建large对象失败，请稍后再试！';
+                        }
 
-                         //normal
-                         if($max_px>48){
-                             $percent = 48/$max_px;
-                             $new_w = round($img_info[0]*$percent);
-                             $new_h = round($img_info[1]*$percent);
-                         }else{
-                             $new_w = $img_info[0];
-                             $new_h = $img_info[1];
-                         }
+                        //normal
+                        if($max_px>48){
+                            $percent = 48/$max_px;
+                            $new_w = round($img_info[0]*$percent);
+                            $new_h = round($img_info[1]*$percent);
+                        }else{
+                            $new_w = $img_info[0];
+                            $new_h = $img_info[1];
+                        }
 
-                         $new_image = imagecreatetruecolor($new_w, $new_h);
-                         $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                         imagefill ( $new_image, 0, 0, $bg );
+                        $new_image = imagecreatetruecolor($new_w, $new_h);
+                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                        imagefill ( $new_image, 0, 0, $bg );
 
-                         imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
 
-                         $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
+                        $bcs_object = '/avatar/normal/'.$cur_uid.'.png';
 
-                         ob_start();
-                         imagejpeg($new_image, NULL, 95);
-                         $out_img = ob_get_contents();
-                         ob_end_clean();
+                        ob_start();
+                        imagejpeg($new_image, NULL, 95);
+                        $out_img = ob_get_contents();
+                        ob_end_clean();
 
-                         try{
-                             $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
-                         }catch (Exception $e){
-                             $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
-                         }
+                        try{
+                            $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
+                        }catch (Exception $e){
+                            $tip2 = '百度云存储创建normal对象失败，请稍后再试！';
+                        }
 
-                         // mini
-                         if($max_px>24){
-                             $percent = 24/$max_px;
-                             $new_w = round($img_info[0]*$percent);
-                             $new_h = round($img_info[1]*$percent);
-                         }else{
-                             $new_w = $img_info[0];
-                             $new_h = $img_info[1];
-                         }
+                        // mini
+                        if($max_px>24){
+                            $percent = 24/$max_px;
+                            $new_w = round($img_info[0]*$percent);
+                            $new_h = round($img_info[1]*$percent);
+                        }else{
+                            $new_w = $img_info[0];
+                            $new_h = $img_info[1];
+                        }
 
-                         $new_image = imagecreatetruecolor($new_w, $new_h);
-                         $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
-                         imagefill ( $new_image, 0, 0, $bg );
+                        $new_image = imagecreatetruecolor($new_w, $new_h);
+                        $bg = imagecolorallocate ( $new_image, 255, 255, 255 );
+                        imagefill ( $new_image, 0, 0, $bg );
 
-                         imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
-                         imagedestroy($img_obj);
+                        imagecopyresampled($new_image, $img_obj, 0, 0, 0, 0, $new_w, $new_h, $img_info[0], $img_info[1]);
+                        imagedestroy($img_obj);
 
-                         $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
+                        $bcs_object = '/avatar/mini/'.$cur_uid.'.png';
 
-                         ob_start();
-                         imagejpeg($new_image, NULL, 95);
-                         $out_img = ob_get_contents();
-                         ob_end_clean();
-                         imagedestroy($new_image);
+                        ob_start();
+                        imagejpeg($new_image, NULL, 95);
+                        $out_img = ob_get_contents();
+                        ob_end_clean();
+                        imagedestroy($new_image);
 
-                         try{
-                             $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
-                         }catch (Exception $e){
-                             $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
-                         }
+                        try{
+                            $response = (array)$baidu_bcs->create_object_by_content(BUCKET, $bcs_object, $out_img, array('acl'=>'public-read'));
+                        }catch (Exception $e){
+                            $tip2 = '百度云存储创建mini对象失败，请稍后再试！';
+                        }
 
-                         unset($out_img);
+                        unset($out_img);
 
-                         //
-                         if($cur_user['avatar']!=$cur_user['id']){
-                             if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
-                                 $cur_user['avatar'] = $cur_user['id'];
-                                 $MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
-                             }else{
-                                 $tip2 = '图片保存失败，请稍后再试';
-                             }
-                         }
+                        if($cur_user['avatar']!=$cur_user['id']){
+                            if($DBS->unbuffered_query("UPDATE yunbbs_users SET avatar='$cur_uid' WHERE id='$cur_uid'")){
+                                $cur_user['avatar'] = $cur_user['id'];
+                                $MMC->set('u_'.$cur_uid, $cur_user, 0, 600);
+                            }else{
+                                $tip2 = '图片保存失败，请稍后再试';
+                            }
+                        }
 
-                         //
-                         $av_time = $timestamp;
-                     }else{
-                         $tip2 = '图片转换失败，请稍后再试';
-                     }
-                 }else{
-                     $tip2 = '你上传的不是图片文件，只支持jpg/gif/png三种格式';
-                 }
-             }else{
-                 $tip2 = '图片尚未上传或太大了';
-             }
+                        $av_time = $timestamp;
+                        $tip2 = '图片上传成功，你可能需要刷新一下，才能正常显示';
+                    }else{
+                        $tip2 = '图片转换失败，请稍后再试';
+                    }
+                }else{
+                    $tip2 = '你上传的不是图片文件，只支持jpg/gif/png三种格式';
+                }
+            }else{
+                $tip2 = '图片尚未上传或太大了';
+            }
             break;
 
 
