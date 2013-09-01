@@ -12,7 +12,7 @@ if (!$cur_user) {
 }
 if ($cur_user['flag']<88) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 
@@ -83,7 +83,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles+1 WHERE id='$p_cid'");
             $DBS->unbuffered_query("UPDATE yunbbs_categories SET articles=articles-1 WHERE id='$old_cid'");
         }
-
+        $tip = '帖子已成功修改';
         header('Location: /topic-'.$tid.'-1.html');
         exit;
     }else{
@@ -98,6 +98,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 $title = '修改帖子 - '.$t_obj['title'].' - '.$options['name'];
 // 设置回复图片最大宽度
 $img_max_w = 650;
+$newpost_page = '1';
 
 $pagefile = ROOT . '/templates/default/'.$tpl.'admin-edit-post.php';
 

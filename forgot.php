@@ -7,7 +7,7 @@ include_once(ROOT . '/common.php');
 
 if ($cur_user && $cur_user['flag'] == 0) {
     $error_code = 4032;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 

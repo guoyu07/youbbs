@@ -11,12 +11,12 @@ if (!$cur_user) {
 } else {
     if ($cur_user['flag'] == 0){
         $error_code = 4032;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
     if ($cur_user['flag'] == 1){
         $error_code = 4011;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 }
@@ -48,7 +48,7 @@ if($options['main_nodes']){
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
         $error_code = 4033;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 
@@ -65,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $DBS->unbuffered_query("UPDATE yunbbs_users SET flag='0' WHERE id='$cur_uid'");
                 $MMC->delete('u_'.$cur_uid);
                 $error_code = 4034;
-                include_once(dirname(__FILE__) . '/error/403.php');
+                include_once(ROOT . '/error/403.php');
                 exit;
             }
         }

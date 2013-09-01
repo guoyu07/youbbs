@@ -12,7 +12,7 @@ if (!$cur_user) {
 }
 if ($cur_user['flag']<99) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 

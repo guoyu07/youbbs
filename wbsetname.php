@@ -23,7 +23,7 @@ $openid = $_SESSION["openid"];
 
 if (!$openid) {
     $error_code = 4039;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 

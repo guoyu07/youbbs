@@ -38,13 +38,13 @@ $errors = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(empty($_SERVER['HTTP_REFERER']) || $_POST['formhash'] != formhash() || preg_replace("/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER['HTTP_REFERER']) !== preg_replace("/([^\:]+).*/", "\\1", $_SERVER['HTTP_HOST'])) {
         $error_code = 4033;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 
     if($regip){
         $error_code = 4030;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 

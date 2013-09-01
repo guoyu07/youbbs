@@ -76,7 +76,7 @@ echo '
             <div class="commont-data-date">
                 <div class="float-left"><a href="/member-',$comment['uid'],'.html">',$comment['author'],'</a> at ',$comment['addtime'];
 if($cur_user && $cur_user['flag']>=88){
-    echo ' &nbsp;&nbsp;&nbsp; • <a href="/admin-edit-comment-',$comment['id'],'">编辑</a>';
+    echo ' &nbsp;&nbsp;<a href="/admin-edit-comment-',$comment['id'],'"><strong>编辑</strong></a>';
 }
                 echo '</div>
                 <div class="float-right">';

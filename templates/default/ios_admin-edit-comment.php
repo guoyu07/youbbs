@@ -21,9 +21,9 @@ if($tip){
 echo '
 <form action="',$_SERVER["REQUEST_URI"],'" method="post">
 <p><textarea id="id-content" name="content" class="comment-text mll wb96">',$r_content,'</textarea></p>
-<p><input type="submit" value=" 保 存 " name="submit" class="textbtn wb96" /></p>
+<div class="float-left"><input type="submit" value=" 保 存 " name="submit" class="textbtn" /></div>
 </form>
-<a href="/topic-',$r_obj['articleid'],'-1.html">查看这条评论所在的帖子</a>
+<div class="float-right cancel-edit"><a href="/topic-',$r_obj['articleid'],'-1.html">取消编辑并返回</a></div><div class="c"></div>
 </div>';
 
 

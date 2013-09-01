@@ -12,7 +12,7 @@ if (!$cur_user) {
 }
 if ($cur_user['flag']<88) {
     $error_code = 4031;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 
@@ -39,6 +39,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $MMC->delete('commentdb-'.$r_obj['articleid'].'-'.$page);
         $MMC->delete('commentdb-'.$r_obj['articleid'].'_ios-'.$page);
         $tip = '评论已成功修改';
+        header('Location: /topic-'.$r_obj['articleid'].'-1.html');
+        exit;
     }else{
         $tip = '内容 不能留空';
     }

@@ -11,19 +11,19 @@ if (!$cur_user) {
 } else {
     if ($cur_user['flag'] == 0){
         $error_code = 4032;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
     if ($cur_user['flag'] == 1){
         $error_code = 4011;
-        include_once(dirname(__FILE__) . '/error/403.php');
+        include_once(ROOT . '/error/403.php');
         exit;
     }
 }
 
 if ($options['close_upload']) {
     $error_code = 4035;
-    include_once(dirname(__FILE__) . '/error/403.php');
+    include_once(ROOT . '/error/403.php');
     exit;
 }
 
