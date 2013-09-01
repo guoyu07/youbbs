@@ -68,7 +68,7 @@ if(!$articledb){
 $title = $options['name'].' › '.$c_obj['name'];
 if ($page>=2) $title .= ' - 第 '.$page.' 页';
 
-$show_sider_ad = "1";
+$show_sider_ad = 1;
 //$meta_keywords = htmlspecialchars();
 if ($c_obj['about']) {
     $meta_des = htmlspecialchars(mb_substr($c_obj['about'], 0, 150, 'utf-8'));

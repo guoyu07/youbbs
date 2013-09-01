@@ -238,7 +238,7 @@ if ($t_obj['content']) {
 
 // 设置回复图片最大宽度
 $img_max_w = 590;
-$show_sider_ad = "1";
+$show_sider_ad = 1;
 
 $pagefile = ROOT . '/templates/default/'.$tpl.'postpage.php';
 

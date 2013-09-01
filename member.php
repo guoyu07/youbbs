@@ -72,7 +72,7 @@ if($m_obj['articles']){
 
 // 页面变量
 $title =  $options['name'].' › '.$m_obj['name'];
-$show_sider_ad = "1";
+$show_sider_ad = 1;
 //$meta_keywords = htmlspecialchars();
 if ($m_obj['about']) {
     $meta_des = htmlspecialchars(mb_substr($m_obj['about'], 0, 150, 'utf-8'));

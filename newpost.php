@@ -142,7 +142,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 $title = '发新帖子 - '.$options['name'];
 // 设置处理图片的最大宽度
 $img_max_w = 650;
-$newpost_page = '1';
+$newpost_page = 1;
 
 $pagefile = ROOT . '/templates/default/'.$tpl.'newpost.php';
 
