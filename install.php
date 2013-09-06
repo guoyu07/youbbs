@@ -51,7 +51,7 @@ if(!$DBS->geterrdesc()) {
 runquery($sql);
 
 $timestamp = time();
-$DBS->unbuffered_query("UPDATE yunbbs_settings SET value='$timestamp' WHERE title='site_create'");
+$DBS->unbuffered_query("UPDATE yunbbs_settings SET value=$timestamp WHERE title='site_create'");
 
 $DBS->close();
 

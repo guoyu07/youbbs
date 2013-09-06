@@ -90,7 +90,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }
 
                 $c_content = htmlspecialchars($c_content);
-                $DBS->query("INSERT INTO yunbbs_comments (id,articleid,uid,addtime,content) VALUES (null,$tid, $cur_uid, $timestamp, '$c_content')");
+                $DBS->query("INSERT INTO yunbbs_comments (articleid, uid, addtime, content) VALUES ($tid, $cur_uid, $timestamp, '$c_content')");
                 $DBS->unbuffered_query("UPDATE yunbbs_articles SET ruid='$cur_uid',edittime='$timestamp',comments=comments+1 WHERE id='$tid'");
                 $DBS->unbuffered_query("UPDATE yunbbs_users SET replies=replies+1,lastreplytime='$timestamp' WHERE id='$cur_uid'");
                 // 更新u_code
@@ -226,15 +226,10 @@ if ($cur_user){
 }
 
 // 页面变量
-if ($page>=2) {
-    $title = $t_obj['title'].' - 第'.$page.'页 - '.$options['name'];
-} else {
-    $title = $t_obj['title'].' - '.$options['name'];
-}
+$title = ($page>=2) ? $t_obj['title'].' - 第'.$page.'页 - '.$options['name'] : $t_obj['title'].' - '.$options['name'];
+
 //$meta_keywords = htmlspecialchars();
-if ($t_obj['content']) {
-    $meta_des = htmlspecialchars(mb_substr($t_obj['content'], 0, 150, 'utf-8'));
-}
+if ($t_obj['content']) $meta_des = htmlspecialchars(mb_substr($t_obj['content'], 0, 150, 'utf-8'));
 
 // 设置回复图片最大宽度
 $img_max_w = 590;

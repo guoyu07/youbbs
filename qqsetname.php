@@ -63,11 +63,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $flag = 5;
             }
-            $DBS->query("INSERT INTO yunbbs_users (id,name,flag,password,regtime) VALUES (null,'$name', $flag, '', $timestamp)");
+            $DBS->query("INSERT INTO yunbbs_users (name, flag, regtime) VALUES ('$name', $flag, $timestamp)");
             $new_uid = $DBS->insert_id();
             $MMC->delete('site_infos');
             // update qqweibo
-            $DBS->unbuffered_query("UPDATE yunbbs_qqweibo SET uid = '$new_uid' WHERE openid='$openid'");
+            $DBS->unbuffered_query("UPDATE yunbbs_qqweibo SET uid = $new_uid WHERE openid='$openid'");
 
             //设置cookie
             $db_ucode = md5($new_uid.''.$timestamp.'00');

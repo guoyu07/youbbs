@@ -45,13 +45,13 @@ if ($token) {
     $openid = $token['uid'];
     $_SESSION["openid"] = $openid;
 
-    $db_openid = $DBS->fetch_one_array("SELECT id,uid,name FROM yunbbs_weibo WHERE openid='".$openid."'");
+    $db_openid = $DBS->fetch_one_array("SELECT id,uid,name FROM yunbbs_weibo WHERE openid='$openid'");
 
     if($db_openid && $db_openid['uid']){
 
         // 直接登录
         $cur_uid = $db_openid['uid'];
-        $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id='".$cur_uid."' LIMIT 1");
+        $db_user = $DBS->fetch_one_array("SELECT * FROM yunbbs_users WHERE id=$cur_uid LIMIT 1");
         if($db_user){
             $db_ucode = md5($db_user['id'].$db_user['password'].$db_user['regtime'].$db_user['lastposttime'].$db_user['lastreplytime']);
             //设置缓存和cookie
@@ -99,7 +99,7 @@ if ($token) {
             exit;
         }
     }else{
-        $DBS->query("INSERT INTO yunbbs_weibo (id,uid,name,openid) VALUES (null,'0','$name', '$openid')");
+        $DBS->query("INSERT INTO yunbbs_weibo (name, openid) VALUES ('$name', '$openid')");
         header("Location:/wbsetname");
         exit;
     }

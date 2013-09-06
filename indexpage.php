@@ -58,12 +58,9 @@ if (!$is_mobie && count($bot_nodes) < $options['newest_node_num'] + $options['ho
 $show_sider_ad = 1;
 $links = get_links();
 
-if($options['keywords']){
-    $meta_keywords = htmlspecialchars($options['keywords']);
-}
-if($options['site_des']){
-    $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8'));
-}
+if ($options['keywords']) $meta_keywords = htmlspecialchars($options['keywords']);
+
+if ($options['site_des']) $meta_des = htmlspecialchars(mb_substr($options['site_des'], 0, 150, 'utf-8'));
 
 $pagefile = ROOT . '/templates/default/'.$tpl.'indexpage.php';
 

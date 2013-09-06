@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $n_name = htmlspecialchars(trim($_POST['name']));
                     $n_url = trim($_POST['url']);
                     if($n_name && $n_url){
-                        if($DBS->query("INSERT INTO yunbbs_links (id,name,url) VALUES (null,'$n_name','$n_url')")){
+                        if($DBS->query("INSERT INTO yunbbs_links (name, url) VALUES ('$n_name', '$n_url')")){
                             //更新缓存
                             $MMC->delete('site_links');
                             $tip1 = '已成功添加';

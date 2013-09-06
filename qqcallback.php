@@ -121,7 +121,7 @@ get_openid();
 
 $openid = $_SESSION["openid"];
 
-$db_openid = $DBS->fetch_one_array("SELECT id,uid FROM yunbbs_qqweibo WHERE openid='".$openid."'");
+$db_openid = $DBS->fetch_one_array("SELECT id,uid FROM yunbbs_qqweibo WHERE openid='$openid'");
 
 if($db_openid && $db_openid['uid']){
     // 直接登录
@@ -188,15 +188,13 @@ if(strpos(' '.$_SESSION["scope"], 'get_info')){
 }
 
 
-if($db_openid){
-    if($db_openid['uid']){
-        // pass
-    }else{
+if ($db_openid) {
+    if (!$db_openid['uid']) {
         header("Location:/qqsetname");
         exit;
     }
-}else{
-    $DBS->query("INSERT INTO yunbbs_qqweibo (id,uid,name,openid) VALUES (null,'0','$name', '$openid')");
+} else {
+    $DBS->query("INSERT INTO yunbbs_qqweibo (name, openid) VALUES ('$name', '$openid')");
     header("Location:/qqsetname");
     exit;
 

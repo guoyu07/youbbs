@@ -67,7 +67,7 @@ if($act && $tid){
             }else{
 
                 $user_fav= array('id'=>'','uid'=>$cur_uid, 'articles'=>1, 'content' => $tid);
-                $DBS->query("INSERT INTO yunbbs_favorites (id,uid,articles,content) VALUES (null,'$cur_uid','1','$tid')");
+                $DBS->query("INSERT INTO yunbbs_favorites (uid, articles, content) VALUES ($cur_uid, 1, $tid)");
                 $DBS->unbuffered_query("UPDATE yunbbs_articles SET favorites=favorites+1 WHERE id='$tid'");
                 $MMC->delete('favorites_'.$cur_uid);
                 $MMC->delete('t-'.$tid);

@@ -30,7 +30,7 @@ CREATE TABLE yunbbs_categories (
   KEY articles (articles)
 ) ENGINE=MyISAM ;
 
-INSERT INTO yunbbs_categories VALUES(1, '默认节点', 0, '');
+INSERT INTO yunbbs_categories (name) VALUES ('默认节点');
 
 DROP TABLE IF EXISTS yunbbs_comments;
 CREATE TABLE yunbbs_comments (
@@ -51,7 +51,7 @@ CREATE TABLE yunbbs_links (
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM ;
 
-INSERT INTO yunbbs_links VALUES(null,'SinoSky', 'http://www.sinosky.org/');
+INSERT INTO yunbbs_links (name, url) VALUES ('SinoSky', 'http://www.sinosky.org/');
 
 DROP TABLE IF EXISTS yunbbs_settings;
 CREATE TABLE yunbbs_settings (

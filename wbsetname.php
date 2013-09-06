@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $errors[] = '名字不能全为数字';
                     }else{
                         // 检测重名
-                        $db_user = $DBS->fetch_one_array("SELECT id FROM yunbbs_users WHERE name='".$name."'");
+                        $db_user = $DBS->fetch_one_array("SELECT id FROM yunbbs_users WHERE name='$name'");
                         if($db_user){
                             $errors[] = '这名字太火了，已经被抢注了，换一个吧！';
                         }
@@ -63,11 +63,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }else{
                 $flag = 5;
             }
-            $DBS->query("INSERT INTO yunbbs_users (id,name,flag,password,regtime) VALUES (null,'$name', $flag, '', $timestamp)");
+            $DBS->query("INSERT INTO yunbbs_users (name, flag, regtime) VALUES ('$name', $flag, $timestamp)");
             $new_uid = $DBS->insert_id();
             $MMC->delete('site_infos');
             // update qqweibo
-            $DBS->unbuffered_query("UPDATE yunbbs_weibo SET uid = '$new_uid' WHERE openid='$openid'");
+            $DBS->unbuffered_query("UPDATE yunbbs_weibo SET uid = $new_uid WHERE openid='$openid'");
 
             //设置cookie
             $db_ucode = md5($new_uid.''.$timestamp.'00');

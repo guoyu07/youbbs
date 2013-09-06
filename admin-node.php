@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if ($check_obj) {
                     $tip1 = $n_name.' 节点已存在，请修改为不同的节点名';
                 } else {
-                    if ($DBS->query("INSERT INTO yunbbs_categories (id,name,about) VALUES (null,'$n_name','$n_about')")) {
+                    if ($DBS->query("INSERT INTO yunbbs_categories (name, about) VALUES ('$n_name', '$n_about')")) {
                         //更新缓存
                         $MMC->delete('newest_nodes');
                         $MMC->delete('bot_nodes');
