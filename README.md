@@ -1,10 +1,10 @@
-### 此项目已[停止维护](http://www.sinosky.org/youbbs-for-bae-stop-to-update.html)
+### 此项目已[停止维护](https://www.sinosky.org/youbbs-for-bae-stop-to-update.html)
 
-## [YouBBS for BAE](http://bbs.sinosky.org/)
+## YouBBS for BAE
 
 [YouBBS](http://youbbs.sinaapp.com) 是一个基于 PHP + MySQL的轻型的论坛程序，界面优美，性能高效，代码简洁、安全，适合于对传统论坛视觉疲劳、对传统论坛功能感觉臃肿等小众群体。
 
-Modified by [Jat](http://www.sinosky.org/)
+Modified by [Jat](https://www.sinosky.org/)
 
 Based on [YouBBS](https://github.com/ego008/youbbs)
 
