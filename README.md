@@ -13,3 +13,4 @@ Based on [YouBBS](https://github.com/ego008/youbbs)
 2. 在 [云存储](http://developer.baidu.com/bae/bcs/bucket/) 创建 bucket
 3. 按照说明修改 `config.sample.php` 并保存为 `config.php`
 4. 使用 [SVN](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/manage/svn) 或 [Git](http://developer.baidu.com/wiki/index.php?title=docs/cplat/rt/manage/git) 上传代码
+5. 访问 `/install` 安装
